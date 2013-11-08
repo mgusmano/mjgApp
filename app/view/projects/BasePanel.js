@@ -4,53 +4,18 @@ Ext.define('mjgApp.view.projects.BasePanel', {
 
     initialize: function () {
         this.items.items[0].setTitle(this.getTitle());
-
-        var theHtml = '';
-        switch(this.getImage())
-        {
-            case 'resources/images/' + '7-EMSPEED12.png':
-                theHtml = 'hi';
-                break;
-            case 'resources/images/' + '1-EMSIX.png':
-
-                theHtml =
-                '<div style="font-weight:bold;color:#146BA8;font-style:italic;">Large Oil and Gas Provider - Houston, TX</div>' +
-
-                '<div style="display:table;width:100%">' +
-                  '<div style="display:table-cell;text-align:left;font-weight:bold">' +
-                    '<span style="padding:5px 5px 5px 0px;width:30px;">Senior SharePoint Architect</span>' +
-                  '</div>' +
-                  '<div style="display:table-cell;text-align:right;font-weight:bold">' +
-                    '<span style="padding:10px 5px 5px 5px;width:30px;">Oct 2009 - Dec 2009</span>' +
-                  '</div>' +
-                '</div>' +
-
-
-                '<div style="margin:10px 0px 0px 0px;font-weight:bold;font-size:10px;">' +
-                    'Architected and implemented a Document Management System utilizing SharePoint Enterprise Search.  The application utilized the SharePoint Profile System to provide for personalized search results.  The display of search results utilized a custom faceted search experience, with result data displayed in tabular format to allow for sorting.  An AJAX-enabled interface added to the custom search experience.  The custom Search experience was created with custom Visual Studio controls.' +
-                '</div>' +
-
-
-                '<div style="margin:10px 0px 0px 0px;font-weight:bold;color:#146BA8;font-style:italic;">Technologies Used:</div>' +
-
-                '<div style="font-weight:bold;font-size:10px;">' +
-                    'Microsoft.Net (C#) 3.5, SQL Server2008 SharePoint 2007, Visual Studio 2008, ASP.NET AJAX ' +
-                '</div>';
-                break;
-            default:
-                theHtml = this.getImage() + Ext.os.deviceType;
-        }
-
-
-        this.setHtml(theHtml);
-
-
+        var i = this.getSrc();
+        var theStart = 'resources/images/';
+        var s = i.indexOf(theStart) + theStart.length;
+        var e = i.indexOf('.');
+        var theImage = i.substring(s, e);
+        this.setContentEl(theImage);
     },
 
     config: {
         title: null,
         html: null,
-        image: null,
+        src: null,
         modal: true,
         hideOnMaskTap: true,
         showAnimation: {
@@ -64,8 +29,8 @@ Ext.define('mjgApp.view.projects.BasePanel', {
             easing: 'ease-out'
         },
         centered: true,
-        width: (Ext.os.deviceType == 'Phone') ? '90%' : 800,
-        height: Ext.os.deviceType == 'Phone' ? '90%' : 300,
+        width: (Ext.os.deviceType == 'Phone') ? '95%' : 800,
+        height: Ext.os.deviceType == 'Phone' ? '95%' : 300,
         //width: '60%',
         //height: '50%',
         //width: Ext.filterPlatform('ie10') ? '100%' : (Ext.os.deviceType == 'Phone') ? 290 : 800,

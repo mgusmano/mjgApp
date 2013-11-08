@@ -39,6 +39,12 @@
      *      }
      */
     "js": [
+		{
+            "path": "js/jquery-1.9.1.js",
+            "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
+            "update": "delta"
+        },
+
         {
             "path": "touch/sencha-touch.js",
             "x-bootstrap": true
@@ -73,6 +79,10 @@
     "css": [
         {
             "path": "resources/css/app.css",
+            "update": "delta"
+        },
+        {
+            "path": "cover.css",
             "update": "delta"
         }
     ],

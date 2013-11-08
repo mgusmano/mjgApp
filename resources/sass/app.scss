@@ -8,3 +8,24 @@
 
 // Examples of using the icon mixin:
 // @include icon('user');
+
+.x-portrait .my-carousel-item-img {
+    background-size: 100% auto;
+}
+
+.x-landscape .my-carousel-item-img {
+    background-size: auto 100%;
+}
+
+.my-carousel-item-img {
+    background-position: center center;
+}
+
+.x-carousel-indicator > * {
+    background-color: orange !important;
+    opacity: 0.4;
+}
+
+.x-carousel-indicator > .x-carousel-indicator-active {
+    opacity: 1;
+}

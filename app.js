@@ -19,6 +19,9 @@ Ext.application({
 
     views: [
         'Main',
+        'Cover',
+        'Dashboard',
+        'projects.BasePage',
         'projects.BasePanel'
     ],
 
@@ -43,6 +46,14 @@ Ext.application({
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
+
+        Ext.Viewport.bodyElement.on('resize', Ext.emptyFn, this, { buffer: 1 });
+        Ext.Viewport.on('orientationchange', function (me, orientation, width, height, eOpts) {
+            debugger;
+            Ext.getCmp('coverHistory').refresh();
+        });
+
+
 
         // Initialize the main view
         Ext.Viewport.add(Ext.create('mjgApp.view.Main'));
