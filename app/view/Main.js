@@ -24,10 +24,10 @@ Ext.define('mjgApp.view.Main', {
                         '<br/>' +
                         '<div style="font-weight:bold;color:#146BA8;font-style:italic;">Summary:</div>' +
                         '<div style="font-weight:bold;font-size:10px;">' +
-                            'Marc Gusmano is a Senior Manager with Hitachi Consulting based in the Chicago office.  Mr. Gusmano is involved in assisting and mentoring clients in the development and implementation of solutions that utilize Windows SharePoint Services and Microsoft SharePoint Office Server (MOSS) and related technologies including ASP.NET, Silverlight, and AJAX.'+
+                            'Marc Gusmano is a Senior Manager with Hitachi Consulting based in the Houston office.  Mr. Gusmano is involved in assisting and mentoring clients in the development and implementation of solutions that utilize WMicrosoft SharePoint related technologies including ASP.NET and HTML5.'+
                         '<br/>' +
                         '<br/>' +
-                            'Mr. Gusmano is primarily involved with Windows SharePoint Services 3.0, where his particular focus and expertise is in the area of custom .NET development of extensions tothe WSS 3.0 platform.  Mr. Gusmano gets involved with custom development efforts involving WSS 3.0 with Hitachi Consulting\'s  clients, combining his knowledge of the underlying WSS 3.0 architecture with his experience building ASP.NET 2.0 applications to assist clients in the planning, design and development of custom solutions with WSS 3.0 and ASP.NET 2.0.' +
+                            'Mr. Gusmano is extensively involved with custom HTML5 development efforts, combining his knowledge of the underlying SharePoint architecture with his experience building HTML5 Single Page Applications to assist clients in the planning, design and development of custom solutions.' +
                         '<br/>'
                     },
                     {
