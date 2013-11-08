@@ -12,6 +12,7 @@ Ext.define('mjgApp.view.Main', {
                 title: 'Current Work',
                 iconCls: 'home',
                 xtype: 'carousel',
+                //itemLength: 100,
                 bufferSize: 2,
                 direction: 'horizontal',
                 items: [
@@ -31,9 +32,30 @@ Ext.define('mjgApp.view.Main', {
             },
             {
                 xtype: 'dashboard',
-                title: 'Work History',
+                title: 'Companies',
                 iconCls: 'info'
-            }
+            },
+
+
+            {
+                title: 'Past Work',
+                iconCls: 'favorites',
+                xtype: 'carousel',
+                //itemLength: 100,
+                bufferSize: 2,
+                direction: 'horizontal',
+                items: [
+                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'a' },
+                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'b' },
+                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'c' },
+                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'd' },
+                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'e' },
+                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'f' },
+                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'g' }
+]
+            },
+
+
         ]
     }
 });
