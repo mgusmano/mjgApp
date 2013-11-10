@@ -35,7 +35,7 @@ Ext.define('mjgApp.view.Main', {
                         padding: '5 5 5 5',
                         contentEl: 'summary'
                     },
-                    { xtype: 'basepage', image: 'SharePointRest.png', header: 'SharePoint REST API Remote List Reader' },
+                    //{ xtype: 'basepage', image: 'SharePointRest.png', header: 'SharePoint REST API Remote List Reader' },
                     { xtype: 'basepage', image: 'EMSPEED12.png', header: 'HTML5 Single Page Application' },
                     { xtype: 'basepage', image: 'EMSPEEDPOC.jpg', header: 'HTML5 Graphical Proof of Concept' },
                     { xtype: 'basepage', image: 'EMSPEED10.jpg', header: 'HTML5/Silverlight Web Application' },
@@ -68,7 +68,6 @@ Ext.define('mjgApp.view.Main', {
                                 yep: ['js/jquery.tmpl.min.js', 'js/jquery.history.js', 'js/core.string.js', 'js/jquery.touchSwipe-1.2.5.js', 'js/jquery.flips.js'],
                                 nope: 'css/fallback.css',
                                 callback: function (url, result, key) {
-
                                     if (url === 'css/fallback.css') {
                                         $pages.show();
                                     }
@@ -82,7 +81,6 @@ Ext.define('mjgApp.view.Main', {
                     }
                 }
             },
-
 
             {
                 title: 'Past Work',
@@ -99,10 +97,8 @@ Ext.define('mjgApp.view.Main', {
                     { xtype: 'container', padding: '5 5 5 5', contentEl: 'e' },
                     { xtype: 'container', padding: '5 5 5 5', contentEl: 'f' },
                     { xtype: 'container', padding: '5 5 5 5', contentEl: 'g' }
-]
+                ]
             }
-
-
         ]
     }
 });
