@@ -41,7 +41,7 @@
 			this.options 		= $.extend( true, {}, $.Flips.defaults, options );
 			this.$pages			= this.$el.children( 'div.f-page' );
 			this.pagesCount		= this.$pages.length;
-			this.History		= window.History;
+			//this.History		= window.History;
 			this.currentPage	= this.options.current;
 			this._validateOpts();
 			this._getWinSize();
@@ -85,8 +85,9 @@
 			
 		},
 		_getState			: function() {
-		
-			this.state = this.History.getState().url.queryStringToJSON().page;
+		    debugger;
+			//this.state = this.History.getState().url.queryStringToJSON().page;
+		    this.state = 1;
 			
 		},
 		_isNumber			: function( n ) {
@@ -136,13 +137,13 @@
 		_saveState			: function() {
 		
 			// adds a new state to the history object and triggers the statechange event on the window
-			var page = this.currentPage;
-			
-			if( this.History.getState().url.queryStringToJSON().page !== page ) {
+			//var page = this.currentPage;
+			debugger;
+			//if( this.History.getState().url.queryStringToJSON().page !== page ) {
 					
-				this.History.pushState( null, null, '?page=' + page );
+			//	this.History.pushState( null, null, '?page=' + page );
 				
-			}
+			//}
 			
 		},
 		_layout				: function() {

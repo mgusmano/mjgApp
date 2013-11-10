@@ -67808,51 +67808,17 @@ Ext.define('mjgApp.view.Main', {
         tabBarPosition: 'bottom',
         items: [
 
-
-            {
-                xtype: 'container',
-                title: 'Companies',
-                iconCls: 'info',
-                contentEl: 'header',
-                listeners: {
-                    painted: function (element, eOpts) {
-                        if (isLoaded === false) {
-                            isLoaded = true;
-                            var $container  = $( '#flip' ),
-                                $pages      = $container.children().hide();
-     
-                            Modernizr.load({
-                                test: Modernizr.csstransforms3d && Modernizr.csstransitions,
-                                yep : ['js/jquery.tmpl.min.js','js/jquery.history.js','js/core.string.js','js/jquery.touchSwipe-1.2.5.js','js/jquery.flips.js'],
-                                nope: 'css/fallback.css',
-                                callback : function( url, result, key ) {
-             
-                                    if( url === 'css/fallback.css' ) {
-                                        $pages.show();
-                                    }
-                                    else if( url === 'js/jquery.flips.js' ) {
-                                        $( '#flip' ).flips();
-                                    }
-     
-                                }
-                            });
-                        }
-                    }
-                }
-            },
-
-
-            {
-                xtype: 'container',
-                title: 'Companies',
-                iconCls: 'info',
-                contentEl: 'qrcode',
-                listeners: {
-                    painted: function (element, eOpts) {
-                        $('#qrcode').qrcode({ width: 264, height: 264, text: "{projectId:97266}" });
-                    }
-                }
-            },
+            //{
+            //    xtype: 'container',
+            //    title: 'Companies',
+            //    iconCls: 'info',
+            //    contentEl: 'qrcode',
+            //    listeners: {
+            //        painted: function (element, eOpts) {
+            //            $('#qrcode').qrcode({ width: 264, height: 264, text: "{projectId:97266}" });
+            //        }
+            //    }
+            //},
 
             {
                 title: 'Current Work',
@@ -67867,7 +67833,7 @@ Ext.define('mjgApp.view.Main', {
                         padding: '5 5 5 5',
                         contentEl: 'summary'
                     },
-                    { xtype: 'basepage', image: 'SharePointRest.png', header: 'SharePoint REST API Remote List Reader' },
+                    //{ xtype: 'basepage', image: 'SharePointRest.png', header: 'SharePoint REST API Remote List Reader' },
                     { xtype: 'basepage', image: 'EMSPEED12.png', header: 'HTML5 Single Page Application' },
                     { xtype: 'basepage', image: 'EMSPEEDPOC.jpg', header: 'HTML5 Graphical Proof of Concept' },
                     { xtype: 'basepage', image: 'EMSPEED10.jpg', header: 'HTML5/Silverlight Web Application' },
@@ -67883,6 +67849,36 @@ Ext.define('mjgApp.view.Main', {
                 iconCls: 'info'
             },
 
+            {
+                xtype: 'container',
+                title: 'Prior Work',
+                iconCls: 'favorites',
+                contentEl: 'header',
+                listeners: {
+                    painted: function (element, eOpts) {
+                        if (isLoaded === false) {
+                            isLoaded = true;
+                            var $container = $('#flip'),
+                                $pages = $container.children().hide();
+
+                            Modernizr.load({
+                                test: Modernizr.csstransforms3d && Modernizr.csstransitions,
+                                yep: ['js/jquery.tmpl.min.js', 'js/jquery.history.js', 'js/core.string.js', 'js/jquery.touchSwipe-1.2.5.js', 'js/jquery.flips.js'],
+                                nope: 'css/fallback.css',
+                                callback: function (url, result, key) {
+                                    if (url === 'css/fallback.css') {
+                                        $pages.show();
+                                    }
+                                    else if (url === 'js/jquery.flips.js') {
+                                        $('#flip').flips();
+                                    }
+
+                                }
+                            });
+                        }
+                    }
+                }
+            },
 
             {
                 title: 'Past Work',
@@ -67899,10 +67895,8 @@ Ext.define('mjgApp.view.Main', {
                     { xtype: 'container', padding: '5 5 5 5', contentEl: 'e' },
                     { xtype: 'container', padding: '5 5 5 5', contentEl: 'f' },
                     { xtype: 'container', padding: '5 5 5 5', contentEl: 'g' }
-]
+                ]
             }
-
-
         ]
     }
 });

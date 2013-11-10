@@ -274,7 +274,7 @@ a.f-ref{
 	background-image: url(../images/9.jpg);
 }
 .box h3{
-	padding: 10px 0px;
+	padding: 5px 0px;
 	margin: 0;
 	font-size: 18px;
 }
@@ -312,6 +312,7 @@ a.f-ref{
 	position: relative;
 	padding-bottom: 30px;
 }
+.w-10{ width: 10%; }
 .w-25{ width: 25%; }
 .w-30{ width: 30%; }
 .w-40{ width: 40%; }
@@ -319,6 +320,7 @@ a.f-ref{
 .w-60{ width: 60%; }
 .w-70{ width: 70%; }
 .w-75{ width: 75%; }
+.w-90{ width: 90%; }
 .w-100{ width: 100%; }
 
 .h-25{ height: 25%; }
