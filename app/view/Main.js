@@ -12,17 +12,7 @@ Ext.define('mjgApp.view.Main', {
 
 
 
-            {
-                xtype: 'container',
-                title: 'Companies',
-                iconCls: 'info',
-                contentEl: 'qrcode',
-                listeners: {
-                    painted: function (element, eOpts) {
-                        $('#qrcode').qrcode({ width: 264, height: 264, text: "{projectId:97266}" });
-                    }
-                }
-            },
+
 
             {
                 xtype: 'container',
@@ -56,6 +46,17 @@ Ext.define('mjgApp.view.Main', {
                 }
             },
 
+            {
+                xtype: 'container',
+                title: 'Companies',
+                iconCls: 'info',
+                contentEl: 'qrcode',
+                listeners: {
+                    painted: function (element, eOpts) {
+                        $('#qrcode').qrcode({ width: 264, height: 264, text: "{projectId:97266}" });
+                    }
+                }
+            },
 
 
             {
