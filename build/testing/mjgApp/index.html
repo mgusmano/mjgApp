@@ -227,7 +227,7 @@
         }
     }
 
-})(this);Ext.blink({"id":"43c07621-ff6e-4ac5-8bd9-7dd45720baa5","js":[{"path":"app.js","update":"delta"},{"path":"js/jquery.qrcode.min.js","update":"delta"},{"path":"js/modernizr.custom.08464.js","update":"delta"},{"path":"app.js","update":"delta"}],"css":[{"path":"resources/css/app.css","update":"delta"},{"path":"cover.css","update":"delta"},{"path":"css/style.css","update":"delta"},{"path":"css/demo.css","update":"delta"}]});</script>
+})(this);Ext.blink({"id":"43c07621-ff6e-4ac5-8bd9-7dd45720baa5","js":[{"path":"app.js","update":"delta"},{"path":"js/jquery.qrcode.min.js","update":"delta"},{"path":"js/modernizr.custom.08464.js","update":"delta"},{"path":"app.js","update":"delta"}],"css":[{"path":"resources/css/app.css","update":"delta"},{"path":"cover.css","update":"delta"},{"path":"css/style.css","update":"delta"},{"path":"css/demo.css","update":"delta"},{"path":"css/mjg.css","update":"delta"}]});</script>
 
 </head>
 <body>
@@ -237,37 +237,16 @@
         <div></div>
     </div>
 
-    <div id="qrcode" style="display: none;"></div>
-
-    <script id="pageTmpl" type="text/x-jquery-tmpl">
-        <div class="${theClass}" style="${theStyle}">
-            <div class="front">
-                <div class="outer">
-                    <div class="content" style="${theContentStyleFront}">
-                        <div class="inner">{{html theContentFront}}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="back">
-                <div class="outer">
-                    <div class="content" style="${theContentStyleBack}">
-                        <div class="inner">{{html theContentBack}}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </script>
-
     <div id="fliparea" style="display: none;background-color:#FFFFFF;">
 
         <header class="main-title">
             <div style="display:table;width:100%">
-                <div style="display: table-cell; text-align: left; font-size: 30px; font-weight: xbold; color: #146BA8; font-style: italic;font-family: Arial, 'DejaVu Sans', 'Liberation Sans', Freesans, sans-serif,'Times New Roman',Georgia,Serif;">Marc Gusmano</div>
-                <div style="display:table-cell;text-align:right;font-weight:xbold;color:red;">swipe or drag for projects summary >></div>
+                <div class="f40 myName">Marc Gusmano</div>
+                <div class="f24 mySwipe">swipe or drag for projects summary >></div>
             </div>
-            <div style="font-size:24px;font-weight:xbold;">Senior SharePoint and HTML5 Architect</div>
-            <div style="font-weight: xbold; font-size: 24px; color: #146BA8; font-style: italic; margin: 10px 0px 0px 0px;">Summary:</div>
-            <div style="font-weight:xbold;font-size:24px;">
+            <div class="f20">Senior Microsoft SharePoint and HTML5 Architect</div>
+            <div class="f20 myHeading">Summary:</div>
+            <div class="f20">
                 Marc Gusmano is a Senior Manager with Hitachi Consulting based in the Houston, TX office
                 with 30 years of experence in the software services industry.
                 He is involved in the development of solutions
@@ -277,7 +256,6 @@
                 Mr. Gusmano is extensively involved with custom HTML5 development projects, combining his knowledge of the underlying
                 SharePoint architecture with his experience building HTML5 Single Page Applications, working on the requirements,
                 design and development of custom solutions.
-
                 <br />
                 <br />
                 <div style="font-weight: xbold; font-size: 24px; color: #146BA8; font-style: italic; margin: 10px 0px 0px 0px;">Education, Certifications, Accomplishments:</div>
@@ -290,9 +268,6 @@
                     <li style="font-size: 24px; list-style: square outside;">Founder / Partner,  The Bismarck Group, Chicago, Illinois - 1995 to 1997</li>
                     <li style="font-size: 24px; list-style: square outside;">Partner, The Information Management Group, Chicago, Illinois – 1997 to 2009</li>
                 </ol>
-
-
-
             </div>
         </header>
 
@@ -314,22 +289,20 @@
                 <div class="f-title">
                     <a>Marc Gusmano</a>
                     <h2>Projects at Hitachi Consulting</h2>
-                    <a>Previous Projects</a>
+                    <a>Projects Summary</a>
                 </div>
                 <div class="box w-10 h-50 box-b-l box-b-r">
                 </div>
                 <div class="box w-90 h-50 box-b-l box-b-r box-img-right">
                     <div class="img-cont" style="background-image: url(resources/images/EMSPEED12.png); "></div>
-                    <h3>Large Oil and Gas Provider - Houston, TX<span>June 2012 - present</span></h3>
-                    <h3>Senior HTML5 Architect</h3>
+                    <h3>Large Oil and Gas Provider - Houston, TX   <strong>(Senior HTML5 Architect)</strong><span>June 2012 - present</span></h3>
                         Architected and implemented a Web-based portal to a project management system.  The User Interface
                         is 100% browser based, utilizing HTML5, JavaScript and CSS and is built as a 'Single Page Application'.   All
                         interaction with the server is via AJAX calls to Microsoft Windows Communication Framework (WCF) services and
                         SQL Server.
-                    <h3>Technologies Used:</h3>
-                    HTML5, Sencha ExtJS 4.2, JQuery 1.9.1, JavaScript, CSS/SASS, Siesta (testing tool),
-                    Microsoft .NET 4.5, C#, Microsoft WCF
-                </div>
+                    <h3>Technologies: HTML5, Sencha ExtJS 4.2, JQuery 1.9.1, JavaScript, CSS/SASS, Siesta (testing tool),
+                        Microsoft .NET 4.5, C#, Microsoft WCF</h3>
+</div>
                 <div class="box w-90 h-50 box-b-l box-b-r box-img-left">
                     <div class="img-cont" style="background-image: url(resources/images/EMSPEEDPOC.jpg); "></div>
                     <h3>Large Oil and Gas Provider - Houston, TX<span>Feb 2012 - May 2012</span></h3>
@@ -439,12 +412,12 @@
 
     <div style="display: none;" id="summary">
         <div style="display:table;width:100%">
-            <div style="display: table-cell; text-align: left; font-size: 20px; font-weight: bold; color: #146BA8; font-style: italic;">Marc Gusmano</div>
-            <div style="display:table-cell;text-align:right;font-weight:bold;color:red;">swipe for current projects >></div>
+            <div class="f30 myName">Marc Gusmano</div>
+            <div class="f14 mySwipe">swipe for current projects >></div>
         </div>
-        <div style="font-size:14px;font-weight:bold;">Senior SharePoint and HTML5 Architect</div>
-        <div style="font-weight:bold;color:#146BA8;font-style:italic;margin:10px 0px 0px 0px;">Summary:</div>
-        <div style="font-weight:bold;font-size:14px;">
+        <div class="f14">Senior SharePoint and HTML5 Architect</div>
+        <div class="f12 myHeading">Summary:</div>
+        <div class="f12">
             Marc Gusmano is a Senior Manager with Hitachi Consulting based in the Houston, TX office
             with 30 years of experence in the software services industry.
             He is involved in the development of solutions
@@ -760,6 +733,30 @@
             <li>Partner, The Information Management Group, Chicago, Illinois – 1997 to 2009
         </ol>
     </div>
+
+
+
+
+    <div id="qrcode" style="display: none;"></div>
+
+    <script id="pageTmpl" type="text/x-jquery-tmpl">
+        <div class="${theClass}" style="${theStyle}">
+            <div class="front">
+                <div class="outer">
+                    <div class="content" style="${theContentStyleFront}">
+                        <div class="inner">{{html theContentFront}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="back">
+                <div class="outer">
+                    <div class="content" style="${theContentStyleBack}">
+                        <div class="inner">{{html theContentBack}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
 
 
 

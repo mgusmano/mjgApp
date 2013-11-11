@@ -101,6 +101,10 @@
         {
             "path": "css/demo.css",
             "update": "delta"
+        },
+        {
+            "path": "css/mjg.css",
+            "update": "delta"
         }
     ],
 

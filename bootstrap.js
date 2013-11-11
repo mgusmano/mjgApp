@@ -753,9 +753,13 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.viewport.WindowsPhone": [
     "Ext.viewport.WP"
   ],
+  "mjgApp.view.AllTablet": [],
   "mjgApp.view.Cover": [],
+  "mjgApp.view.CurrentPhone": [],
+  "mjgApp.view.CurrentTablet": [],
   "mjgApp.view.Dashboard": [],
   "mjgApp.view.Main": [],
+  "mjgApp.view.PastPhone": [],
   "mjgApp.view.projects.BasePage": [],
   "mjgApp.view.projects.BasePanel": []
 });
@@ -1705,14 +1709,26 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.viewport.Ios": [],
   "Ext.viewport.Viewport": [],
   "Ext.viewport.WindowsPhone": [],
+  "mjgApp.view.AllTablet": [
+    "widget.alltablet"
+  ],
   "mjgApp.view.Cover": [
     "widget.cover"
+  ],
+  "mjgApp.view.CurrentPhone": [
+    "widget.currentphone"
+  ],
+  "mjgApp.view.CurrentTablet": [
+    "widget.currenttablet"
   ],
   "mjgApp.view.Dashboard": [
     "widget.dashboard"
   ],
   "mjgApp.view.Main": [
     "widget.main"
+  ],
+  "mjgApp.view.PastPhone": [
+    "widget.pastphone"
   ],
   "mjgApp.view.projects.BasePage": [
     "widget.basepage"

@@ -37597,6 +37597,140 @@ Ext.define('Ext.LoadMask', {
 }, function() {
 });
 
+Ext.define('Ext.Menu', {
+    extend:  Ext.Sheet ,
+    xtype: 'menu',
+                             
+
+    config: {
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        baseCls: Ext.baseCSSPrefix + 'menu',
+
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        left: 0,
+
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        right: 0,
+
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        bottom: 0,
+
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        height: 'auto',
+
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        width: 'auto',
+
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        defaultType: 'button',
+
+        /**
+         * @hide
+         */
+        showAnimation: null,
+
+        /**
+         * @hide
+         */
+        hideAnimation: null,
+
+        /**
+         * @hide
+         */
+        centered: false,
+
+        /**
+         * @hide
+         */
+        modal: true,
+
+        /**
+         * @hide
+         */
+        hidden: true,
+
+        /**
+         * @hide
+         */
+        hideOnMaskTap: true,
+
+        /**
+         * @hide
+         */
+        translatable: {
+            translationMethod: null
+        }
+    },
+
+    constructor: function() {
+        this.config.translatable.translationMethod = Ext.browser.is.AndroidStock2 ? 'cssposition' : 'csstransform';
+        this.callParent(arguments);
+    },
+
+    platformConfig: [{
+        theme: ['Windows']
+    }, {
+        theme: ['Blackberry'],
+        ui: 'context',
+        layout: {
+            pack: 'center'
+        }
+    }],
+
+    updateUi: function(newUi, oldUi) {
+        this.callParent(arguments);
+
+        if (newUi != oldUi && Ext.theme.name == 'Blackberry') {
+            if (newUi == 'context') {
+                this.innerElement.swapCls('x-vertical', 'x-horizontal');
+            }
+            else if (newUi == 'application') {
+                this.innerElement.swapCls('x-horizontal', 'x-vertical');
+            }
+        }
+    },
+
+    updateHideOnMaskTap : function(hide) {
+        var mask = this.getModal();
+
+        if (mask) {
+            mask[hide ? 'on' : 'un'].call(mask, 'tap', function() {
+                Ext.Viewport.hideMenu(this.$side);
+            }, this);
+        }
+    },
+
+    /**
+     * Only fire the hide event if it is initialized
+     */
+    doSetHidden: function() {
+        if (this.initialized) {
+            this.callParent(arguments);
+        }
+    }
+});
+
 /**
  * {@link Ext.Title} is used for the {@link Ext.Toolbar#title} configuration in the {@link Ext.Toolbar} component.
  * @private
@@ -67313,39 +67447,6 @@ Ext.define('Ext.viewport.Viewport', {
  * you should **not** use {@link Ext#onReady}.
  */
 
-Ext.define('mjgApp.view.projects.BasePage', {
-    extend:  Ext.Container ,
-    xtype: 'basepage',
-
-    initialize: function () {
-        this.down('image').setSrc('resources/images/' + this.getImage());
-        this.down('#theHeader').setHtml(this.getHeader());
-    },
-
-    config: {
-        image: null,
-        header: null,
-        padding: '0 5 0 5', layout: 'vbox',
-        items: [
-            { xtype: 'container', itemId: 'theHeader', margin: '5 5 5 5', style: { textAlign: 'center', fontSize: '10px' } },
-            {
-                xtype: 'image', flex: 1, cls: 'my-carousel-item-img', 
-                listeners: {
-                    tap: function () {
-                        var overlay = Ext.Viewport.add({ xtype: 'basepanel', title: 'Project Details', src: this.getSrc() });
-                        overlay.show();
-                        overlay.remove();
-                    }
-                }
-            },
-           { xtype: 'container', margin: '5 5 5 5', style: { textAlign: 'center', fontSize: '10px' }, html: "Tap on the image to see details on this project." },
-           { xtype: 'container', height: 20 }
-        ]
-    }
-
-
-});
-
 Ext.define('mjgApp.view.Main', {
     extend:  Ext.tab.Panel ,
     xtype: 'main',
@@ -67361,85 +67462,32 @@ Ext.define('mjgApp.view.Main', {
 
     create: function () {
         var theItems = [];
-
         var theChild = {};
-        if (Ext.os.deviceType !== 'Phone') {
+
+        if (Ext.os.deviceType === 'Phone') {
             theChild = {};
-            theChild.xtype = 'container';
+            theChild.xtype = 'currentphone';
             theChild.title = 'Current Work';
             theChild.iconCls = 'home';
-            theChild.contentEl = 'fliparea';
-            theChild.isLoaded = false;
-
-            theChild.listeners = {
-                painted: function (element, eOpts) {
-                    if (this.isLoaded === false) {
-                        this.isLoaded = true;
-                        var $container = $('#flip'),
-                            $pages = $container.children().hide();
-
-                        Modernizr.load({
-                            test: Modernizr.csstransforms3d && Modernizr.csstransitions,
-                            yep: ['js/jquery.tmpl.min.js', 'js/jquery.history.js', 'js/core.string.js', 'js/jquery.touchSwipe-1.2.5.js', 'js/jquery.flips.js'],
-                            nope: 'css/fallback.css',
-                            callback: function (url, result, key) {
-                                if (url === 'css/fallback.css') {
-                                    $pages.show();
-                                }
-                                else if (url === 'js/jquery.flips.js') {
-                                    $('#flip').flips();
-                                }
-
-                            }
-                        });
-                    }
-                }
-            };
             theItems.push(theChild);
 
+            theChild = {};
+            theChild.xtype = 'pastphone';
+            theChild.title = 'Past Work';
+            theChild.iconCls = 'favorites';
+            theItems.push(theChild);
         }
         else {
             theChild = {};
-            theChild.xtype = 'carousel';
-            theChild.title = 'Current Work';
+            theChild.xtype = 'alltablet';
+            theChild.title = 'Work';
             theChild.iconCls = 'home';
-            //itemLength: 100,
-            theChild.bufferSize = 2;
-            theChild.direction = 'horizontal';
-            theChild.items = [
-                {
-                    xtype: 'container',
-                    padding: '5 5 5 5',
-                    contentEl: 'summary'
-                },
-                //{ xtype: 'basepage', image: 'SharePointRest.png', header: 'SharePoint REST API Remote List Reader' },
-                { xtype: 'basepage', image: 'EMSPEED12.png', header: 'HTML5 Single Page Application' },
-                { xtype: 'basepage', image: 'EMSPEEDPOC.jpg', header: 'HTML5 Graphical Proof of Concept' },
-                { xtype: 'basepage', image: 'EMSPEED10.jpg', header: 'HTML5/Silverlight Web Application' },
-                { xtype: 'basepage', image: 'NalcoEquip.jpg', header: 'ASP.NET/Silverlight Web Application' },
-                { xtype: 'basepage', image: 'Scheduler.jpg', header: 'Silverlight/SharePoint Web Application' },
-                { xtype: 'basepage', image: 'Atlas.jpg', header: 'SharePoint Custom Search Web Application' },
-                { xtype: 'basepage', image: 'EMSIX.png', header: 'ASP.NET/AJAX Web Application' }
-            ]
             theItems.push(theChild);
 
-
             theChild = {};
-            theChild.xtype= 'carousel';
-            theChild.title= 'Past Work';
-            theChild.iconCls= 'favorites';
-            //theChild.itemLength= 100;
-            theChild.bufferSize= 2;
-            theChild.direction= 'horizontal';
-            theChild.items= [
-                { xtype: 'container', padding: '5 5 5 5', contentEl: 'a' },
-                { xtype: 'container', padding: '5 5 5 5', contentEl: 'b' },
-                { xtype: 'container', padding: '5 5 5 5', contentEl: 'c' },
-                { xtype: 'container', padding: '5 5 5 5', contentEl: 'd' },
-                { xtype: 'container', padding: '5 5 5 5', contentEl: 'e' },
-                { xtype: 'container', padding: '5 5 5 5', contentEl: 'f' },
-                { xtype: 'container', padding: '5 5 5 5', contentEl: 'g' }
-            ];
+            theChild.xtype = 'currenttablet';
+            theChild.title = 'Current Work';
+            theChild.iconCls = 'favorites';
             theItems.push(theChild);
         }
 
@@ -67447,7 +67495,6 @@ Ext.define('mjgApp.view.Main', {
         theChild.xtype = 'dashboard';
         theChild.title = 'Companies';
         theChild.iconCls = 'info';
-        theChild.html = 'info';
         theItems.push(theChild)
 
         this.add(theItems);
@@ -67457,38 +67504,7 @@ Ext.define('mjgApp.view.Main', {
     config: {
         tabBarPosition: 'bottom',
         xitems: [
-            {
-                xtype: 'container',
-                title: 'iPad',
-                iconCls: 'favorites',
-                contentEl: 'fliparea',
-                isLoaded: false,
-                listeners: {
-                    painted: function (element, eOpts) {
-                        if (this.isLoaded === false) {
-                            this.isLoaded = true;
-                            var $container = $('#flip'),
-                                $pages = $container.children().hide();
-
-                            Modernizr.load({
-                                test: Modernizr.csstransforms3d && Modernizr.csstransitions,
-                                yep: ['js/jquery.tmpl.min.js', 'js/jquery.history.js', 'js/core.string.js', 'js/jquery.touchSwipe-1.2.5.js', 'js/jquery.flips.js'],
-                                nope: 'css/fallback.css',
-                                callback: function (url, result, key) {
-                                    if (url === 'css/fallback.css') {
-                                        $pages.show();
-                                    }
-                                    else if (url === 'js/jquery.flips.js') {
-                                        $('#flip').flips();
-                                    }
-
-                                }
-                            });
-                        }
-                    }
-                }
-            },
-
+ 
             //{
             //    xtype: 'container',
             //    title: 'Companies',
@@ -67501,47 +67517,6 @@ Ext.define('mjgApp.view.Main', {
             //    }
             //},
 
-            {
-                title: 'Current Work',
-                iconCls: 'home',
-                xtype: 'carousel',
-                //itemLength: 100,
-                bufferSize: 2,
-                direction: 'horizontal',
-                items: [
-                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'summary' },
-                    //{ xtype: 'basepage', image: 'SharePointRest.png', header: 'SharePoint REST API Remote List Reader' },
-                    { xtype: 'basepage', image: 'EMSPEED12.png', header: 'HTML5 Single Page Application' },
-                    { xtype: 'basepage', image: 'EMSPEEDPOC.jpg', header: 'HTML5 Graphical Proof of Concept' },
-                    { xtype: 'basepage', image: 'EMSPEED10.jpg', header: 'HTML5/Silverlight Web Application' },
-                    { xtype: 'basepage', image: 'NalcoEquip.jpg', header: 'ASP.NET/Silverlight Web Application' },
-                    { xtype: 'basepage', image: 'Scheduler.jpg', header: 'Silverlight/SharePoint Web Application' },
-                    { xtype: 'basepage', image: 'Atlas.jpg', header: 'SharePoint Custom Search Web Application' },
-                    { xtype: 'basepage', image: 'EMSIX.png', header: 'ASP.NET/AJAX Web Application' }
-                ]
-            },
-            //{
-            //    xtype: 'dashboard',
-            //    title: 'Companies',
-            //    iconCls: 'info'
-            //},
-            {
-                title: 'Past Work',
-                iconCls: 'favorites',
-                xtype: 'carousel',
-                //itemLength: 100,
-                bufferSize: 2,
-                direction: 'horizontal',
-                items: [
-                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'a' },
-                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'b' },
-                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'c' },
-                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'd' },
-                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'e' },
-                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'f' },
-                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'g' }
-                ]
-            }
         ]
     }
 });
@@ -67732,13 +67707,12 @@ Ext.define('mjgApp.view.Cover', {
     },
 
     applySelectedIndex: function(idx){
-        this.selectedIndex = idx;
-        //if (this.isRendered()) {
-        //    this.updateOffsetToIdx(idx);
-        //    this.selectWithEvent(this.getStore().getAt(idx));
-        //}else{
-        //    this.selectedIndex = idx;
-        //}
+        if (this.isRendered()) {
+            this.updateOffsetToIdx(idx);
+            this.selectWithEvent(this.getStore().getAt(idx));
+        }else{
+            this.selectedIndex = idx;
+        }
     },
 
     updateOffsetToIdx: function(idx){
@@ -67922,8 +67896,7 @@ Ext.define('mjgApp.view.Dashboard', {
 		    //These are just for demo purposes.
 		    id: 'coverHistory',
 		    height:  300 ,
-		    width:  '100%' ,
-
+		    width: '100%',
 		    //height: (Ext.os.deviceType !== 'Phone')? 300: undefined,
 		    //width: (Ext.os.deviceType !== 'Phone')? 800: undefined,
 		    //end-demo
@@ -67936,8 +67909,8 @@ Ext.define('mjgApp.view.Dashboard', {
                     '<button co="{co}" name="{company}" class="more" style="font-size:10px;margin:5px 0px 0px 140px;">more</button>',
 				'</div>'
 		    ],
-		    store : {
-		        fields: ['co', 'company', 'title', 'tenure', 'summary' ],
+		    store: Ext.create("Ext.data.Store", { 
+		        fields: ['co', 'company', 'title', 'tenure', 'summary'],
 		        data: [
                     { co: 'hitachi', company: 'Hitachi Consulting', title: 'Senior Manager/Architect', tenure: 'Oct 2009 - Present', summary: 'Senior Manager with Hitachi Consulting based in the Houston office. Involved in assisting and mentoring clients in the development and implementation of solutions that utilize Microsoft SharePoint related technologies including ASP.NET and HTML5.' },
                     { co: 'img', company: 'The Information Management Group', title: 'Partner', tenure: 'Sept 1997- Oct 2009', summary: 'Director of Emerging Technologies, responsible for fostering an understanding of how new and emerging technologies could be utilized for IMG and its clients.  Lead Technical Trainer focusing on Microsoft Development technologies.' },
@@ -67945,7 +67918,7 @@ Ext.define('mjgApp.view.Dashboard', {
                     { co: 'lante', company: 'Lante Corporation', title: 'Director of Consulting', tenure: 'Nov 1992 - Mar 1995', summary: 'Director of Consulting, responsible for the entire consulting organization, including all aspects of project execution, profit and loss (utilization) responsibility,  performance reviews,  recruiting,  and staffing.' },
                     { co: 'andersen', company: 'Andersen Consulting', title: 'Manager', tenure: 'May 1984 - Nov 1992', summary: 'Staff Consultant and Manager in the Chicago office, spending first 4 years on a variety of medium and large systems development projects. Promoted to a Project Manager after four years and moved to role with Emerging Technologies Group.' }
 		        ]
-		    },
+		    }),
 
 		    selectedIndex: 2
 		    //listeners:{
@@ -67984,6 +67957,127 @@ $(function () {
         overlay.show();
         overlay.remove();
     });
+});
+
+Ext.define('mjgApp.view.AllTablet', {
+    extend:  Ext.Container ,
+    xtype: 'alltablet',
+    contentEl: 'fliparea',
+    isLoaded: false,
+    listeners: {
+        painted: function (element, eOpts) {
+            if (this.isLoaded === false) {
+                this.isLoaded = true;
+                var $container = $('#flip'),
+                    $pages = $container.children().hide();
+
+                Modernizr.load({
+                    test: Modernizr.csstransforms3d && Modernizr.csstransitions,
+                    yep: ['js/jquery.tmpl.min.js', 'js/jquery.history.js', 'js/core.string.js', 'js/jquery.touchSwipe-1.2.5.js', 'js/jquery.flips.js'],
+                    nope: 'css/fallback.css',
+                    callback: function (url, result, key) {
+                        if (url === 'css/fallback.css') {
+                            $pages.show();
+                        }
+                        else if (url === 'js/jquery.flips.js') {
+                            $('#flip').flips();
+                        }
+
+                    }
+                });
+            }
+        }
+    }
+});
+
+Ext.define('mjgApp.view.projects.BasePage', {
+    extend:  Ext.Container ,
+    xtype: 'basepage',
+
+    initialize: function () {
+        this.down('image').setSrc('resources/images/' + this.getImage());
+        this.down('#theHeader').setHtml(this.getHeader());
+    },
+
+    config: {
+        image: null,
+        header: null,
+        padding: '0 5 0 5', layout: 'vbox',
+        items: [
+            { xtype: 'container', itemId: 'theHeader', margin: '5 5 5 5', style: { textAlign: 'center', fontSize: '10px' } },
+            {
+                xtype: 'image', flex: 1, cls: 'my-carousel-item-img', 
+                listeners: {
+                    tap: function () {
+                        var overlay = Ext.Viewport.add({ xtype: 'basepanel', title: 'Project Details', src: this.getSrc() });
+                        overlay.show();
+                        overlay.remove();
+                    }
+                }
+            },
+           { xtype: 'container', margin: '5 5 5 5', style: { textAlign: 'center', fontSize: '10px' }, html: "Tap on the image to see details on this project." },
+           { xtype: 'container', height: 20 }
+        ]
+    }
+
+
+});
+
+Ext.define('mjgApp.view.CurrentTablet', {
+    extend:  Ext.Carousel ,
+    xtype: 'currenttablet',
+    config: {
+        bufferSize: 2,
+        direction: 'horizontal',
+        items: [
+            //{ xtype: 'basepage', image: 'SharePointRest.png', header: 'SharePoint REST API Remote List Reader' },
+            { xtype: 'basepage', image: 'EMSPEED12.png', header: 'HTML5 Single Page Application' },
+            { xtype: 'basepage', image: 'EMSPEEDPOC.jpg', header: 'HTML5 Graphical Proof of Concept' },
+            { xtype: 'basepage', image: 'EMSPEED10.jpg', header: 'HTML5/Silverlight Web Application' },
+            { xtype: 'basepage', image: 'NalcoEquip.jpg', header: 'ASP.NET/Silverlight Web Application' },
+            { xtype: 'basepage', image: 'Scheduler.jpg', header: 'Silverlight/SharePoint Web Application' },
+            { xtype: 'basepage', image: 'Atlas.jpg', header: 'SharePoint Custom Search Web Application' },
+            { xtype: 'basepage', image: 'EMSIX.png', header: 'ASP.NET/AJAX Web Application' }
+        ]
+    }
+});
+
+Ext.define('mjgApp.view.CurrentPhone', {
+    extend:  Ext.Carousel ,
+    xtype: 'currentphone',
+    config: {
+        bufferSize: 2,
+        direction: 'horizontal',
+        items: [
+            { xtype: 'container', padding: '5 5 5 5', contentEl: 'summary' },
+            //{ xtype: 'basepage', image: 'SharePointRest.png', header: 'SharePoint REST API Remote List Reader' },
+            { xtype: 'basepage', image: 'EMSPEED12.png', header: 'HTML5 Single Page Application' },
+            { xtype: 'basepage', image: 'EMSPEEDPOC.jpg', header: 'HTML5 Graphical Proof of Concept' },
+            { xtype: 'basepage', image: 'EMSPEED10.jpg', header: 'HTML5/Silverlight Web Application' },
+            { xtype: 'basepage', image: 'NalcoEquip.jpg', header: 'ASP.NET/Silverlight Web Application' },
+            { xtype: 'basepage', image: 'Scheduler.jpg', header: 'Silverlight/SharePoint Web Application' },
+            { xtype: 'basepage', image: 'Atlas.jpg', header: 'SharePoint Custom Search Web Application' },
+            { xtype: 'basepage', image: 'EMSIX.png', header: 'ASP.NET/AJAX Web Application' }
+        ]
+    }
+});
+
+Ext.define('mjgApp.view.PastPhone', {
+    extend:  Ext.Carousel ,
+    xtype: 'pastphone',
+    config: {
+        bufferSize: 2,
+        direction: 'horizontal',
+        items: [
+            { xtype: 'container', padding: '5 5 5 5', contentEl: 'a' },
+            { xtype: 'container', padding: '5 5 5 5', contentEl: 'b' },
+            { xtype: 'container', padding: '5 5 5 5', contentEl: 'c' },
+            { xtype: 'container', padding: '5 5 5 5', contentEl: 'd' },
+            { xtype: 'container', padding: '5 5 5 5', contentEl: 'e' },
+            { xtype: 'container', padding: '5 5 5 5', contentEl: 'f' },
+            { xtype: 'container', padding: '5 5 5 5', contentEl: 'g' }
+        ]
+    }
 });
 
 Ext.define('mjgApp.view.projects.BasePanel', {
@@ -68078,6 +68172,10 @@ Ext.application({
         'Main',
         'Cover',
         'Dashboard',
+        'AllTablet',
+        'CurrentTablet',
+        'CurrentPhone',
+        'PastPhone',
         'projects.BasePage',
         'projects.BasePanel'
     ],
@@ -68114,6 +68212,33 @@ Ext.application({
 
         // Initialize the main view
         Ext.Viewport.add(Ext.create('mjgApp.view.Main'));
+
+
+
+        var menu = Ext.create("Ext.Menu", {
+            width: '265px',
+            scrollable: 'vertical',
+            cls: 'mainmenu x-header-dark',
+            layout: 'vbox',
+            style: {
+                backgroundColor: '#061f31'
+            },
+            items: [
+                { xtype: 'container', margin: '0 20 0 20', defaults: { xtype: "menubutton" }, items: items },
+                {
+                    xtype: 'container', margin: '0 20 0 20',
+                    items: [
+                        { text: 'one' },
+                        { text: 'two' }
+                    ]
+                }
+            ]
+
+
+        });
+        Ext.Viewport.setMenu(menu, { side: 'left', reveal: true });
+
+
     },
 
     onUpdated: function() {
