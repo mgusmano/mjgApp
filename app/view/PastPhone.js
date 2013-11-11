@@ -5,7 +5,7 @@ Ext.define('mjgApp.view.PastPhone', {
         bufferSize: 2,
         direction: 'horizontal',
         items: [
-            { xtype: 'container', padding: '5 5 5 5', contentEl: 'a' },
+            { xtype: 'container', padding: '15 15 15 15', contentEl: 'a', style: { backgroundColor: '#FFFFFF' } },
             { xtype: 'container', padding: '5 5 5 5', contentEl: 'b' },
             { xtype: 'container', padding: '5 5 5 5', contentEl: 'c' },
             { xtype: 'container', padding: '5 5 5 5', contentEl: 'd' },

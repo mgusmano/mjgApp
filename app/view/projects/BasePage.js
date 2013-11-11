@@ -1,6 +1,7 @@
 Ext.define('mjgApp.view.projects.BasePage', {
     extend: 'Ext.Container',
     xtype: 'basepage',
+    style: { backgroundColor: '#FFFFFF' },
 
     initialize: function () {
         this.down('image').setSrc('resources/images/' + this.getImage());
