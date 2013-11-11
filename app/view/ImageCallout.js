@@ -1,6 +1,6 @@
-Ext.define('mjgApp.view.projects.BasePanel', {
+Ext.define('mjgApp.view.ImageCallout', {
     extend: 'Ext.Panel',
-    xtype: 'basepanel',
+    xtype: 'imagecallout',
 
     initialize: function () {
         this.items.items[0].setTitle(this.getTitle());
@@ -28,6 +28,14 @@ Ext.define('mjgApp.view.projects.BasePanel', {
             duration: 250,
             easing: 'ease-out'
         },
+
+        listeners: {
+            tap: function () {
+                debugger;
+                this.hide();
+            }
+        },
+
         centered: true,
         width: (Ext.os.deviceType == 'Phone') ? '95%' : 800,
         height: Ext.os.deviceType == 'Phone' ? '95%' : 300,
@@ -65,4 +73,11 @@ Ext.define('mjgApp.view.projects.BasePanel', {
         ],
         scrollable: true
     }
+});
+
+$(function () {
+    $('body').on('click', '.pastwork', function () {
+        debugger;
+        Ext.getCmp(this.id).hide();
+    });
 });

@@ -1,10 +1,14 @@
-Ext.define('mjgApp.view.projects.BasePage', {
+Ext.define('mjgApp.view.ImagePanel', {
     extend: 'Ext.Container',
-    xtype: 'basepage',
+    xtype: 'imagepanel',
     style: { backgroundColor: '#FFFFFF' },
 
     initialize: function () {
         this.down('image').setSrc('resources/images/' + this.getImage());
+        //this.down('image').setTheId('EMSPEED12');
+        this.down('image').theId ='cEMSPEED12';
+
+
         this.down('#theHeader').setHtml(this.getHeader());
     },
 
@@ -15,10 +19,10 @@ Ext.define('mjgApp.view.projects.BasePage', {
         items: [
             { xtype: 'container', itemId: 'theHeader', margin: '5 5 5 5', style: { textAlign: 'center', fontSize: '10px' } },
             {
-                xtype: 'image', flex: 1, cls: 'my-carousel-item-img', 
+                xtype: 'image', flex: 1, cls: 'my-carousel-item-img', theId: null,
                 listeners: {
                     tap: function () {
-                        var overlay = Ext.Viewport.add({ xtype: 'basepanel', title: 'Project Details', src: this.getSrc() });
+                        var overlay = Ext.Viewport.add({ xtype: 'imagecallout', title: 'Project Details', src: this.getSrc(), xid: this.theId });
                         overlay.show();
                         overlay.remove();
                     }
@@ -28,6 +32,11 @@ Ext.define('mjgApp.view.projects.BasePage', {
            { xtype: 'container', height: 20 }
         ]
     }
+});
 
-
+$(function () {
+    $('body').on('click', '.pastwork', function () {
+        debugger;
+        Ext.getCmp(this.id).hide();
+    });
 });

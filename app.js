@@ -25,8 +25,8 @@ Ext.application({
         'CurrentTablet',
         'CurrentPhone',
         'PastPhone',
-        'projects.BasePage',
-        'projects.BasePanel'
+        'ImagePanel',
+        'ImageCallout'
     ],
 
     icon: {
@@ -64,28 +64,28 @@ Ext.application({
 
 
 
-        var menu = Ext.create("Ext.Menu", {
-            width: '265px',
-            scrollable: 'vertical',
-            cls: 'mainmenu x-header-dark',
-            layout: 'vbox',
-            style: {
-                backgroundColor: '#061f31'
-            },
-            items: [
-                { xtype: 'container', margin: '0 20 0 20', defaults: { xtype: "menubutton" }, items: items },
-                {
-                    xtype: 'container', margin: '0 20 0 20',
-                    items: [
-                        { text: 'one' },
-                        { text: 'two' }
-                    ]
-                }
-            ]
+        //var menu = Ext.create("Ext.Menu", {
+        //    width: '265px',
+        //    scrollable: 'vertical',
+        //    cls: 'mainmenu x-header-dark',
+        //    layout: 'vbox',
+        //    style: {
+        //        backgroundColor: '#061f31'
+        //    },
+        //    items: [
+        //        { xtype: 'container', margin: '0 20 0 20', defaults: { xtype: "menubutton" }, items: items },
+        //        {
+        //            xtype: 'container', margin: '0 20 0 20',
+        //            items: [
+        //                { text: 'one' },
+        //                { text: 'two' }
+        //            ]
+        //        }
+        //    ]
 
 
-        });
-        Ext.Viewport.setMenu(menu, { side: 'left', reveal: true });
+        //});
+        //Ext.Viewport.setMenu(menu, { side: 'left', reveal: true });
 
 
     },
