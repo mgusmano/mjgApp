@@ -67808,6 +67808,38 @@ Ext.define('mjgApp.view.Main', {
         tabBarPosition: 'bottom',
         items: [
 
+
+            {
+                xtype: 'container',
+                title: 'iPad',
+                iconCls: 'favorites',
+                contentEl: 'header',
+                listeners: {
+                    painted: function (element, eOpts) {
+                        if (isLoaded === false) {
+                            isLoaded = true;
+                            var $container = $('#flip'),
+                                $pages = $container.children().hide();
+
+                            Modernizr.load({
+                                test: Modernizr.csstransforms3d && Modernizr.csstransitions,
+                                yep: ['js/jquery.tmpl.min.js', 'js/jquery.history.js', 'js/core.string.js', 'js/jquery.touchSwipe-1.2.5.js', 'js/jquery.flips.js'],
+                                nope: 'css/fallback.css',
+                                callback: function (url, result, key) {
+                                    if (url === 'css/fallback.css') {
+                                        $pages.show();
+                                    }
+                                    else if (url === 'js/jquery.flips.js') {
+                                        $('#flip').flips();
+                                    }
+
+                                }
+                            });
+                        }
+                    }
+                }
+            },
+
             //{
             //    xtype: 'container',
             //    title: 'Companies',
@@ -67849,36 +67881,6 @@ Ext.define('mjgApp.view.Main', {
                 iconCls: 'info'
             },
 
-            {
-                xtype: 'container',
-                title: 'Prior Work',
-                iconCls: 'favorites',
-                contentEl: 'header',
-                listeners: {
-                    painted: function (element, eOpts) {
-                        if (isLoaded === false) {
-                            isLoaded = true;
-                            var $container = $('#flip'),
-                                $pages = $container.children().hide();
-
-                            Modernizr.load({
-                                test: Modernizr.csstransforms3d && Modernizr.csstransitions,
-                                yep: ['js/jquery.tmpl.min.js', 'js/jquery.history.js', 'js/core.string.js', 'js/jquery.touchSwipe-1.2.5.js', 'js/jquery.flips.js'],
-                                nope: 'css/fallback.css',
-                                callback: function (url, result, key) {
-                                    if (url === 'css/fallback.css') {
-                                        $pages.show();
-                                    }
-                                    else if (url === 'js/jquery.flips.js') {
-                                        $('#flip').flips();
-                                    }
-
-                                }
-                            });
-                        }
-                    }
-                }
-            },
 
             {
                 title: 'Past Work',

@@ -85,9 +85,8 @@
 			
 		},
 		_getState			: function() {
-		    debugger;
 			//this.state = this.History.getState().url.queryStringToJSON().page;
-		    this.state = 1;
+		    this.state = 0;
 			
 		},
 		_isNumber			: function( n ) {
@@ -138,11 +137,8 @@
 		
 			// adds a new state to the history object and triggers the statechange event on the window
 			//var page = this.currentPage;
-			debugger;
 			//if( this.History.getState().url.queryStringToJSON().page !== page ) {
-					
 			//	this.History.pushState( null, null, '?page=' + page );
-				
 			//}
 			
 		},

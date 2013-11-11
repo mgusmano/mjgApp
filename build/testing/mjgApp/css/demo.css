@@ -29,6 +29,7 @@ a{
 }
 .main-title{
 	position: absolute;
+    background-color:#FFFFFF;
 	xz-index: -1;
 	width: 50%;
 	padding: 20px 40px;
