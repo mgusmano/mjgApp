@@ -67346,6 +67346,206 @@ Ext.define('mjgApp.view.projects.BasePage', {
 
 });
 
+Ext.define('mjgApp.view.Main', {
+    extend:  Ext.tab.Panel ,
+    xtype: 'main',
+               
+                       
+                   
+      
+
+    initialize: function () {
+        this.create();
+        this.callParent(arguments);
+    },
+
+    create: function () {
+        var theItems = [];
+
+        var theChild = {};
+        if (Ext.os.deviceType !== 'Phone') {
+            theChild = {};
+            theChild.xtype = 'container';
+            theChild.title = 'Current Work';
+            theChild.iconCls = 'home';
+            theChild.contentEl = 'fliparea';
+            theChild.isLoaded = false;
+
+            theChild.listeners = {
+                painted: function (element, eOpts) {
+                    if (this.isLoaded === false) {
+                        this.isLoaded = true;
+                        var $container = $('#flip'),
+                            $pages = $container.children().hide();
+
+                        Modernizr.load({
+                            test: Modernizr.csstransforms3d && Modernizr.csstransitions,
+                            yep: ['js/jquery.tmpl.min.js', 'js/jquery.history.js', 'js/core.string.js', 'js/jquery.touchSwipe-1.2.5.js', 'js/jquery.flips.js'],
+                            nope: 'css/fallback.css',
+                            callback: function (url, result, key) {
+                                if (url === 'css/fallback.css') {
+                                    $pages.show();
+                                }
+                                else if (url === 'js/jquery.flips.js') {
+                                    $('#flip').flips();
+                                }
+
+                            }
+                        });
+                    }
+                }
+            };
+            theItems.push(theChild);
+
+        }
+        else {
+            theChild = {};
+            theChild.xtype = 'carousel';
+            theChild.title = 'Current Work';
+            theChild.iconCls = 'home';
+            //itemLength: 100,
+            theChild.bufferSize = 2;
+            theChild.direction = 'horizontal';
+            theChild.items = [
+                {
+                    xtype: 'container',
+                    padding: '5 5 5 5',
+                    contentEl: 'summary'
+                },
+                //{ xtype: 'basepage', image: 'SharePointRest.png', header: 'SharePoint REST API Remote List Reader' },
+                { xtype: 'basepage', image: 'EMSPEED12.png', header: 'HTML5 Single Page Application' },
+                { xtype: 'basepage', image: 'EMSPEEDPOC.jpg', header: 'HTML5 Graphical Proof of Concept' },
+                { xtype: 'basepage', image: 'EMSPEED10.jpg', header: 'HTML5/Silverlight Web Application' },
+                { xtype: 'basepage', image: 'NalcoEquip.jpg', header: 'ASP.NET/Silverlight Web Application' },
+                { xtype: 'basepage', image: 'Scheduler.jpg', header: 'Silverlight/SharePoint Web Application' },
+                { xtype: 'basepage', image: 'Atlas.jpg', header: 'SharePoint Custom Search Web Application' },
+                { xtype: 'basepage', image: 'EMSIX.png', header: 'ASP.NET/AJAX Web Application' }
+            ]
+            theItems.push(theChild);
+
+
+            theChild = {};
+            theChild.xtype= 'carousel';
+            theChild.title= 'Past Work';
+            theChild.iconCls= 'favorites';
+            //theChild.itemLength= 100;
+            theChild.bufferSize= 2;
+            theChild.direction= 'horizontal';
+            theChild.items= [
+                { xtype: 'container', padding: '5 5 5 5', contentEl: 'a' },
+                { xtype: 'container', padding: '5 5 5 5', contentEl: 'b' },
+                { xtype: 'container', padding: '5 5 5 5', contentEl: 'c' },
+                { xtype: 'container', padding: '5 5 5 5', contentEl: 'd' },
+                { xtype: 'container', padding: '5 5 5 5', contentEl: 'e' },
+                { xtype: 'container', padding: '5 5 5 5', contentEl: 'f' },
+                { xtype: 'container', padding: '5 5 5 5', contentEl: 'g' }
+            ];
+            theItems.push(theChild);
+        }
+
+        theChild = {};
+        theChild.xtype = 'dashboard';
+        theChild.title = 'Companies';
+        theChild.iconCls = 'info';
+        theChild.html = 'info';
+        theItems.push(theChild)
+
+        this.add(theItems);
+    },
+
+
+    config: {
+        tabBarPosition: 'bottom',
+        xitems: [
+            {
+                xtype: 'container',
+                title: 'iPad',
+                iconCls: 'favorites',
+                contentEl: 'fliparea',
+                isLoaded: false,
+                listeners: {
+                    painted: function (element, eOpts) {
+                        if (this.isLoaded === false) {
+                            this.isLoaded = true;
+                            var $container = $('#flip'),
+                                $pages = $container.children().hide();
+
+                            Modernizr.load({
+                                test: Modernizr.csstransforms3d && Modernizr.csstransitions,
+                                yep: ['js/jquery.tmpl.min.js', 'js/jquery.history.js', 'js/core.string.js', 'js/jquery.touchSwipe-1.2.5.js', 'js/jquery.flips.js'],
+                                nope: 'css/fallback.css',
+                                callback: function (url, result, key) {
+                                    if (url === 'css/fallback.css') {
+                                        $pages.show();
+                                    }
+                                    else if (url === 'js/jquery.flips.js') {
+                                        $('#flip').flips();
+                                    }
+
+                                }
+                            });
+                        }
+                    }
+                }
+            },
+
+            //{
+            //    xtype: 'container',
+            //    title: 'Companies',
+            //    iconCls: 'info',
+            //    contentEl: 'qrcode',
+            //    listeners: {
+            //        painted: function (element, eOpts) {
+            //            $('#qrcode').qrcode({ width: 264, height: 264, text: "{projectId:97266}" });
+            //        }
+            //    }
+            //},
+
+            {
+                title: 'Current Work',
+                iconCls: 'home',
+                xtype: 'carousel',
+                //itemLength: 100,
+                bufferSize: 2,
+                direction: 'horizontal',
+                items: [
+                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'summary' },
+                    //{ xtype: 'basepage', image: 'SharePointRest.png', header: 'SharePoint REST API Remote List Reader' },
+                    { xtype: 'basepage', image: 'EMSPEED12.png', header: 'HTML5 Single Page Application' },
+                    { xtype: 'basepage', image: 'EMSPEEDPOC.jpg', header: 'HTML5 Graphical Proof of Concept' },
+                    { xtype: 'basepage', image: 'EMSPEED10.jpg', header: 'HTML5/Silverlight Web Application' },
+                    { xtype: 'basepage', image: 'NalcoEquip.jpg', header: 'ASP.NET/Silverlight Web Application' },
+                    { xtype: 'basepage', image: 'Scheduler.jpg', header: 'Silverlight/SharePoint Web Application' },
+                    { xtype: 'basepage', image: 'Atlas.jpg', header: 'SharePoint Custom Search Web Application' },
+                    { xtype: 'basepage', image: 'EMSIX.png', header: 'ASP.NET/AJAX Web Application' }
+                ]
+            },
+            //{
+            //    xtype: 'dashboard',
+            //    title: 'Companies',
+            //    iconCls: 'info'
+            //},
+            {
+                title: 'Past Work',
+                iconCls: 'favorites',
+                xtype: 'carousel',
+                //itemLength: 100,
+                bufferSize: 2,
+                direction: 'horizontal',
+                items: [
+                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'a' },
+                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'b' },
+                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'c' },
+                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'd' },
+                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'e' },
+                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'f' },
+                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'g' }
+                ]
+            }
+        ]
+    }
+});
+
 /**
  * @class Ext.ux.Cover
  * @extend Ext.DataView
@@ -67532,12 +67732,13 @@ Ext.define('mjgApp.view.Cover', {
     },
 
     applySelectedIndex: function(idx){
-        if(this.isRendered()){
-            this.updateOffsetToIdx(idx);
-            this.selectWithEvent(this.getStore().getAt(idx));
-        }else{
-            this.selectedIndex = idx;
-        }
+        this.selectedIndex = idx;
+        //if (this.isRendered()) {
+        //    this.updateOffsetToIdx(idx);
+        //    this.selectWithEvent(this.getStore().getAt(idx));
+        //}else{
+        //    this.selectedIndex = idx;
+        //}
     },
 
     updateOffsetToIdx: function(idx){
@@ -67738,22 +67939,11 @@ Ext.define('mjgApp.view.Dashboard', {
 		    store : {
 		        fields: ['co', 'company', 'title', 'tenure', 'summary' ],
 		        data: [
-{ co: 'hitachi', company: 'Hitachi Consulting', title: 'Senior Manager/Architect', tenure: 'Oct 2009 - Present', summary: 'Senior Manager with Hitachi Consulting based in the Houston office. Involved in assisting and mentoring clients in the development and implementation of solutions that utilize Microsoft SharePoint related technologies including ASP.NET and HTML5.' },
-{ co: 'img', company: 'The Information Management Group', title: 'Partner', tenure: 'Sept 1997- Oct 2009', summary: 'Director of Emerging Technologies, responsible for fostering an understanding of how new and emerging technologies could be utilized for IMG and its clients.  Lead Technical Trainer focusing on Microsoft Development technologies.' },
-{ co: 'bismarck', company: 'The Bismarck Group', title: 'Founder', tenure: 'Mar 1995 - Sept 1997', summary: 'Chief Technology Officer, responsible for providing Client Server software integration services to high growth, information-centric organizations and for building solutions that could be sold as \'Customizable Software Products\'.' },
-{ co: 'lante', company: 'Lante Corporation', title: 'Director of Consulting', tenure: 'Nov 1992 - Mar 1995', summary: 'Director of Consulting, responsible for the entire consulting organization, including all aspects of project execution, profit and loss (utilization) responsibility,  performance reviews,  recruiting,  and staffing.' },
-{ co: 'andersen', company: 'Andersen Consulting', title: 'Manager', tenure: 'May 1984 - Nov 1992', summary: 'Staff Consultant and Manager in the Chicago office, spending first 4 years on a variety of medium and large systems development projects. Promoted to a Project Manager after four years and moved to role with Emerging Technologies Group.' }
-
-
-//{ image: 'resources/images/blank.png', company: 'Hitachi Consulting', title: 'Senior Manager/Architect', tenure: 'Oct 2009 - Present', summary: 'Senior Manager with Hitachi Consulting based in the Houston office. Involved in assisting and mentoring clients in the development and implementation of solutions that utilize Microsoft SharePoint related technologies including ASP.NET and HTML5.' },
-//{ image: 'resources/images/blank.png', company: 'The Information Management Group', title: 'Partner', tenure: 'Sept 1997- Oct 2009', summary: 'Partner and the Director of Emerging Technologies for The Information Management Group, a Microsoft Gold Certified Partner and the Worldwide 2001 Microsoft Certified Technical Education Center (CTEC) of the year. In this role, Mr. Gusmano was responsible for fostering an understanding of new and emerging technologies can be utilized for IMG and its clients.  In this position, Marc was  involved in Architecting applications for IMG�s Consulting Services clients, as well as mentoring and training in client engagements.' },
-//{ image: 'resources/images/CEOAward.png', company: 'The Bismarck Group', title: 'Founder', tenure: 'Mar 1995 - Sept 1997', summary: 'The Bismarck Group was a Client Server software product integration Firm headquartered in Chicago, Illinois.  The Firm�s tag, \'Business Integration Services using Client Server Technologies\', highlighted the firm�s focus: Providing Client Server software integration services to high growth, information-centric organizations and building solutions that can be sold as \'Customizable Software Products\'.' },
-//{ image: 'resources/images/CEOAward.png', company: 'Lante Corporation', title: 'Director of Consulting', tenure: 'Nov 1992 - Mar 1995', summary: 'Mr. Gusmano started at Lante as Senior Consulting Manager and immediately began to get involved in many of the key clients for Lante, including Dell Computer, Abbott Labs, Baxter Healthcare, Sears, and Ameritech.  In  April of 1993 Marc was promoted to the position of Director of Consulting, responsible for the entire consulting organization at Lante, including all aspects of project execution, profit and loss (utilization) responsibility,  performance reviews,  recruiting,  and staffing.' },
-//{ image: 'resources/images/CEOAward.png', company: 'Andersen Consulting', title: 'Manager', tenure: 'May 1984 - Nov 1992', summary: ' Mr. Gusmano began his consulting career as a staff consultant in the Chicago office of Arthur Andersen and Co./Andersen Consulting in May of 1984.  He spent his first 4 years on a variety of medium and large systems development projects for organizations such as IBM, Northern Trust Bank, Mellon Bank in Pittsburgh, and Lutheran General Hospital.  Mr. Gusmano was promoted to a Project Manager after just four years with Andersen Consulting, and moved to the Technology Services area where he became a project Manager for the New Age Systems group, a very specialized group within Andersen Consulting, focusing on assisting local Andersen offices with the planning, management, and deployment of client-server business applications.' }
-
-
-
-
+                    { co: 'hitachi', company: 'Hitachi Consulting', title: 'Senior Manager/Architect', tenure: 'Oct 2009 - Present', summary: 'Senior Manager with Hitachi Consulting based in the Houston office. Involved in assisting and mentoring clients in the development and implementation of solutions that utilize Microsoft SharePoint related technologies including ASP.NET and HTML5.' },
+                    { co: 'img', company: 'The Information Management Group', title: 'Partner', tenure: 'Sept 1997- Oct 2009', summary: 'Director of Emerging Technologies, responsible for fostering an understanding of how new and emerging technologies could be utilized for IMG and its clients.  Lead Technical Trainer focusing on Microsoft Development technologies.' },
+                    { co: 'bismarck', company: 'The Bismarck Group', title: 'Founder', tenure: 'Mar 1995 - Sept 1997', summary: 'Chief Technology Officer, responsible for providing Client Server software integration services to high growth, information-centric organizations and for building solutions that could be sold as \'Customizable Software Products\'.' },
+                    { co: 'lante', company: 'Lante Corporation', title: 'Director of Consulting', tenure: 'Nov 1992 - Mar 1995', summary: 'Director of Consulting, responsible for the entire consulting organization, including all aspects of project execution, profit and loss (utilization) responsibility,  performance reviews,  recruiting,  and staffing.' },
+                    { co: 'andersen', company: 'Andersen Consulting', title: 'Manager', tenure: 'May 1984 - Nov 1992', summary: 'Staff Consultant and Manager in the Chicago office, spending first 4 years on a variety of medium and large systems development projects. Promoted to a Project Manager after four years and moved to role with Emerging Technologies Group.' }
 		        ]
 		    },
 
@@ -67794,113 +67984,6 @@ $(function () {
         overlay.show();
         overlay.remove();
     });
-});
-
-var isLoaded = false;
-Ext.define('mjgApp.view.Main', {
-    extend:  Ext.tab.Panel ,
-    xtype: 'main',
-               
-                       
-                   
-      
-    config: {
-        tabBarPosition: 'bottom',
-        items: [
-
-
-            {
-                xtype: 'container',
-                title: 'iPad',
-                iconCls: 'favorites',
-                contentEl: 'header',
-                listeners: {
-                    painted: function (element, eOpts) {
-                        if (isLoaded === false) {
-                            isLoaded = true;
-                            var $container = $('#flip'),
-                                $pages = $container.children().hide();
-
-                            Modernizr.load({
-                                test: Modernizr.csstransforms3d && Modernizr.csstransitions,
-                                yep: ['js/jquery.tmpl.min.js', 'js/jquery.history.js', 'js/core.string.js', 'js/jquery.touchSwipe-1.2.5.js', 'js/jquery.flips.js'],
-                                nope: 'css/fallback.css',
-                                callback: function (url, result, key) {
-                                    if (url === 'css/fallback.css') {
-                                        $pages.show();
-                                    }
-                                    else if (url === 'js/jquery.flips.js') {
-                                        $('#flip').flips();
-                                    }
-
-                                }
-                            });
-                        }
-                    }
-                }
-            },
-
-            //{
-            //    xtype: 'container',
-            //    title: 'Companies',
-            //    iconCls: 'info',
-            //    contentEl: 'qrcode',
-            //    listeners: {
-            //        painted: function (element, eOpts) {
-            //            $('#qrcode').qrcode({ width: 264, height: 264, text: "{projectId:97266}" });
-            //        }
-            //    }
-            //},
-
-            {
-                title: 'Current Work',
-                iconCls: 'home',
-                xtype: 'carousel',
-                //itemLength: 100,
-                bufferSize: 2,
-                direction: 'horizontal',
-                items: [
-                    {
-                        xtype: 'container',
-                        padding: '5 5 5 5',
-                        contentEl: 'summary'
-                    },
-                    //{ xtype: 'basepage', image: 'SharePointRest.png', header: 'SharePoint REST API Remote List Reader' },
-                    { xtype: 'basepage', image: 'EMSPEED12.png', header: 'HTML5 Single Page Application' },
-                    { xtype: 'basepage', image: 'EMSPEEDPOC.jpg', header: 'HTML5 Graphical Proof of Concept' },
-                    { xtype: 'basepage', image: 'EMSPEED10.jpg', header: 'HTML5/Silverlight Web Application' },
-                    { xtype: 'basepage', image: 'NalcoEquip.jpg', header: 'ASP.NET/Silverlight Web Application' },
-                    { xtype: 'basepage', image: 'Scheduler.jpg', header: 'Silverlight/SharePoint Web Application' },
-                    { xtype: 'basepage', image: 'Atlas.jpg', header: 'SharePoint Custom Search Web Application' },
-                    { xtype: 'basepage', image: 'EMSIX.png', header: 'ASP.NET/AJAX Web Application' }
-                ]
-            },
-            {
-                xtype: 'dashboard',
-                title: 'Companies',
-                iconCls: 'info'
-            },
-
-
-            {
-                title: 'Past Work',
-                iconCls: 'favorites',
-                xtype: 'carousel',
-                //itemLength: 100,
-                bufferSize: 2,
-                direction: 'horizontal',
-                items: [
-                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'a' },
-                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'b' },
-                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'c' },
-                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'd' },
-                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'e' },
-                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'f' },
-                    { xtype: 'container', padding: '5 5 5 5', contentEl: 'g' }
-                ]
-            }
-        ]
-    }
 });
 
 Ext.define('mjgApp.view.projects.BasePanel', {

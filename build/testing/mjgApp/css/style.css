@@ -105,7 +105,7 @@
 	font-weight: 300;
 	font-size: 34px;
 	text-transform: uppercase;
-	margin: 0 0 0 60%;
+	xmargin: 0 0 0 60%;
 	line-height: 34px;
 	padding-bottom: 10px;
 	cursor: default;
@@ -148,8 +148,8 @@ a.f-ref{
 	color: #000;
 }
 .f-cover-flip{
-	background: #000;
-	color: #ddd;
+	background: #F86738;
+	color: #FFFFFF;
 	position: absolute;
 	right: 0px;
 	padding: 5px 30px 5px 20px;

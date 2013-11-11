@@ -50,7 +50,6 @@
         }
     </style>
 
-
     <!-- The line below must be kept intact for Sencha Command to build your application -->
     <script type="text/javascript">/**
  * Sencha Blink - Testing
@@ -240,7 +239,6 @@
 
     <div id="qrcode" style="display: none;"></div>
 
-
     <script id="pageTmpl" type="text/x-jquery-tmpl">
         <div class="${theClass}" style="${theStyle}">
             <div class="front">
@@ -260,20 +258,16 @@
         </div>
     </script>
 
-
-
-
-    <div id="header" style="display: none;">
+    <div id="fliparea" style="display: none;background-color:#FFFFFF;">
 
         <header class="main-title">
-
             <div style="display:table;width:100%">
-                <div style="display: table-cell; text-align: left; font-size: 30px; font-weight: bold; color: #146BA8; font-style: italic;">Marc Gusmano</div>
-                <div style="display:table-cell;text-align:right;font-weight:bold;color:red;">swipe for current projects >></div>
+                <div style="display: table-cell; text-align: left; font-size: 30px; font-weight: xbold; color: #146BA8; font-style: italic;font-family: Arial, 'DejaVu Sans', 'Liberation Sans', Freesans, sans-serif,'Times New Roman',Georgia,Serif;">Marc Gusmano</div>
+                <div style="display:table-cell;text-align:right;font-weight:xbold;color:red;">swipe or drag for projects summary >></div>
             </div>
-            <div style="font-size:24px;font-weight:bold;">Senior SharePoint and HTML5 Architect</div>
-            <div style="font-weight: bold; font-size: 24px; color: #146BA8; font-style: italic; margin: 10px 0px 0px 0px;">Summary:</div>
-            <div style="font-weight:bold;font-size:24px;">
+            <div style="font-size:24px;font-weight:xbold;">Senior SharePoint and HTML5 Architect</div>
+            <div style="font-weight: xbold; font-size: 24px; color: #146BA8; font-style: italic; margin: 10px 0px 0px 0px;">Summary:</div>
+            <div style="font-weight:xbold;font-size:24px;">
                 Marc Gusmano is a Senior Manager with Hitachi Consulting based in the Houston, TX office
                 with 30 years of experence in the software services industry.
                 He is involved in the development of solutions
@@ -283,45 +277,35 @@
                 Mr. Gusmano is extensively involved with custom HTML5 development projects, combining his knowledge of the underlying
                 SharePoint architecture with his experience building HTML5 Single Page Applications, working on the requirements,
                 design and development of custom solutions.
+
+                <br />
+                <br />
+                <div style="font-weight: xbold; font-size: 24px; color: #146BA8; font-style: italic; margin: 10px 0px 0px 0px;">Education, Certifications, Accomplishments:</div>
+                <ol >
+                    <li style="font-size: 24px; list-style: square outside;">BS Business Administration, University Of Illinois, May 1984 (GPA 4.6/5.0)</li>
+                    <li style="font-size: 24px; list-style: square outside;">Instructor for SharePoint Advanced Developer classes for The Ted Pattison Group curriculum   Ted Pattison Developer Courses - http://www.tedpattison.net/CoursesForDevelopers.aspx</li>
+                    <li style="font-size: 24px; list-style: square outside;">Microsoft Regional Director in the US Midwest District for 3 years.</li>
+                    <li style="font-size: 24px; list-style: square outside;">Public Speaker and Conference Presenter</li>
+                    <li style="font-size: 24px; list-style: square outside;">Speaker at numerous conferences, including Microsoft TechEd US and Europe and Advisor Magazine DevCons - A recent event is the Microsoft MSDN Developer Conference - http://www.msdndevcon.com/Pages/Chicago.aspx</li>
+                    <li style="font-size: 24px; list-style: square outside;">Founder / Partner,  The Bismarck Group, Chicago, Illinois - 1995 to 1997</li>
+                    <li style="font-size: 24px; list-style: square outside;">Partner, The Information Management Group, Chicago, Illinois – 1997 to 2009</li>
+                </ol>
+
+
+
             </div>
-
-
-
-            <div>hi</div>
-            <h1>Swipe to flip pages</h1>
-            <h1>Click to open items</h1>
-            <h1><strong>Best viewed on iPad</strong></h1>
-                <p><strong>or on desktop withn a Webkit browser (Safari, Chrome)</strong></p>
         </header>
 
         <div id="flip" class="container">
 
             <div class="f-page f-cover">
-
                 <div class="cover-elements">
-                    <!--
-                    <div class="logo">
-                        A
-                        <a class="f-ref" href="xhttp://www.flickr.com/photos/nasahqphoto/">Projects prior to Hitachi Consulting</a>
-                    </div>
-                        -->
-
-
-                    <h1>Spacy Flipping Pages with CSS3 &amp; jQuery <span>Inspired by <a href="http://flipboard.com/">Flipboard</a></span></h1>
-
                     <h1>Swipe or drag to flip pages</h1>
-                    <h1>Click to open items</h1>
-                    <h1><strong>Best viewed on iPad</strong></h1>
+                    <h1>Click to open items<span>Best viewed on iPad</span></h1>
                     <p><strong>or on desktop withn a Webkit browser (Safari, Chrome)</strong></p>
-
-
-
-
-
-                    <div class="f-cover-story"><span>Prior Projects</span>Marc Gusmano</div>
+                    <div class="f-cover-story"><span>Projects Summary</span>Marc Gusmano<div>&nbsp</div></div>
                 </div>
-                <div class="f-cover-flip">&lt; Flip</div>
-
+                <div class="f-cover-flip">&lt; Flip The Page</div>
             </div>
 
 
@@ -444,49 +428,14 @@
                 </div>
             </div>
 
-            <!--p4-->
-            <div class="f-page">
-
-                <div class="f-title">
-                    <a></a>
-                    <h2>Education, Certifications, Accomplishments</h2>
-                    <a></a>
-                </div>
-
-                <div class="box w-30 h-50 box-b-l box-b-r title-top">
-                    <h3>Education</h3>
-                    <h3>University of Illinois - Champaign, Illinois<span>May 1984</span></h3>
-                    <div class="img-cont" style="background-image: url(resources/images/Illinois.png); "></div>
-
-                    <ol>
-                        <li>BS Business Administration
-                    </ol>
-                </div>
-                <div class="box w-100 h-100 box-b-l box-b-r">
-                    <h3>Education, Certifications, Accomplishments<span></span></h3>
-                    <ol>
-                        <li>BS Business Administration, University Of Illinois
-                        <li>Instructor for SharePoint Advanced Developer classes for The Ted Pattison Group curriculum   Ted Pattison Developer Courses - http://www.tedpattison.net/CoursesForDevelopers.aspx
-                        <li>Microsoft Regional Director in the US Midwest District for 3 years.
-                        <li>Public Speaker and Conference Presenter
-                        <li>Speaker at numerous conferences, including Microsoft TechEd US and Europe and Advisor Magazine DevCons - A recent event is the Microsoft MSDN Developer Conference - http://www.msdndevcon.com/Pages/Chicago.aspx
-                        <li>Founder / Partner,  The Bismarck Group, Chicago, Illinois - 1995 to 1997
-                        <li>Partner, The Information Management Group, Chicago, Illinois – 1997 to 2009
-                    </ol>
-                </div>
-            </div>
-
-            <div class="f-page f-cover-back">
-                <div id="codrops-ad-wrapper">
-
+             <div class="f-page f-cover-back">
+                <div>
+                    <h3 style="color:#FFFFFF;">End of summary</h3>
                 </div>
             </div>
         </div>
 
     </div>
-
-
-
 
     <div style="display: none;" id="summary">
         <div style="display:table;width:100%">

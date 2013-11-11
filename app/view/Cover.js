@@ -184,7 +184,7 @@ Ext.define('mjgApp.view.Cover', {
     },
 
     applySelectedIndex: function(idx){
-        if(this.isRendered()){
+        if (this.isRendered()) {
             this.updateOffsetToIdx(idx);
             this.selectWithEvent(this.getStore().getAt(idx));
         }else{

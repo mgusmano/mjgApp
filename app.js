@@ -21,6 +21,10 @@ Ext.application({
         'Main',
         'Cover',
         'Dashboard',
+        'AllTablet',
+        'CurrentTablet',
+        'CurrentPhone',
+        'PastPhone',
         'projects.BasePage',
         'projects.BasePanel'
     ],
