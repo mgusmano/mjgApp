@@ -70,7 +70,7 @@ $(function () {
         var co = $(this).attr('co');
         var name = $(this).attr('name');
 
-        var overlay = Ext.Viewport.add({ xtype: 'basepanel', title: name, src: 'resources/images/' + co + '.jpg', id: co });
+        var overlay = Ext.Viewport.add({ xtype: 'imagecallout', title: name, src: 'resources/images/' + co + '.jpg', id: 'c'+co });
         overlay.show();
         overlay.remove();
     });

@@ -4,12 +4,15 @@ Ext.define('mjgApp.view.ImagePanel', {
     style: { backgroundColor: '#FFFFFF' },
 
     initialize: function () {
-        this.down('image').setSrc('resources/images/' + this.getImage());
-        //this.down('image').setTheId('EMSPEED12');
-        this.down('image').theId ='cEMSPEED12';
-
-
         this.down('#theHeader').setHtml(this.getHeader());
+
+        var theImage = this.getImage();
+        this.down('image').setSrc('resources/images/' + theImage);
+
+        var theStart = '.';
+        var e = theImage.indexOf('.');
+        var theId = theImage.substring(0, e);
+        this.down('image').theId ='c' + theId;
     },
 
     config: {
@@ -22,7 +25,7 @@ Ext.define('mjgApp.view.ImagePanel', {
                 xtype: 'image', flex: 1, cls: 'my-carousel-item-img', theId: null,
                 listeners: {
                     tap: function () {
-                        var overlay = Ext.Viewport.add({ xtype: 'imagecallout', title: 'Project Details', src: this.getSrc(), xid: this.theId });
+                        var overlay = Ext.Viewport.add({ xtype: 'imagecallout', title: 'Project Details', src: this.getSrc(), id: this.theId });
                         overlay.show();
                         overlay.remove();
                     }
@@ -32,11 +35,4 @@ Ext.define('mjgApp.view.ImagePanel', {
            { xtype: 'container', height: 20 }
         ]
     }
-});
-
-$(function () {
-    $('body').on('click', '.pastwork', function () {
-        debugger;
-        Ext.getCmp(this.id).hide();
-    });
 });

@@ -53,7 +53,6 @@ Ext.application({
 
         Ext.Viewport.bodyElement.on('resize', Ext.emptyFn, this, { buffer: 1 });
         Ext.Viewport.on('orientationchange', function (me, orientation, width, height, eOpts) {
-            debugger;
             Ext.getCmp('coverHistory').refresh();
         });
 
