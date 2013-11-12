@@ -758,10 +758,10 @@ Ext.ClassManager.addNameAlternateMappings({
   "mjgApp.view.CurrentPhone": [],
   "mjgApp.view.CurrentTablet": [],
   "mjgApp.view.Dashboard": [],
+  "mjgApp.view.ImageCallout": [],
+  "mjgApp.view.ImagePanel": [],
   "mjgApp.view.Main": [],
-  "mjgApp.view.PastPhone": [],
-  "mjgApp.view.projects.BasePage": [],
-  "mjgApp.view.projects.BasePanel": []
+  "mjgApp.view.PastPhone": []
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.AbstractComponent": [],
@@ -1724,16 +1724,16 @@ Ext.ClassManager.addNameAliasMappings({
   "mjgApp.view.Dashboard": [
     "widget.dashboard"
   ],
+  "mjgApp.view.ImageCallout": [
+    "widget.imagecallout"
+  ],
+  "mjgApp.view.ImagePanel": [
+    "widget.imagepanel"
+  ],
   "mjgApp.view.Main": [
     "widget.main"
   ],
   "mjgApp.view.PastPhone": [
     "widget.pastphone"
-  ],
-  "mjgApp.view.projects.BasePage": [
-    "widget.basepage"
-  ],
-  "mjgApp.view.projects.BasePanel": [
-    "widget.basepanel"
   ]
 });

@@ -1,5 +1,9 @@
 // @tag full-page
 // @require C:\dev\mjgApp\js\jquery-1.9.1.js
-// @require C:\dev\mjgApp\js\jquery.qrcode.min.js
 // @require C:\dev\mjgApp\js\modernizr.custom.08464.js
+// @require C:\dev\mjgApp\js\jquery.tmpl.min.js
+// @require C:\dev\mjgApp\js\jquery.history.js
+// @require C:\dev\mjgApp\js\core.string.js
+// @require C:\dev\mjgApp\js\jquery.touchSwipe-1.2.5.js
+// @require C:\dev\mjgApp\js\jquery.flips.js
 // @require C:\dev\mjgApp\app.js
