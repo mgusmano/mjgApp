@@ -41,41 +41,14 @@
     "js": [
 		{
             "path": "js/jquery-1.9.1.js",
-            "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
-            "update": "delta"
+            "bundle": true  /* Indicates that all class dependencies are concatenated into this file when build */
         },
 		{
             "path": "js/modernizr.custom.08464.js",
-            "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
-            "update": "delta"
-        },
-		{
-            "path": "js/jquery.tmpl.min.js",
-            "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
-            "update": "delta"
-        },		
-		{
-            "path": "js/jquery.history.js",
-            "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
-            "update": "delta"
-        },		
-		{
-            "path": "js/core.string.js",
-            "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
-            "update": "delta"
-        },		
-		{
-            "path": "js/jquery.touchSwipe-1.2.5.js",
-            "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
-            "update": "delta"
-        },		
-		{
-            "path": "js/jquery.flips.js",
-            "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
-            "update": "delta"
+            "bundle": true /* Indicates that all class dependencies are concatenated into this file when build */
         },
         {
-            "path": "touch/sencha-touch-all.js",
+            "path": "touch/sencha-touch.js",
             "x-bootstrap": true
         },
         {
@@ -84,8 +57,7 @@
         },
         {
             "path": "app.js",
-            "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
-            "update": "delta"
+            "bundle": true  /* Indicates that all class dependencies are concatenated into this file when build */
         }
     ],
 
