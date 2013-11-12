@@ -14,7 +14,7 @@ Ext.define('mjgApp.view.ImageCallout', {
         var me = this;
         this.mon(this.el, {
             tap: function (e, t) {
-                //me.destroy();
+                me.destroy();
             }
         });
         this.callParent(arguments);
@@ -81,6 +81,6 @@ Ext.define('mjgApp.view.ImageCallout', {
 
 $(function () {
     $('body').on('click', '.pastwork', function () {
-        //Ext.getCmp('c' + this.id).destroy();
+        Ext.getCmp('c' + this.id).destroy();
     });
 });
