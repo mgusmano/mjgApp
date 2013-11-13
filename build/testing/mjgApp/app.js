@@ -67317,6 +67317,7 @@ Ext.define('mjgApp.view.Main', {
     extend:  Ext.tab.Panel ,
     xtype: 'main',
                
+                         
                        
                    
       
@@ -67330,20 +67331,8 @@ Ext.define('mjgApp.view.Main', {
         var theItems = [];
         var theChild = {};
 
-        if (Ext.os.deviceType === 'Phone') {
-            theChild = {};
-            theChild.xtype = 'currentphone';
-            theChild.title = 'Current Work';
-            theChild.iconCls = 'home';
-            theItems.push(theChild);
-
-            theChild = {};
-            theChild.xtype = 'pastphone';
-            theChild.title = 'Past Work';
-            theChild.iconCls = 'favorites';
-            theItems.push(theChild);
-        }
-        else {
+//        alert(Ext.os.deviceType);
+        if (Ext.os.deviceType != 'Phone') {
             theChild = {};
             theChild.xtype = 'alltablet';
             theChild.title = 'Work';
@@ -67356,12 +67345,26 @@ Ext.define('mjgApp.view.Main', {
             theChild.iconCls = 'favorites';
             theItems.push(theChild);
         }
+        else {
+            theChild = {};
+            theChild.xtype = 'currentphone';
+            theChild.title = 'Current Work';
+            theChild.iconCls = 'home';
+            theItems.push(theChild);
+
+            theChild = {};
+            theChild.xtype = 'pastphone';
+            theChild.title = 'Past Work';
+            theChild.iconCls = 'favorites';
+            theItems.push(theChild);
+
+        }
 
         theChild = {};
         theChild.xtype = 'dashboard';
         theChild.title = 'Companies';
         theChild.iconCls = 'info';
-        theItems.push(theChild)
+        theItems.push(theChild);
 
         this.add(theItems);
     },
@@ -67398,7 +67401,6 @@ Ext.define('mjgApp.view.Main', {
 Ext.define('mjgApp.view.Cover', {
     extend:  Ext.DataView ,
     xtype: 'cover',
-
     config:{
        /**
          * @cfg {Number} selectedIndex The idx from the Store that will be active first. Only one item can be active at a
@@ -67610,12 +67612,20 @@ Ext.define('mjgApp.view.Cover', {
     getBaseItemBox: function(containerBox){
         var cH = containerBox.height,
             cW = containerBox.width,
-            //sizeFactor = (cW > cH) ? 0.68 : 0.52,
-            sizeFactor = (cW > cH) ? 0.75 : 0.65,
+            sizeFactor = (cW > cH) ? 0.50 : 0.50,
             h, w;
 
         var height = (window.innerHeight > 0) ? window.innerHeight : screen.Height;
+        h = w = Math.min(containerBox.width, containerBox.height) * sizeFactor;
 
+        theTop = (height - h - (h / 2)) /2;
+
+        console.log('height: ' + height);
+        console.log('h: ' + h);
+        console.log('theTop: ' + theTop);
+
+        //640-200 - (200/2) =340 /2 ==top
+        //h = w = 200;
         //var orientation = Ext.Viewport.getOrientation();
         //var theTop = 0;
         //if (orientation === 'portrait') {
@@ -67625,16 +67635,13 @@ Ext.define('mjgApp.view.Cover', {
         //    theTop = 30;
         //}
 
-        if (height < 350) {
-            theTop = 30;
-        }
-        else {
-            var theTabBar = 100;
-            theTop = (height - theTabBar) / 3;
-        }
-
-        //h = w = Math.min(containerBox.width, containerBox.height) * sizeFactor;
-        h = w = 200;
+        //if (height < 350) {
+        //    theTop = 30;
+        //}
+        //else {
+        //    var theTabBar = 100;
+        //    theTop = (height - theTabBar) / 3;
+        //}
 
         return {
             top: theTop,
@@ -67695,7 +67702,7 @@ Ext.define('mjgApp.view.Cover', {
             items, idx = 0, l,
             orientation = Ext.Viewport.getOrientation();
 
-        this.setOrientation(orientation);
+        //this.setOrientation(orientation);
 
         this.callParent([me]);
 
@@ -67750,7 +67757,9 @@ Ext.define('mjgApp.view.Cover', {
 Ext.define('mjgApp.view.Dashboard', {
     extend:  Ext.Container ,
     xtype: 'dashboard',
-
+               
+                        
+      
     config: {
         title: null,
         layout: 'vbox',
@@ -67761,18 +67770,18 @@ Ext.define('mjgApp.view.Dashboard', {
 		    itemCls: 'my-cover-item',
 		    //These are just for demo purposes.
 		    id: 'coverHistory',
-		    height:  300 ,
-		    width: '100%',
+		    //height:  300 ,
+		   // width: '100%',
 		    //height: (Ext.os.deviceType !== 'Phone')? 300: undefined,
 		    //width: (Ext.os.deviceType !== 'Phone')? 800: undefined,
 		    //end-demo
 		    itemTpl : [
-				'<div style="width:200px;height:200px;border-style:solid;border-width:1px;background-color:white;padding:5px 5px 5px 5px;">',
+				'<div style="width:100%px;height:100%;border-style:solid;border-width:1px;background-color:white;padding:5px 5px 5px 5px;">',
                     '<div style="font-size:14px;font-weight:bold;color:#146BA8;font-style:italic;">{company}</div>',
                     '<div style="font-size:10px;font-weight:bold;color:#146BA8;">{title}</div>',
                     '<div style="font-size:10px;font-weight:bold;color:#000000;">{tenure}</div>',
                     '<div style="font-size:10px;margin:5px 0px 0px 0px;">{summary} </div>',
-                    '<button co="{co}" name="{company}" class="more" style="font-size:10px;margin:5px 0px 0px 140px;">more</button>',
+                    //'<button co="{co}" name="{company}" class="more" style="font-size:10px;margin:5px 0px 0px 140px;">more</button>',
 				'</div>'
 		    ],
 		    store: Ext.create("Ext.data.Store", { 
@@ -67817,9 +67826,8 @@ $(function () {
     $('body').on('click', '.more', function () {
 
         var co = $(this).attr('co');
-        var name = $(this).attr('name');
-
-        var overlay = Ext.Viewport.add({ xtype: 'imagecallout', title: name, src: 'resources/images/' + co + '.jpg', id: 'c'+co });
+        //var name = $(this).attr('name');
+        var overlay = Ext.Viewport.add({ xtype: 'imagecallout', title: 'Details', src: 'resources/images/' + co + '.jpg', id: 'd'+co });
         overlay.show();
         overlay.remove();
     });
@@ -67828,38 +67836,75 @@ $(function () {
 Ext.define('mjgApp.view.AllTablet', {
     extend:  Ext.Container ,
     xtype: 'alltablet',
-    contentEl: 'fliparea',
-    isLoaded: false,
-    listeners: {
-        painted: function (element, eOpts) {
-            if (this.isLoaded === false) {
-                this.isLoaded = true;
-                var $container = $('#flip'),
-                    $pages = $container.children().hide();
-                Modernizr.load({
-                    test: Modernizr.csstransforms3d && Modernizr.csstransitions,
-                    yep: ['js/jquery.tmpl.min.js', 'js/jquery.history.js', 'js/core.string.js', 'js/jquery.touchSwipe-1.2.5.js', 'js/jquery.flips.js'],
-                    nope: 'css/fallback.css',
-                    callback: function (url, result, key) {
-                        if (url === 'css/fallback.css') {
-                            $pages.show();
-                        }
-                        else if (url === 'js/jquery.flips.js') {
-                            $('#flip').flips();
-                        }
+    id:'allTablet',
 
+    initialize: function () {
+        if (this.getIsLoaded() === false) {
+            this.setIsLoaded(true);
+            var $container = $('#flip'),
+                $pages = $container.children().hide();
+            Modernizr.load({
+                test: Modernizr.csstransforms3d && Modernizr.csstransitions,
+                yep: ['js/jquery.tmpl.min.js', 'js/jquery.history.js', 'js/core.string.js', 'js/jquery.touchSwipe-1.2.5.js', 'js/jquery.flips.js'],
+                nope: 'css/fallback.css',
+                callback: function (url, result, key) {
+                    if (url === 'css/fallback.css') {
+                        $pages.show();
                     }
-                });
+                    else if (url === 'js/jquery.flips.js') {
+                        $('#flip').flips();
+                    }
+
+                }
+            });
+        }
+        this.callParent(arguments);
+        this.setContentEl('fliparea');
+    },
+
+    config: {
+        bodyStyle: { backgroundColor: '#FFFFFF' },
+        //contentEl: 'fliparea',
+        isLoaded: false,
+        listeners: {
+
+            activate2: function (newActiveItem, me, oldActiveItem, eOpts) {
+                if (this.getIsLoaded() === false) {
+                    this.setIsLoaded(true);
+                    var $container = $('#flip'),
+                        $pages = $container.children().hide();
+                    Modernizr.load({
+                        test: Modernizr.csstransforms3d && Modernizr.csstransitions,
+                        yep: ['js/jquery.tmpl.min.js', 'js/jquery.history.js', 'js/core.string.js', 'js/jquery.touchSwipe-1.2.5.js', 'js/jquery.flips.js'],
+                        nope: 'css/fallback.css',
+                        callback: function (url, result, key) {
+                            if (url === 'css/fallback.css') {
+                                $pages.show();
+                            }
+                            else if (url === 'js/jquery.flips.js') {
+                                $('#flip').flips();
+                            }
+
+                        }
+                    });
+                }
             }
         }
     }
 });
 
+$(function () {
+    $('body').on('click', '.img-cont', function () {
+        alert('img-cont');
+    });
+});
+
 Ext.define('mjgApp.view.ImagePanel', {
     extend:  Ext.Container ,
     xtype: 'imagepanel',
-    style: { backgroundColor: '#FFFFFF' },
-
+               
+                 
+      
     initialize: function () {
         this.down('#theHeader').setHtml(this.getHeader());
 
@@ -67873,6 +67918,7 @@ Ext.define('mjgApp.view.ImagePanel', {
     },
 
     config: {
+        style: { backgroundColor: '#FFFFFF' },
         image: null,
         header: null,
         padding: '0 5 0 5', layout: 'vbox',
@@ -67955,27 +68001,29 @@ Ext.define('mjgApp.view.PastPhone', {
 Ext.define('mjgApp.view.ImageCallout', {
     extend:  Ext.Panel ,
     xtype: 'imagecallout',
-    //cls: 'pastwork',
 
     initialize: function () {
-        this.items.items[0].setTitle(this.getTitle() + ' (tap to close)');
+        this.items.items[0].setTitle(this.getTitle());
         var i = this.getSrc();
         var theStart = 'resources/images/';
         var s = i.indexOf(theStart) + theStart.length;
         var e = i.indexOf('.');
         var theImage = i.substring(s, e);
         this.setContentEl(theImage);
-        var me = this;
-        this.mon(this.el, {
-            tap: function (e, t) {
-                me.destroy();
-            }
-        });
+        //var me = this;
+        //this.mon(this.el, {
+        //    tap: function (e, t) {
+        //        me.destroy();
+        //    }
+        //});
         this.callParent(arguments);
     },
 
     config: {
-
+        listeners: {
+            activate: function (newActiveItem, me, oldActiveItem, eOpts) {
+            }
+        },
         title: null,
         html: null,
         src: null,
@@ -68008,34 +68056,42 @@ Ext.define('mjgApp.view.ImageCallout', {
                 docked: 'top',
                 xtype: 'toolbar',
                 pack: 'center',
-                title: ''
-                //items: [
-                //   { xtype: 'spacer' },
-                //   {
-                //       xtype: 'button',
-                //       width: 32,
-                //       iconCls: "delete",
-                //       ui: "plain",
-                //       style: {
-                //           background: 'transparent',
-                //           color: '#ffffff',
-                //           padding: '0 0 0 0'
-                //       },
-                //       listeners: {
-                //           tap: function () {
-                //               this.up('panel').hide();
-                //           }
-                //       }
-                //   }
-                //]
+                title: '',
+                style: {fontFamily: 'Arial' },
+                items: [
+                   { xtype: 'spacer' },
+                   {
+                       xtype: 'button',
+                       width: 32,
+                       iconCls: "delete",
+                       ui: "plain",
+                       style: {
+                           background: 'transparent',
+                           color: '#ffffff',
+                           padding: '0 0 0 0'
+                       },
+                       listeners: {
+                           tap: function () {
+                               //this.up('panel').hide();
+                               this.up('panel').destroy();
+                           }
+                       }
+                   }
+                ]
             }
         ]
     }
 });
 
 $(function () {
-    $('body').on('click', '.pastwork', function () {
+    $('body').on('click', '.pastworkxx', function () {
         Ext.getCmp('c' + this.id).destroy();
+    });
+});
+
+$(function () {
+    $('body').on('click', '.pastcompany', function () {
+        Ext.getCmp('d' + this.id).destroy();
     });
 });
 
@@ -77746,1700 +77802,8 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
  */
 ;window.Modernizr=function(a,b,c){function z(a){j.cssText=a}function A(a,b){return z(m.join(a+";")+(b||""))}function B(a,b){return typeof a===b}function C(a,b){return!!~(""+a).indexOf(b)}function D(a,b){for(var d in a)if(j[a[d]]!==c)return b=="pfx"?a[d]:!0;return!1}function E(a,b,d){for(var e in a){var f=b[a[e]];if(f!==c)return d===!1?a[e]:B(f,"function")?f.bind(d||b):f}return!1}function F(a,b,c){var d=a.charAt(0).toUpperCase()+a.substr(1),e=(a+" "+o.join(d+" ")+d).split(" ");return B(b,"string")||B(b,"undefined")?D(e,b):(e=(a+" "+p.join(d+" ")+d).split(" "),E(e,b,c))}var d="2.5.3",e={},f=!0,g=b.documentElement,h="modernizr",i=b.createElement(h),j=i.style,k,l={}.toString,m=" -webkit- -moz- -o- -ms- ".split(" "),n="Webkit Moz O ms",o=n.split(" "),p=n.toLowerCase().split(" "),q={},r={},s={},t=[],u=t.slice,v,w=function(a,c,d,e){var f,i,j,k=b.createElement("div"),l=b.body,m=l?l:b.createElement("body");if(parseInt(d,10))while(d--)j=b.createElement("div"),j.id=e?e[d]:h+(d+1),k.appendChild(j);return f=["&#173;","<style>",a,"</style>"].join(""),k.id=h,(l?k:m).innerHTML+=f,m.appendChild(k),l||(m.style.background="",g.appendChild(m)),i=c(k,a),l?k.parentNode.removeChild(k):m.parentNode.removeChild(m),!!i},x={}.hasOwnProperty,y;!B(x,"undefined")&&!B(x.call,"undefined")?y=function(a,b){return x.call(a,b)}:y=function(a,b){return b in a&&B(a.constructor.prototype[b],"undefined")},Function.prototype.bind||(Function.prototype.bind=function(b){var c=this;if(typeof c!="function")throw new TypeError;var d=u.call(arguments,1),e=function(){if(this instanceof e){var a=function(){};a.prototype=c.prototype;var f=new a,g=c.apply(f,d.concat(u.call(arguments)));return Object(g)===g?g:f}return c.apply(b,d.concat(u.call(arguments)))};return e});var G=function(a,c){var d=a.join(""),f=c.length;w(d,function(a,c){var d=b.styleSheets[b.styleSheets.length-1],g=d?d.cssRules&&d.cssRules[0]?d.cssRules[0].cssText:d.cssText||"":"",h=a.childNodes,i={};while(f--)i[h[f].id]=h[f];e.csstransforms3d=(i.csstransforms3d&&i.csstransforms3d.offsetLeft)===9&&i.csstransforms3d.offsetHeight===3},f,c)}([,["@media (",m.join("transform-3d),("),h,")","{#csstransforms3d{left:9px;position:absolute;height:3px;}}"].join("")],[,"csstransforms3d"]);q.csstransforms3d=function(){var a=!!F("perspective");return a&&"webkitPerspective"in g.style&&(a=e.csstransforms3d),a},q.csstransitions=function(){return F("transition")};for(var H in q)y(q,H)&&(v=H.toLowerCase(),e[v]=q[H](),t.push((e[v]?"":"no-")+v));return z(""),i=k=null,function(a,b){function g(a,b){var c=a.createElement("p"),d=a.getElementsByTagName("head")[0]||a.documentElement;return c.innerHTML="x<style>"+b+"</style>",d.insertBefore(c.lastChild,d.firstChild)}function h(){var a=k.elements;return typeof a=="string"?a.split(" "):a}function i(a){var b={},c=a.createElement,e=a.createDocumentFragment,f=e();a.createElement=function(a){var e=(b[a]||(b[a]=c(a))).cloneNode();return k.shivMethods&&e.canHaveChildren&&!d.test(a)?f.appendChild(e):e},a.createDocumentFragment=Function("h,f","return function(){var n=f.cloneNode(),c=n.createElement;h.shivMethods&&("+h().join().replace(/\w+/g,function(a){return b[a]=c(a),f.createElement(a),'c("'+a+'")'})+");return n}")(k,f)}function j(a){var b;return a.documentShived?a:(k.shivCSS&&!e&&(b=!!g(a,"article,aside,details,figcaption,figure,footer,header,hgroup,nav,section{display:block}audio{display:none}canvas,video{display:inline-block;*display:inline;*zoom:1}[hidden]{display:none}audio[controls]{display:inline-block;*display:inline;*zoom:1}mark{background:#FF0;color:#000}")),f||(b=!i(a)),b&&(a.documentShived=b),a)}var c=a.html5||{},d=/^<|^(?:button|form|map|select|textarea)$/i,e,f;(function(){var a=b.createElement("a");a.innerHTML="<xyz></xyz>",e="hidden"in a,f=a.childNodes.length==1||function(){try{b.createElement("a")}catch(a){return!0}var c=b.createDocumentFragment();return typeof c.cloneNode=="undefined"||typeof c.createDocumentFragment=="undefined"||typeof c.createElement=="undefined"}()})();var k={elements:c.elements||"abbr article aside audio bdi canvas data datalist details figcaption figure footer header hgroup mark meter nav output progress section summary time video",shivCSS:c.shivCSS!==!1,shivMethods:c.shivMethods!==!1,type:"default",shivDocument:j};a.html5=k,j(b)}(this,b),e._version=d,e._prefixes=m,e._domPrefixes=p,e._cssomPrefixes=o,e.testProp=function(a){return D([a])},e.testAllProps=F,e.testStyles=w,g.className=g.className.replace(/(^|\s)no-js(\s|$)/,"$1$2")+(f?" js "+t.join(" "):""),e}(this,this.document),function(a,b,c){function d(a){return o.call(a)=="[object Function]"}function e(a){return typeof a=="string"}function f(){}function g(a){return!a||a=="loaded"||a=="complete"||a=="uninitialized"}function h(){var a=p.shift();q=1,a?a.t?m(function(){(a.t=="c"?B.injectCss:B.injectJs)(a.s,0,a.a,a.x,a.e,1)},0):(a(),h()):q=0}function i(a,c,d,e,f,i,j){function k(b){if(!o&&g(l.readyState)&&(u.r=o=1,!q&&h(),l.onload=l.onreadystatechange=null,b)){a!="img"&&m(function(){t.removeChild(l)},50);for(var d in y[c])y[c].hasOwnProperty(d)&&y[c][d].onload()}}var j=j||B.errorTimeout,l={},o=0,r=0,u={t:d,s:c,e:f,a:i,x:j};y[c]===1&&(r=1,y[c]=[],l=b.createElement(a)),a=="object"?l.data=c:(l.src=c,l.type=a),l.width=l.height="0",l.onerror=l.onload=l.onreadystatechange=function(){k.call(this,r)},p.splice(e,0,u),a!="img"&&(r||y[c]===2?(t.insertBefore(l,s?null:n),m(k,j)):y[c].push(l))}function j(a,b,c,d,f){return q=0,b=b||"j",e(a)?i(b=="c"?v:u,a,b,this.i++,c,d,f):(p.splice(this.i++,0,a),p.length==1&&h()),this}function k(){var a=B;return a.loader={load:j,i:0},a}var l=b.documentElement,m=a.setTimeout,n=b.getElementsByTagName("script")[0],o={}.toString,p=[],q=0,r="MozAppearance"in l.style,s=r&&!!b.createRange().compareNode,t=s?l:n.parentNode,l=a.opera&&o.call(a.opera)=="[object Opera]",l=!!b.attachEvent&&!l,u=r?"object":l?"script":"img",v=l?"script":u,w=Array.isArray||function(a){return o.call(a)=="[object Array]"},x=[],y={},z={timeout:function(a,b){return b.length&&(a.timeout=b[0]),a}},A,B;B=function(a){function b(a){var a=a.split("!"),b=x.length,c=a.pop(),d=a.length,c={url:c,origUrl:c,prefixes:a},e,f,g;for(f=0;f<d;f++)g=a[f].split("="),(e=z[g.shift()])&&(c=e(c,g));for(f=0;f<b;f++)c=x[f](c);return c}function g(a,e,f,g,i){var j=b(a),l=j.autoCallback;j.url.split(".").pop().split("?").shift(),j.bypass||(e&&(e=d(e)?e:e[a]||e[g]||e[a.split("/").pop().split("?")[0]]||h),j.instead?j.instead(a,e,f,g,i):(y[j.url]?j.noexec=!0:y[j.url]=1,f.load(j.url,j.forceCSS||!j.forceJS&&"css"==j.url.split(".").pop().split("?").shift()?"c":c,j.noexec,j.attrs,j.timeout),(d(e)||d(l))&&f.load(function(){k(),e&&e(j.origUrl,i,g),l&&l(j.origUrl,i,g),y[j.url]=2})))}function i(a,b){function c(a,c){if(a){if(e(a))c||(j=function(){var a=[].slice.call(arguments);k.apply(this,a),l()}),g(a,j,b,0,h);else if(Object(a)===a)for(n in m=function(){var b=0,c;for(c in a)a.hasOwnProperty(c)&&b++;return b}(),a)a.hasOwnProperty(n)&&(!c&&!--m&&(d(j)?j=function(){var a=[].slice.call(arguments);k.apply(this,a),l()}:j[n]=function(a){return function(){var b=[].slice.call(arguments);a&&a.apply(this,b),l()}}(k[n])),g(a[n],j,b,n,h))}else!c&&l()}var h=!!a.test,i=a.load||a.both,j=a.callback||f,k=j,l=a.complete||f,m,n;c(h?a.yep:a.nope,!!i),i&&c(i)}var j,l,m=this.yepnope.loader;if(e(a))g(a,0,m,0);else if(w(a))for(j=0;j<a.length;j++)l=a[j],e(l)?g(l,0,m,0):w(l)?B(l):Object(l)===l&&i(l,m);else Object(a)===a&&i(a,m)},B.addPrefix=function(a,b){z[a]=b},B.addFilter=function(a){x.push(a)},B.errorTimeout=1e4,b.readyState==null&&b.addEventListener&&(b.readyState="loading",b.addEventListener("DOMContentLoaded",A=function(){b.removeEventListener("DOMContentLoaded",A,0),b.readyState="complete"},0)),a.yepnope=k(),a.yepnope.executeStack=h,a.yepnope.injectJs=function(a,c,d,e,i,j){var k=b.createElement("script"),l,o,e=e||B.errorTimeout;k.src=a;for(o in d)k.setAttribute(o,d[o]);c=j?h:c||f,k.onreadystatechange=k.onload=function(){!l&&g(k.readyState)&&(l=1,c(),k.onload=k.onreadystatechange=null)},m(function(){l||(l=1,c(1))},e),i?k.onload():n.parentNode.insertBefore(k,n)},a.yepnope.injectCss=function(a,c,d,e,g,i){var e=b.createElement("link"),j,c=i?h:c||f;e.href=a,e.rel="stylesheet",e.type="text/css";for(j in d)e.setAttribute(j,d[j]);g||(n.parentNode.insertBefore(e,n),m(c,0))}}(this,document),Modernizr.load=function(){yepnope.apply(window,[].slice.call(arguments,0))};
 
-(function(a){var r=a.fn.domManip,d="_tmplitem",q=/^[^<]*(<[\w\W]+>)[^>]*$|\{\{\! /,b={},f={},e,p={key:0,data:{}},h=0,c=0,l=[];function g(e,d,g,i){var c={data:i||(d?d.data:{}),_wrap:d?d._wrap:null,tmpl:null,parent:d||null,nodes:[],calls:u,nest:w,wrap:x,html:v,update:t};e&&a.extend(c,e,{nodes:[],parent:d});if(g){c.tmpl=g;c._ctnt=c._ctnt||c.tmpl(a,c);c.key=++h;(l.length?f:b)[h]=c}return c}a.each({appendTo:"append",prependTo:"prepend",insertBefore:"before",insertAfter:"after",replaceAll:"replaceWith"},function(f,d){a.fn[f]=function(n){var g=[],i=a(n),k,h,m,l,j=this.length===1&&this[0].parentNode;e=b||{};if(j&&j.nodeType===11&&j.childNodes.length===1&&i.length===1){i[d](this[0]);g=this}else{for(h=0,m=i.length;h<m;h++){c=h;k=(h>0?this.clone(true):this).get();a.fn[d].apply(a(i[h]),k);g=g.concat(k)}c=0;g=this.pushStack(g,f,i.selector)}l=e;e=null;a.tmpl.complete(l);return g}});a.fn.extend({tmpl:function(d,c,b){return a.tmpl(this[0],d,c,b)},tmplItem:function(){return a.tmplItem(this[0])},template:function(b){return a.template(b,this[0])},domManip:function(d,l,j){if(d[0]&&d[0].nodeType){var f=a.makeArray(arguments),g=d.length,i=0,h;while(i<g&&!(h=a.data(d[i++],"tmplItem")));if(g>1)f[0]=[a.makeArray(d)];if(h&&c)f[2]=function(b){a.tmpl.afterManip(this,b,j)};r.apply(this,f)}else r.apply(this,arguments);c=0;!e&&a.tmpl.complete(b);return this}});a.extend({tmpl:function(d,h,e,c){var j,k=!c;if(k){c=p;d=a.template[d]||a.template(null,d);f={}}else if(!d){d=c.tmpl;b[c.key]=c;c.nodes=[];c.wrapped&&n(c,c.wrapped);return a(i(c,null,c.tmpl(a,c)))}if(!d)return[];if(typeof h==="function")h=h.call(c||{});e&&e.wrapped&&n(e,e.wrapped);j=a.isArray(h)?a.map(h,function(a){return a?g(e,c,d,a):null}):[g(e,c,d,h)];return k?a(i(c,null,j)):j},tmplItem:function(b){var c;if(b instanceof a)b=b[0];while(b&&b.nodeType===1&&!(c=a.data(b,"tmplItem"))&&(b=b.parentNode));return c||p},template:function(c,b){if(b){if(typeof b==="string")b=o(b);else if(b instanceof a)b=b[0]||{};if(b.nodeType)b=a.data(b,"tmpl")||a.data(b,"tmpl",o(b.innerHTML));return typeof c==="string"?(a.template[c]=b):b}return c?typeof c!=="string"?a.template(null,c):a.template[c]||a.template(null,q.test(c)?c:a(c)):null},encode:function(a){return(""+a).split("<").join("&lt;").split(">").join("&gt;").split('"').join("&#34;").split("'").join("&#39;")}});a.extend(a.tmpl,{tag:{tmpl:{_default:{$2:"null"},open:"if($notnull_1){_=_.concat($item.nest($1,$2));}"},wrap:{_default:{$2:"null"},open:"$item.calls(_,$1,$2);_=[];",close:"call=$item.calls();_=call._.concat($item.wrap(call,_));"},each:{_default:{$2:"$index, $value"},open:"if($notnull_1){$.each($1a,function($2){with(this){",close:"}});}"},"if":{open:"if(($notnull_1) && $1a){",close:"}"},"else":{_default:{$1:"true"},open:"}else if(($notnull_1) && $1a){"},html:{open:"if($notnull_1){_.push($1a);}"},"=":{_default:{$1:"$data"},open:"if($notnull_1){_.push($.encode($1a));}"},"!":{open:""}},complete:function(){b={}},afterManip:function(f,b,d){var e=b.nodeType===11?a.makeArray(b.childNodes):b.nodeType===1?[b]:[];d.call(f,b);m(e);c++}});function i(e,g,f){var b,c=f?a.map(f,function(a){return typeof a==="string"?e.key?a.replace(/(<\w+)(?=[\s>])(?![^>]*_tmplitem)([^>]*)/g,"$1 "+d+'="'+e.key+'" $2'):a:i(a,e,a._ctnt)}):e;if(g)return c;c=c.join("");c.replace(/^\s*([^<\s][^<]*)?(<[\w\W]+>)([^>]*[^>\s])?\s*$/,function(f,c,e,d){b=a(e).get();m(b);if(c)b=j(c).concat(b);if(d)b=b.concat(j(d))});return b?b:j(c)}function j(c){var b=document.createElement("div");b.innerHTML=c;return a.makeArray(b.childNodes)}function o(b){return new Function("jQuery","$item","var $=jQuery,call,_=[],$data=$item.data;with($data){_.push('"+a.trim(b).replace(/([\\'])/g,"\\$1").replace(/[\r\t\n]/g," ").replace(/\$\{([^\}]*)\}/g,"{{= $1}}").replace(/\{\{(\/?)(\w+|.)(?:\(((?:[^\}]|\}(?!\}))*?)?\))?(?:\s+(.*?)?)?(\(((?:[^\}]|\}(?!\}))*?)\))?\s*\}\}/g,function(m,l,j,d,b,c,e){var i=a.tmpl.tag[j],h,f,g;if(!i)throw"Template command not found: "+j;h=i._default||[];if(c&&!/\w$/.test(b)){b+=c;c=""}if(b){b=k(b);e=e?","+k(e)+")":c?")":"";f=c?b.indexOf(".")>-1?b+c:"("+b+").call($item"+e:b;g=c?f:"(typeof("+b+")==='function'?("+b+").call($item):("+b+"))"}else g=f=h.$1||"null";d=k(d);return"');"+i[l?"close":"open"].split("$notnull_1").join(b?"typeof("+b+")!=='undefined' && ("+b+")!=null":"true").split("$1a").join(g).split("$1").join(f).split("$2").join(d?d.replace(/\s*([^\(]+)\s*(\((.*?)\))?/g,function(d,c,b,a){a=a?","+a+")":b?")":"";return a?"("+c+").call($item"+a:d}):h.$2||"")+"_.push('"})+"');}return _;")}function n(c,b){c._wrap=i(c,true,a.isArray(b)?b:[q.test(b)?b:a(b).html()]).join("")}function k(a){return a?a.replace(/\\'/g,"'").replace(/\\\\/g,"\\"):null}function s(b){var a=document.createElement("div");a.appendChild(b.cloneNode(true));return a.innerHTML}function m(o){var n="_"+c,k,j,l={},e,p,i;for(e=0,p=o.length;e<p;e++){if((k=o[e]).nodeType!==1)continue;j=k.getElementsByTagName("*");for(i=j.length-1;i>=0;i--)m(j[i]);m(k)}function m(j){var p,i=j,k,e,m;if(m=j.getAttribute(d)){while(i.parentNode&&(i=i.parentNode).nodeType===1&&!(p=i.getAttribute(d)));if(p!==m){i=i.parentNode?i.nodeType===11?0:i.getAttribute(d)||0:0;if(!(e=b[m])){e=f[m];e=g(e,b[i]||f[i],null,true);e.key=++h;b[h]=e}c&&o(m)}j.removeAttribute(d)}else if(c&&(e=a.data(j,"tmplItem"))){o(e.key);b[e.key]=e;i=a.data(j.parentNode,"tmplItem");i=i?i.key:0}if(e){k=e;while(k&&k.key!=i){k.nodes.push(j);k=k.parent}delete e._ctnt;delete e._wrap;a.data(j,"tmplItem",e)}function o(a){a=a+n;e=l[a]=l[a]||g(e,b[e.parent.key+n]||e.parent,null,true)}}}function u(a,d,c,b){if(!a)return l.pop();l.push({_:a,tmpl:d,item:this,data:c,options:b})}function w(d,c,b){return a.tmpl(a.template(d),c,b,this)}function x(b,d){var c=b.options||{};c.wrapped=d;return a.tmpl(a.template(b.tmpl),b.data,c,b.item)}function v(d,c){var b=this._wrap;return a.map(a(a.isArray(b)?b.join(""):b).filter(d||"*"),function(a){return c?a.innerText||a.textContent:a.outerHTML||s(a)})}function t(){var b=this.nodes;a.tmpl(null,null,null,this).insertBefore(b[0]);a(b).remove()}})(jQuery)
-
-window.JSON||(window.JSON={}),function(){function f(a){return a<10?"0"+a:a}function quote(a){return escapable.lastIndex=0,escapable.test(a)?'"'+a.replace(escapable,function(a){var b=meta[a];return typeof b=="string"?b:"\\u"+("0000"+a.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+a+'"'}function str(a,b){var c,d,e,f,g=gap,h,i=b[a];i&&typeof i=="object"&&typeof i.toJSON=="function"&&(i=i.toJSON(a)),typeof rep=="function"&&(i=rep.call(b,a,i));switch(typeof i){case"string":return quote(i);case"number":return isFinite(i)?String(i):"null";case"boolean":case"null":return String(i);case"object":if(!i)return"null";gap+=indent,h=[];if(Object.prototype.toString.apply(i)==="[object Array]"){f=i.length;for(c=0;c<f;c+=1)h[c]=str(c,i)||"null";return e=h.length===0?"[]":gap?"[\n"+gap+h.join(",\n"+gap)+"\n"+g+"]":"["+h.join(",")+"]",gap=g,e}if(rep&&typeof rep=="object"){f=rep.length;for(c=0;c<f;c+=1)d=rep[c],typeof d=="string"&&(e=str(d,i),e&&h.push(quote(d)+(gap?": ":":")+e))}else for(d in i)Object.hasOwnProperty.call(i,d)&&(e=str(d,i),e&&h.push(quote(d)+(gap?": ":":")+e));return e=h.length===0?"{}":gap?"{\n"+gap+h.join(",\n"+gap)+"\n"+g+"}":"{"+h.join(",")+"}",gap=g,e}}"use strict",typeof Date.prototype.toJSON!="function"&&(Date.prototype.toJSON=function(a){return isFinite(this.valueOf())?this.getUTCFullYear()+"-"+f(this.getUTCMonth()+1)+"-"+f(this.getUTCDate())+"T"+f(this.getUTCHours())+":"+f(this.getUTCMinutes())+":"+f(this.getUTCSeconds())+"Z":null},String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(a){return this.valueOf()});var JSON=window.JSON,cx=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,escapable=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,gap,indent,meta={"\b":"\\b","\t":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"},rep;typeof JSON.stringify!="function"&&(JSON.stringify=function(a,b,c){var d;gap="",indent="";if(typeof c=="number")for(d=0;d<c;d+=1)indent+=" ";else typeof c=="string"&&(indent=c);rep=b;if(!b||typeof b=="function"||typeof b=="object"&&typeof b.length=="number")return str("",{"":a});throw new Error("JSON.stringify")}),typeof JSON.parse!="function"&&(JSON.parse=function(text,reviver){function walk(a,b){var c,d,e=a[b];if(e&&typeof e=="object")for(c in e)Object.hasOwnProperty.call(e,c)&&(d=walk(e,c),d!==undefined?e[c]=d:delete e[c]);return reviver.call(a,b,e)}var j;text=String(text),cx.lastIndex=0,cx.test(text)&&(text=text.replace(cx,function(a){return"\\u"+("0000"+a.charCodeAt(0).toString(16)).slice(-4)}));if(/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,"@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,"]").replace(/(?:^|:|,)(?:\s*\[)+/g,"")))return j=eval("("+text+")"),typeof reviver=="function"?walk({"":j},""):j;throw new SyntaxError("JSON.parse")})}(),function(a,b){"use strict";var c=a.History=a.History||{},d=a.jQuery;if(typeof c.Adapter!="undefined")throw new Error("History.js Adapter has already been loaded...");c.Adapter={bind:function(a,b,c){d(a).bind(b,c)},trigger:function(a,b,c){d(a).trigger(b,c)},extractEventData:function(a,c,d){var e=c&&c.originalEvent&&c.originalEvent[a]||d&&d[a]||b;return e},onDomLoad:function(a){d(a)}},typeof c.init!="undefined"&&c.init()}(window),function(a,b){"use strict";var c=a.document,d=a.setTimeout||d,e=a.clearTimeout||e,f=a.setInterval||f,g=a.History=a.History||{};if(typeof g.initHtml4!="undefined")throw new Error("History.js HTML4 Support has already been loaded...");g.initHtml4=function(){if(typeof g.initHtml4.initialized!="undefined")return!1;g.initHtml4.initialized=!0,g.enabled=!0,g.savedHashes=[],g.isLastHash=function(a){var b=g.getHashByIndex(),c;return c=a===b,c},g.saveHash=function(a){return g.isLastHash(a)?!1:(g.savedHashes.push(a),!0)},g.getHashByIndex=function(a){var b=null;return typeof a=="undefined"?b=g.savedHashes[g.savedHashes.length-1]:a<0?b=g.savedHashes[g.savedHashes.length+a]:b=g.savedHashes[a],b},g.discardedHashes={},g.discardedStates={},g.discardState=function(a,b,c){var d=g.getHashByState(a),e;return e={discardedState:a,backState:c,forwardState:b},g.discardedStates[d]=e,!0},g.discardHash=function(a,b,c){var d={discardedHash:a,backState:c,forwardState:b};return g.discardedHashes[a]=d,!0},g.discardedState=function(a){var b=g.getHashByState(a),c;return c=g.discardedStates[b]||!1,c},g.discardedHash=function(a){var b=g.discardedHashes[a]||!1;return b},g.recycleState=function(a){var b=g.getHashByState(a);return g.discardedState(a)&&delete g.discardedStates[b],!0},g.emulated.hashChange&&(g.hashChangeInit=function(){g.checkerFunction=null;var b="",d,e,h,i;return g.isInternetExplorer()?(d="historyjs-iframe",e=c.createElement("iframe"),e.setAttribute("id",d),e.style.display="none",c.body.appendChild(e),e.contentWindow.document.open(),e.contentWindow.document.close(),h="",i=!1,g.checkerFunction=function(){if(i)return!1;i=!0;var c=g.getHash()||"",d=g.unescapeHash(e.contentWindow.document.location.hash)||"";return c!==b?(b=c,d!==c&&(h=d=c,e.contentWindow.document.open(),e.contentWindow.document.close(),e.contentWindow.document.location.hash=g.escapeHash(c)),g.Adapter.trigger(a,"hashchange")):d!==h&&(h=d,g.setHash(d,!1)),i=!1,!0}):g.checkerFunction=function(){var c=g.getHash();return c!==b&&(b=c,g.Adapter.trigger(a,"hashchange")),!0},g.intervalList.push(f(g.checkerFunction,g.options.hashChangeInterval)),!0},g.Adapter.onDomLoad(g.hashChangeInit)),g.emulated.pushState&&(g.onHashChange=function(b){var d=b&&b.newURL||c.location.href,e=g.getHashByUrl(d),f=null,h=null,i=null,j;return g.isLastHash(e)?(g.busy(!1),!1):(g.doubleCheckComplete(),g.saveHash(e),e&&g.isTraditionalAnchor(e)?(g.Adapter.trigger(a,"anchorchange"),g.busy(!1),!1):(f=g.extractState(g.getFullUrl(e||c.location.href,!1),!0),g.isLastSavedState(f)?(g.busy(!1),!1):(h=g.getHashByState(f),j=g.discardedState(f),j?(g.getHashByIndex(-2)===g.getHashByState(j.forwardState)?g.back(!1):g.forward(!1),!1):(g.pushState(f.data,f.title,f.url,!1),!0))))},g.Adapter.bind(a,"hashchange",g.onHashChange),g.pushState=function(b,d,e,f){if(g.getHashByUrl(e))throw new Error("History.js does not support states with fragement-identifiers (hashes/anchors).");if(f!==!1&&g.busy())return g.pushQueue({scope:g,callback:g.pushState,args:arguments,queue:f}),!1;g.busy(!0);var h=g.createStateObject(b,d,e),i=g.getHashByState(h),j=g.getState(!1),k=g.getHashByState(j),l=g.getHash();return g.storeState(h),g.expectedStateId=h.id,g.recycleState(h),g.setTitle(h),i===k?(g.busy(!1),!1):i!==l&&i!==g.getShortUrl(c.location.href)?(g.setHash(i,!1),!1):(g.saveState(h),g.Adapter.trigger(a,"statechange"),g.busy(!1),!0)},g.replaceState=function(a,b,c,d){if(g.getHashByUrl(c))throw new Error("History.js does not support states with fragement-identifiers (hashes/anchors).");if(d!==!1&&g.busy())return g.pushQueue({scope:g,callback:g.replaceState,args:arguments,queue:d}),!1;g.busy(!0);var e=g.createStateObject(a,b,c),f=g.getState(!1),h=g.getStateByIndex(-2);return g.discardState(f,e,h),g.pushState(e.data,e.title,e.url,!1),!0}),g.emulated.pushState&&g.getHash()&&!g.emulated.hashChange&&g.Adapter.onDomLoad(function(){g.Adapter.trigger(a,"hashchange")})},typeof g.init!="undefined"&&g.init()}(window),function(a,b){"use strict";var c=a.console||b,d=a.document,e=a.navigator,f=a.sessionStorage||!1,g=a.setTimeout,h=a.clearTimeout,i=a.setInterval,j=a.clearInterval,k=a.JSON,l=a.alert,m=a.History=a.History||{},n=a.history;k.stringify=k.stringify||k.encode,k.parse=k.parse||k.decode;if(typeof m.init!="undefined")throw new Error("History.js Core has already been loaded...");m.init=function(){return typeof m.Adapter=="undefined"?!1:(typeof m.initCore!="undefined"&&m.initCore(),typeof m.initHtml4!="undefined"&&m.initHtml4(),!0)},m.initCore=function(){if(typeof m.initCore.initialized!="undefined")return!1;m.initCore.initialized=!0,m.options=m.options||{},m.options.hashChangeInterval=m.options.hashChangeInterval||100,m.options.safariPollInterval=m.options.safariPollInterval||500,m.options.doubleCheckInterval=m.options.doubleCheckInterval||500,m.options.storeInterval=m.options.storeInterval||1e3,m.options.busyDelay=m.options.busyDelay||250,m.options.debug=m.options.debug||!1,m.options.initialTitle=m.options.initialTitle||d.title,m.intervalList=[],m.clearAllIntervals=function(){var a,b=m.intervalList;if(typeof b!="undefined"&&b!==null){for(a=0;a<b.length;a++)j(b[a]);m.intervalList=null}},m.debug=function(){(m.options.debug||!1)&&m.log.apply(m,arguments)},m.log=function(){var a=typeof c!="undefined"&&typeof c.log!="undefined"&&typeof c.log.apply!="undefined",b=d.getElementById("log"),e,f,g,h,i;a?(h=Array.prototype.slice.call(arguments),e=h.shift(),typeof c.debug!="undefined"?c.debug.apply(c,[e,h]):c.log.apply(c,[e,h])):e="\n"+arguments[0]+"\n";for(f=1,g=arguments.length;f<g;++f){i=arguments[f];if(typeof i=="object"&&typeof k!="undefined")try{i=k.stringify(i)}catch(j){}e+="\n"+i+"\n"}return b?(b.value+=e+"\n-----\n",b.scrollTop=b.scrollHeight-b.clientHeight):a||l(e),!0},m.getInternetExplorerMajorVersion=function(){var a=m.getInternetExplorerMajorVersion.cached=typeof m.getInternetExplorerMajorVersion.cached!="undefined"?m.getInternetExplorerMajorVersion.cached:function(){var a=3,b=d.createElement("div"),c=b.getElementsByTagName("i");while((b.innerHTML="<!--[if gt IE "+ ++a+"]><i></i><![endif]-->")&&c[0]);return a>4?a:!1}();return a},m.isInternetExplorer=function(){var a=m.isInternetExplorer.cached=typeof m.isInternetExplorer.cached!="undefined"?m.isInternetExplorer.cached:Boolean(m.getInternetExplorerMajorVersion());return a},m.emulated={pushState:!Boolean(a.history&&a.history.pushState&&a.history.replaceState&&!/ Mobile\/([1-7][a-z]|(8([abcde]|f(1[0-8]))))/i.test(e.userAgent)&&!/AppleWebKit\/5([0-2]|3[0-2])/i.test(e.userAgent)),hashChange:Boolean(!("onhashchange"in a||"onhashchange"in d)||m.isInternetExplorer()&&m.getInternetExplorerMajorVersion()<8)},m.enabled=!m.emulated.pushState,m.bugs={setHash:Boolean(!m.emulated.pushState&&e.vendor==="Apple Computer, Inc."&&/AppleWebKit\/5([0-2]|3[0-3])/.test(e.userAgent)),safariPoll:Boolean(!m.emulated.pushState&&e.vendor==="Apple Computer, Inc."&&/AppleWebKit\/5([0-2]|3[0-3])/.test(e.userAgent)),ieDoubleCheck:Boolean(m.isInternetExplorer()&&m.getInternetExplorerMajorVersion()<8),hashEscape:Boolean(m.isInternetExplorer()&&m.getInternetExplorerMajorVersion()<7)},m.isEmptyObject=function(a){for(var b in a)return!1;return!0},m.cloneObject=function(a){var b,c;return a?(b=k.stringify(a),c=k.parse(b)):c={},c},m.getRootUrl=function(){var a=d.location.protocol+"//"+(d.location.hostname||d.location.host);if(d.location.port||!1)a+=":"+d.location.port;return a+="/",a},m.getBaseHref=function(){var a=d.getElementsByTagName("base"),b=null,c="";return a.length===1&&(b=a[0],c=b.href.replace(/[^\/]+$/,"")),c=c.replace(/\/+$/,""),c&&(c+="/"),c},m.getBaseUrl=function(){var a=m.getBaseHref()||m.getBasePageUrl()||m.getRootUrl();return a},m.getPageUrl=function(){var a=m.getState(!1,!1),b=(a||{}).url||d.location.href,c;return c=b.replace(/\/+$/,"").replace(/[^\/]+$/,function(a,b,c){return/\./.test(a)?a:a+"/"}),c},m.getBasePageUrl=function(){var a=d.location.href.replace(/[#\?].*/,"").replace(/[^\/]+$/,function(a,b,c){return/[^\/]$/.test(a)?"":a}).replace(/\/+$/,"")+"/";return a},m.getFullUrl=function(a,b){var c=a,d=a.substring(0,1);return b=typeof b=="undefined"?!0:b,/[a-z]+\:\/\//.test(a)||(d==="/"?c=m.getRootUrl()+a.replace(/^\/+/,""):d==="#"?c=m.getPageUrl().replace(/#.*/,"")+a:d==="?"?c=m.getPageUrl().replace(/[\?#].*/,"")+a:b?c=m.getBaseUrl()+a.replace(/^(\.\/)+/,""):c=m.getBasePageUrl()+a.replace(/^(\.\/)+/,"")),c.replace(/\#$/,"")},m.getShortUrl=function(a){var b=a,c=m.getBaseUrl(),d=m.getRootUrl();return m.emulated.pushState&&(b=b.replace(c,"")),b=b.replace(d,"/"),m.isTraditionalAnchor(b)&&(b="./"+b),b=b.replace(/^(\.\/)+/g,"./").replace(/\#$/,""),b},m.store={},m.idToState=m.idToState||{},m.stateToId=m.stateToId||{},m.urlToId=m.urlToId||{},m.storedStates=m.storedStates||[],m.savedStates=m.savedStates||[],m.normalizeStore=function(){m.store.idToState=m.store.idToState||{},m.store.urlToId=m.store.urlToId||{},m.store.stateToId=m.store.stateToId||{}},m.getState=function(a,b){typeof a=="undefined"&&(a=!0),typeof b=="undefined"&&(b=!0);var c=m.getLastSavedState();return!c&&b&&(c=m.createStateObject()),a&&(c=m.cloneObject(c),c.url=c.cleanUrl||c.url),c},m.getIdByState=function(a){var b=m.extractId(a.url),c;if(!b){c=m.getStateString(a);if(typeof m.stateToId[c]!="undefined")b=m.stateToId[c];else if(typeof m.store.stateToId[c]!="undefined")b=m.store.stateToId[c];else{for(;;){b=(new Date).getTime()+String(Math.random()).replace(/\D/g,"");if(typeof m.idToState[b]=="undefined"&&typeof m.store.idToState[b]=="undefined")break}m.stateToId[c]=b,m.idToState[b]=a}}return b},m.normalizeState=function(a){var b,c;if(!a||typeof a!="object")a={};if(typeof a.normalized!="undefined")return a;if(!a.data||typeof a.data!="object")a.data={};b={},b.normalized=!0,b.title=a.title||"",b.url=m.getFullUrl(m.unescapeString(a.url||d.location.href)),b.hash=m.getShortUrl(b.url),b.data=m.cloneObject(a.data),b.id=m.getIdByState(b),b.cleanUrl=b.url.replace(/\??\&_suid.*/,""),b.url=b.cleanUrl,c=!m.isEmptyObject(b.data);if(b.title||c)b.hash=m.getShortUrl(b.url).replace(/\??\&_suid.*/,""),/\?/.test(b.hash)||(b.hash+="?"),b.hash+="&_suid="+b.id;return b.hashedUrl=m.getFullUrl(b.hash),(m.emulated.pushState||m.bugs.safariPoll)&&m.hasUrlDuplicate(b)&&(b.url=b.hashedUrl),b},m.createStateObject=function(a,b,c){var d={data:a,title:b,url:c};return d=m.normalizeState(d),d},m.getStateById=function(a){a=String(a);var c=m.idToState[a]||m.store.idToState[a]||b;return c},m.getStateString=function(a){var b,c,d;return b=m.normalizeState(a),c={data:b.data,title:a.title,url:a.url},d=k.stringify(c),d},m.getStateId=function(a){var b,c;return b=m.normalizeState(a),c=b.id,c},m.getHashByState=function(a){var b,c;return b=m.normalizeState(a),c=b.hash,c},m.extractId=function(a){var b,c,d;return c=/(.*)\&_suid=([0-9]+)$/.exec(a),d=c?c[1]||a:a,b=c?String(c[2]||""):"",b||!1},m.isTraditionalAnchor=function(a){var b=!/[\/\?\.]/.test(a);return b},m.extractState=function(a,b){var c=null,d,e;return b=b||!1,d=m.extractId(a),d&&(c=m.getStateById(d)),c||(e=m.getFullUrl(a),d=m.getIdByUrl(e)||!1,d&&(c=m.getStateById(d)),!c&&b&&!m.isTraditionalAnchor(a)&&(c=m.createStateObject(null,null,e))),c},m.getIdByUrl=function(a){var c=m.urlToId[a]||m.store.urlToId[a]||b;return c},m.getLastSavedState=function(){return m.savedStates[m.savedStates.length-1]||b},m.getLastStoredState=function(){return m.storedStates[m.storedStates.length-1]||b},m.hasUrlDuplicate=function(a){var b=!1,c;return c=m.extractState(a.url),b=c&&c.id!==a.id,b},m.storeState=function(a){return m.urlToId[a.url]=a.id,m.storedStates.push(m.cloneObject(a)),a},m.isLastSavedState=function(a){var b=!1,c,d,e;return m.savedStates.length&&(c=a.id,d=m.getLastSavedState(),e=d.id,b=c===e),b},m.saveState=function(a){return m.isLastSavedState(a)?!1:(m.savedStates.push(m.cloneObject(a)),!0)},m.getStateByIndex=function(a){var b=null;return typeof a=="undefined"?b=m.savedStates[m.savedStates.length-1]:a<0?b=m.savedStates[m.savedStates.length+a]:b=m.savedStates[a],b},m.getHash=function(){var a=m.unescapeHash(d.location.hash);return a},m.unescapeString=function(b){var c=b,d;for(;;){d=a.unescape(c);if(d===c)break;c=d}return c},m.unescapeHash=function(a){var b=m.normalizeHash(a);return b=m.unescapeString(b),b},m.normalizeHash=function(a){var b=a.replace(/[^#]*#/,"").replace(/#.*/,"");return b},m.setHash=function(a,b){var c,e,f;return b!==!1&&m.busy()?(m.pushQueue({scope:m,callback:m.setHash,args:arguments,queue:b}),!1):(c=m.escapeHash(a),m.busy(!0),e=m.extractState(a,!0),e&&!m.emulated.pushState?m.pushState(e.data,e.title,e.url,!1):d.location.hash!==c&&(m.bugs.setHash?(f=m.getPageUrl(),m.pushState(null,null,f+"#"+c,!1)):d.location.hash=c),m)},m.escapeHash=function(b){var c=m.normalizeHash(b);return c=a.escape(c),m.bugs.hashEscape||(c=c.replace(/\%21/g,"!").replace(/\%26/g,"&").replace(/\%3D/g,"=").replace(/\%3F/g,"?")),c},m.getHashByUrl=function(a){var b=String(a).replace(/([^#]*)#?([^#]*)#?(.*)/,"$2");return b=m.unescapeHash(b),b},m.setTitle=function(a){var b=a.title,c;b||(c=m.getStateByIndex(0),c&&c.url===a.url&&(b=c.title||m.options.initialTitle));try{d.getElementsByTagName("title")[0].innerHTML=b.replace("<","&lt;").replace(">","&gt;").replace(" & "," &amp; ")}catch(e){}return d.title=b,m},m.queues=[],m.busy=function(a){typeof a!="undefined"?m.busy.flag=a:typeof m.busy.flag=="undefined"&&(m.busy.flag=!1);if(!m.busy.flag){h(m.busy.timeout);var b=function(){var a,c,d;if(m.busy.flag)return;for(a=m.queues.length-1;a>=0;--a){c=m.queues[a];if(c.length===0)continue;d=c.shift(),m.fireQueueItem(d),m.busy.timeout=g(b,m.options.busyDelay)}};m.busy.timeout=g(b,m.options.busyDelay)}return m.busy.flag},m.busy.flag=!1,m.fireQueueItem=function(a){return a.callback.apply(a.scope||m,a.args||[])},m.pushQueue=function(a){return m.queues[a.queue||0]=m.queues[a.queue||0]||[],m.queues[a.queue||0].push(a),m},m.queue=function(a,b){return typeof a=="function"&&(a={callback:a}),typeof b!="undefined"&&(a.queue=b),m.busy()?m.pushQueue(a):m.fireQueueItem(a),m},m.clearQueue=function(){return m.busy.flag=!1,m.queues=[],m},m.stateChanged=!1,m.doubleChecker=!1,m.doubleCheckComplete=function(){return m.stateChanged=!0,m.doubleCheckClear(),m},m.doubleCheckClear=function(){return m.doubleChecker&&(h(m.doubleChecker),m.doubleChecker=!1),m},m.doubleCheck=function(a){return m.stateChanged=!1,m.doubleCheckClear(),m.bugs.ieDoubleCheck&&(m.doubleChecker=g(function(){return m.doubleCheckClear(),m.stateChanged||a(),!0},m.options.doubleCheckInterval)),m},m.safariStatePoll=function(){var b=m.extractState(d.location.href),c;if(!m.isLastSavedState(b))c=b;else return;return c||(c=m.createStateObject()),m.Adapter.trigger(a,"popstate"),m},m.back=function(a){return a!==!1&&m.busy()?(m.pushQueue({scope:m,callback:m.back,args:arguments,queue:a}),!1):(m.busy(!0),m.doubleCheck(function(){m.back(!1)}),n.go(-1),!0)},m.forward=function(a){return a!==!1&&m.busy()?(m.pushQueue({scope:m,callback:m.forward,args:arguments,queue:a}),!1):(m.busy(!0),m.doubleCheck(function(){m.forward(!1)}),n.go(1),!0)},m.go=function(a,b){var c;if(a>0)for(c=1;c<=a;++c)m.forward(b);else{if(!(a<0))throw new Error("History.go: History.go requires a positive or negative integer passed.");for(c=-1;c>=a;--c)m.back(b)}return m};if(m.emulated.pushState){var o=function(){};m.pushState=m.pushState||o,m.replaceState=m.replaceState||o}else m.onPopState=function(b,c){var e=!1,f=!1,g,h;return m.doubleCheckComplete(),g=m.getHash(),g?(h=m.extractState(g||d.location.href,!0),h?m.replaceState(h.data,h.title,h.url,!1):(m.Adapter.trigger(a,"anchorchange"),m.busy(!1)),m.expectedStateId=!1,!1):(e=m.Adapter.extractEventData("state",b,c)||!1,e?f=m.getStateById(e):m.expectedStateId?f=m.getStateById(m.expectedStateId):f=m.extractState(d.location.href),f||(f=m.createStateObject(null,null,d.location.href)),m.expectedStateId=!1,m.isLastSavedState(f)?(m.busy(!1),!1):(m.storeState(f),m.saveState(f),m.setTitle(f),m.Adapter.trigger(a,"statechange"),m.busy(!1),!0))},m.Adapter.bind(a,"popstate",m.onPopState),m.pushState=function(b,c,d,e){if(m.getHashByUrl(d)&&m.emulated.pushState)throw new Error("History.js does not support states with fragement-identifiers (hashes/anchors).");if(e!==!1&&m.busy())return m.pushQueue({scope:m,callback:m.pushState,args:arguments,queue:e}),!1;m.busy(!0);var f=m.createStateObject(b,c,d);return m.isLastSavedState(f)?m.busy(!1):(m.storeState(f),m.expectedStateId=f.id,n.pushState(f.id,f.title,f.url),m.Adapter.trigger(a,"popstate")),!0},m.replaceState=function(b,c,d,e){if(m.getHashByUrl(d)&&m.emulated.pushState)throw new Error("History.js does not support states with fragement-identifiers (hashes/anchors).");if(e!==!1&&m.busy())return m.pushQueue({scope:m,callback:m.replaceState,args:arguments,queue:e}),!1;m.busy(!0);var f=m.createStateObject(b,c,d);return m.isLastSavedState(f)?m.busy(!1):(m.storeState(f),m.expectedStateId=f.id,n.replaceState(f.id,f.title,f.url),m.Adapter.trigger(a,"popstate")),!0};if(f){try{m.store=k.parse(f.getItem("History.store"))||{}}catch(p){m.store={}}m.normalizeStore()}else m.store={},m.normalizeStore();m.Adapter.bind(a,"beforeunload",m.clearAllIntervals),m.Adapter.bind(a,"unload",m.clearAllIntervals),m.saveState(m.storeState(m.extractState(d.location.href,!0))),f&&(m.onUnload=function(){var a,b;try{a=k.parse(f.getItem("History.store"))||{}}catch(c){a={}}a.idToState=a.idToState||{},a.urlToId=a.urlToId||{},a.stateToId=a.stateToId||{};for(b in m.idToState){if(!m.idToState.hasOwnProperty(b))continue;a.idToState[b]=m.idToState[b]}for(b in m.urlToId){if(!m.urlToId.hasOwnProperty(b))continue;a.urlToId[b]=m.urlToId[b]}for(b in m.stateToId){if(!m.stateToId.hasOwnProperty(b))continue;a.stateToId[b]=m.stateToId[b]}m.store=a,m.normalizeStore(),f.setItem("History.store",k.stringify(a))},m.intervalList.push(i(m.onUnload,m.options.storeInterval)),m.Adapter.bind(a,"beforeunload",m.onUnload),m.Adapter.bind(a,"unload",m.onUnload));if(!m.emulated.pushState){m.bugs.safariPoll&&m.intervalList.push(i(m.safariStatePoll,m.options.safariPollInterval));if(e.vendor==="Apple Computer, Inc."||(e.appCodeName||"")==="Mozilla")m.Adapter.bind(a,"hashchange",function(){m.Adapter.trigger(a,"popstate")}),m.getHash()&&m.Adapter.onDomLoad(function(){m.Adapter.trigger(a,"hashchange")})}},m.init()}(window)
-
-/**
- * @depends nothing
- * @name core.string
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- */
-
-/**
- * Return a new string with any spaces trimmed the left and right of the string
- * @version 1.0.0
- * @date June 30, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
- */
-String.prototype.trim = String.prototype.trim || function() {
-	// Trim off any whitespace from the front and back
-	return this.replace(/^\s+|\s+$/g, '');
-};
-
-/**
- * Return a new string with the value stripped from the left and right of the string
- * @version 1.1.1
- * @date July 22, 2010
- * @since 1.0.0, June 30, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
- */
-String.prototype.strip = String.prototype.strip || function(value,regex){
-	// Strip a value from left and right, with optional regex support (defaults to false)
-	value = String(value);
-	var str = this;
-	if ( value.length ) {
-		if ( !(regex||false) ) {
-			// We must escape value as we do not want regex support
-			value = value.replace(/([\[\]\(\)\^\$\.\?\|\/\\])/g, '\\$1');
-		}
-		str = str.replace(eval('/^'+value+'+|'+value+'+$/g'), '');
-	}
-	return String(str);
-}
-
-/**
- * Return a new string with the value stripped from the left of the string
- * @version 1.1.1
- * @date July 22, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
- */
-String.prototype.stripLeft = String.prototype.stripLeft || function(value,regex){
-	// Strip a value from the left, with optional regex support (defaults to false)
-	value = String(value);
-	var str = this;
-	if ( value.length ) {
-		if ( !(regex||false) ) {
-			// We must escape value as we do not want regex support
-			value = value.replace(/([\[\]\(\)\^\$\.\?\|\/\\])/g, '\\$1');
-		}
-		str = str.replace(eval('/^'+value+'+/g'), '');
-	}
-	return String(str);
-}
-
-/**
- * Return a new string with the value stripped from the right of the string
- * @version 1.1.1
- * @date July 22, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
- */
-String.prototype.stripRight = String.prototype.stripRight || function(value,regex){
-	// Strip a value from the right, with optional regex support (defaults to false)
-	value = String(value);
-	var str = this;
-	if ( value.length ) {
-		if ( !(regex||false) ) {
-			// We must escape value as we do not want regex support
-			value = value.replace(/([\[\]\(\)\^\$\.\?\|\/\\])/g, '\\$1');
-		}
-		str = str.replace(eval('/'+value+'+$/g'), '');
-	}
-	return String(str);
-}
-
-/**
- * Return a int of the string
- * @version 1.0.0
- * @date June 30, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
- */
-String.prototype.toInt = String.prototype.toInt || function(){
-	// Convert to a Integer
-	return parseInt(this,10);
-};
-
-/**
- * Return a new string of the old string wrapped with the start and end values
- * @version 1.0.0
- * @date June 30, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
- */
-String.prototype.wrap = String.prototype.wrap || function(start,end){
-	// Wrap the string
-	return start+this+end;
-};
-
-/**
- * Return a new string of a selection of the old string wrapped with the start and end values
- * @version 1.0.0
- * @date June 30, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
- */
-String.prototype.wrapSelection = String.prototype.wrapSelection || function(start,end,a,z){
-	// Wrap the selection
-	if ( typeof a === 'undefined' || a === null ) a = this.length;
-	if ( typeof z === 'undefined' || z === null ) z = this.length;
-	return this.substring(0,a)+start+this.substring(a,z)+end+this.substring(z);
-};
-
-/**
- * Return a new string of the slug of the old string
- * @version 1.1.0
- * @date July 16, 2010
- * @since 1.0.0, June 30, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
- */
-String.prototype.toSlug = String.prototype.toSlug || function(){
-	// Convert a string to a slug
-	return this.toLowerCase().replace(/[\s_]/g, '-').replace(/[^-a-z0-9]/g, '').replace(/--+/g, '-').replace(/^-+|-+$/g,'');
-}
-
-/**
- * Return a new JSON object of the old string.
- * Turns:
- * 		file.js?a=1&amp;b.c=3.0&b.d=four&a_false_value=false&a_null_value=null
- * Into:
- * 		{"a":1,"b":{"c":3,"d":"four"},"a_false_value":false,"a_null_value":null}
- * @version 1.1.0
- * @date July 16, 2010
- * @since 1.0.0, June 30, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
- */
-String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || function ( )
-{	// Turns a params string or url into an array of params
-	// Prepare
-	var params = String(this);
-	// Remove url if need be
-	params = params.substring(params.indexOf('?')+1);
-	// params = params.substring(params.indexOf('#')+1);
-	// Change + to %20, the %20 is fixed up later with the decode
-	params = params.replace(/\+/g, '%20');
-	// Do we have JSON string
-	if ( params.substring(0,1) === '{' && params.substring(params.length-1) === '}' )
-	{	// We have a JSON string
-		return eval(decodeURIComponent(params));
-	}
-	// We have a params string
-	params = params.split(/\&(amp\;)?/);
-	var json = {};
-	// We have params
-	for ( var i = 0, n = params.length; i < n; ++i )
-	{
-		// Adjust
-		var param = params[i] || null;
-		if ( param === null ) { continue; }
-		param = param.split('=');
-		if ( param === null ) { continue; }
-		// ^ We now have "var=blah" into ["var","blah"]
-
-		// Get
-		var key = param[0] || null;
-		if ( key === null ) { continue; }
-		if ( typeof param[1] === 'undefined' ) { continue; }
-		var value = param[1];
-		// ^ We now have the parts
-
-		// Fix
-		key = decodeURIComponent(key);
-		value = decodeURIComponent(value);
-		try {
-		    // value can be converted
-		    value = eval(value);
-		} catch ( e ) {
-		    // value is a normal string
-		}
-
-		// Set
-		// window.console.log({'key':key,'value':value}, split);
-		var keys = key.split('.');
-		if ( keys.length === 1 )
-		{	// Simple
-			json[key] = value;
-		}
-		else
-		{	// Advanced (Recreating an object)
-			var path = '',
-				cmd = '';
-			// Ensure Path Exists
-			$.each(keys,function(ii,key){
-				path += '["'+key.replace(/"/g,'\\"')+'"]';
-				jsonCLOSUREGLOBAL = json; // we have made this a global as closure compiler struggles with evals
-				cmd = 'if ( typeof jsonCLOSUREGLOBAL'+path+' === "undefined" ) jsonCLOSUREGLOBAL'+path+' = {}';
-				eval(cmd);
-				json = jsonCLOSUREGLOBAL;
-				delete jsonCLOSUREGLOBAL;
-			});
-			// Apply Value
-			jsonCLOSUREGLOBAL = json; // we have made this a global as closure compiler struggles with evals
-			valueCLOSUREGLOBAL = value; // we have made this a global as closure compiler struggles with evals
-			cmd = 'jsonCLOSUREGLOBAL'+path+' = valueCLOSUREGLOBAL';
-			eval(cmd);
-			json = jsonCLOSUREGLOBAL;
-			delete jsonCLOSUREGLOBAL;
-			delete valueCLOSUREGLOBAL;
-		}
-		// ^ We now have the parts added to your JSON object
-	}
-	return json;
-};
-
-/*
- * touchSwipe - jQuery Plugin
- * http://plugins.jquery.com/project/touchSwipe
- * http://labs.skinkers.com/touchSwipe/
- *
- * Copyright (c) 2010 Matt Bryson (www.skinkers.com)
- * Dual licensed under the MIT or GPL Version 2 licenses.
- *
- * $version: 1.2.5
- *
- * Changelog
- * $Date: 2010-12-12 (Wed, 12 Dec 2010) $
- * $version: 1.0.0 
- * $version: 1.0.1 - removed multibyte comments
- *
- * $Date: 2011-21-02 (Mon, 21 Feb 2011) $
- * $version: 1.1.0 	- added allowPageScroll property to allow swiping and scrolling of page
- *					- changed handler signatures so one handler can be used for multiple events
- * $Date: 2011-23-02 (Wed, 23 Feb 2011) $
- * $version: 1.2.0 	- added click handler. This is fired if the user simply clicks and does not swipe. The event object and click target are passed to handler.
- *					- If you use the http://code.google.com/p/jquery-ui-for-ipad-and-iphone/ plugin, you can also assign jQuery mouse events to children of a touchSwipe object.
- * $version: 1.2.1 	- removed console log!
- *
- * $version: 1.2.2 	- Fixed bug where scope was not preserved in callback methods. 
- *
- * $Date: 2011-28-04 (Thurs, 28 April 2011) $
- * $version: 1.2.4 	- Changed licence terms to be MIT or GPL inline with jQuery. Added check for support of touch events to stop non compatible browsers erroring.
- *
- * $Date: 2011-27-09 (Tues, 27 September 2011) $
- * $version: 1.2.5 	- Added support for testing swipes with mouse on desktop browser (thanks to https://github.com/joelhy)
-
- * A jQuery plugin to capture left, right, up and down swipes on touch devices.
- * You can capture 2 finger or 1 finger swipes, set the threshold and define either a catch all handler, or individual direction handlers.
- * Options:
- * 		swipe 		Function 	A catch all handler that is triggered for all swipe directions. Handler is passed 3 arguments, the original event object, the direction of the swipe : "left", "right", "up", "down" and the distance of the swipe.
- * 		swipeLeft	Function 	A handler that is triggered for "left" swipes. Handler is passed 3 arguments, the original event object, the direction of the swipe : "left", "right", "up", "down" and the distance of the swipe.
- * 		swipeRight	Function 	A handler that is triggered for "right" swipes. Handler is passed 3 arguments, the original event object, the direction of the swipe : "left", "right", "up", "down" and the distance of the swipe.
- * 		swipeUp		Function 	A handler that is triggered for "up" swipes. Handler is passed 3 arguments, the original event object, the direction of the swipe : "left", "right", "up", "down" and the distance of the swipe.
- * 		swipeDown	Function 	A handler that is triggered for "down" swipes. Handler is passed 3 arguments, the original event object, the direction of the swipe : "left", "right", "up", "down" and the distance of the swipe.
- *		swipeStatus Function 	A handler triggered for every phase of the swipe. Handler is passed 4 arguments: event : The original event object, phase:The current swipe face, either "start?, "move?, "end? or "cancel?. direction : The swipe direction, either "up?, "down?, "left " or "right?.distance : The distance of the swipe.
- *		click		Function	A handler triggered when a user just clicks on the item, rather than swipes it. If they do not move, click is triggered, if they do move, it is not.
- *
- * 		fingers 	int 		Default 1. 	The number of fingers to trigger the swipe, 1 or 2.
- * 		threshold 	int  		Default 75.	The number of pixels that the user must move their finger by before it is considered a swipe.
- *		triggerOnTouchEnd Boolean Default true If true, the swipe events are triggered when the touch end event is received (user releases finger).  If false, it will be triggered on reaching the threshold, and then cancel the touch event automatically.
- *		allowPageScroll String Default "auto". How the browser handles page scrolls when the user is swiping on a touchSwipe object. 
- *										"auto" : all undefined swipes will cause the page to scroll in that direction.
- *										"none" : the page will not scroll when user swipes.
- *										"horizontal" : will force page to scroll on horizontal swipes.
- *										"vertical" : will force page to scroll on vertical swipes.
- *
- * This jQuery plugin will only run on devices running Mobile Webkit based browsers (iOS 2.0+, android 2.2+)
- */
-(function($) 
-{
-	
-	
-	
-	$.fn.swipe = function(options) 
-	{
-		if (!this) return false;
-		
-		// Default thresholds & swipe functions
-		var defaults = {
-					
-			fingers 		: 1,								// int - The number of fingers to trigger the swipe, 1 or 2. Default is 1.
-			threshold 		: 75,								// int - The number of pixels that the user must move their finger by before it is considered a swipe. Default is 75.
-			
-			swipe 			: null,		// Function - A catch all handler that is triggered for all swipe directions. Accepts 2 arguments, the original event object and the direction of the swipe : "left", "right", "up", "down".
-			swipeLeft		: null,		// Function - A handler that is triggered for "left" swipes. Accepts 3 arguments, the original event object, the direction of the swipe : "left", "right", "up", "down" and the distance of the swipe.
-			swipeRight		: null,		// Function - A handler that is triggered for "right" swipes. Accepts 3 arguments, the original event object, the direction of the swipe : "left", "right", "up", "down" and the distance of the swipe.
-			swipeUp			: null,		// Function - A handler that is triggered for "up" swipes. Accepts 3 arguments, the original event object, the direction of the swipe : "left", "right", "up", "down" and the distance of the swipe.
-			swipeDown		: null,		// Function - A handler that is triggered for "down" swipes. Accepts 3 arguments, the original event object, the direction of the swipe : "left", "right", "up", "down" and the distance of the swipe.
-			swipeStatus		: null,		// Function - A handler triggered for every phase of the swipe. Handler is passed 4 arguments: event : The original event object, phase:The current swipe face, either "start?, "move?, "end? or "cancel?. direction : The swipe direction, either "up?, "down?, "left " or "right?.distance : The distance of the swipe.
-			click			: null,		// Function	- A handler triggered when a user just clicks on the item, rather than swipes it. If they do not move, click is triggered, if they do move, it is not.
-			
-			triggerOnTouchEnd : true,	// Boolean, if true, the swipe events are triggered when the touch end event is received (user releases finger).  If false, it will be triggered on reaching the threshold, and then cancel the touch event automatically.
-			allowPageScroll : "auto" 	/* How the browser handles page scrolls when the user is swiping on a touchSwipe object. 
-											"auto" : all undefined swipes will cause the page to scroll in that direction.
- 											"none" : the page will not scroll when user swipes.
- 											"horizontal" : will force page to scroll on horizontal swipes.
- 											"vertical" : will force page to scroll on vertical swipes.
-										*/
-		};
-		
-		
-		//Constants
-		var LEFT = "left";
-		var RIGHT = "right";
-		var UP = "up";
-		var DOWN = "down";
-		var NONE = "none";
-		var HORIZONTAL = "horizontal";
-		var VERTICAL = "vertical";
-		var AUTO = "auto";
-		
-		var PHASE_START="start";
-		var PHASE_MOVE="move";
-		var PHASE_END="end";
-		var PHASE_CANCEL="cancel";
-		
-	    var hasTouch = 'ontouchstart' in window,
-        START_EV = hasTouch ? 'touchstart' : 'mousedown',
-        MOVE_EV = hasTouch ? 'touchmove' : 'mousemove',
-        END_EV = hasTouch ? 'touchend' : 'mouseup',
-        CANCEL_EV = 'touchcancel';
-		
-		var phase="start";
-		
-		if (options.allowPageScroll==undefined && (options.swipe!=undefined || options.swipeStatus!=undefined))
-			options.allowPageScroll=NONE;
-		
-		if (options)
-			$.extend(defaults, options);
-		
-		
-		/**
-		 * Setup each object to detect swipe gestures
-		 */
-		return this.each(function() 
-		{
-            var that = this;
-			var $this = $(this);
-			
-			var triggerElementID = null; 	// this variable is used to identity the triggering element
-			var fingerCount = 0;			// the current number of fingers being used.	
-			
-			//track mouse points / delta
-			var start={x:0, y:0};
-			var end={x:0, y:0};
-			var delta={x:0, y:0};
-			// added by Codrops
-			var lastPositionX = 0; 
-			
-			/**
-			* Event handler for a touch start event. 
-			* Stops the default click event from triggering and stores where we touched
-			*/
-			function touchStart(event) 
-			{	
-				var evt = hasTouch ? event.touches[0] : event; 
-				
-				phase = PHASE_START;
-		
-                if (hasTouch) {
-                    // get the total number of fingers touching the screen
-                    fingerCount = event.touches.length;
-                }
-				
-				//clear vars..
-				distance=0;
-				direction=null;
-				
-				// check the number of fingers is what we are looking for
-				if (fingerCount == defaults.fingers || !hasTouch) 
-				{
-					// get the coordinates of the touch
-					start.x = end.x = evt.pageX;
-					start.y = end.y = evt.pageY;
-					// changed by Codrops
-					lastPositionX = end.x;
-					
-					if (defaults.swipeStatus)
-						triggerHandler(event, phase, start, end);
-				} 
-				else 
-				{
-					//touch with more/less than the fingers we are looking for
-					touchCancel(event);
-				}
-
-				that.addEventListener(MOVE_EV, touchMove, false);
-				that.addEventListener(END_EV, touchEnd, false);
-				
-			}
-
-			/**
-			* Event handler for a touch move event. 
-			* If we change fingers during move, then cancel the event
-			*/
-			function touchMove(event) 
-			{
-				if (phase == PHASE_END || phase == PHASE_CANCEL)
-					return;
-                
-                var evt = hasTouch ? event.touches[0] : event; 
-				
-				end.x = evt.pageX;
-				end.y = evt.pageY;
-			
-				// changed by Codrops
-				direction = calculateDirection();
-				lastPositionX = end.x;	
-				
-				if (hasTouch) {
-                    fingerCount = event.touches.length;
-                }
-				
-				phase = PHASE_MOVE
-				
-				//Check if we need to prevent default evnet (page scroll) or not
-				validateDefaultEvent(event, direction);
-		
-				if ( fingerCount == defaults.fingers || !hasTouch) 
-				{
-					distance = caluculateDistance();
-					
-					if (defaults.swipeStatus)
-						triggerHandler(event, phase, start, end, direction, distance);
-					
-					//If we trigger whilst dragging, not on touch end, then calculate now...
-					if (!defaults.triggerOnTouchEnd)
-					{
-						// if the user swiped more than the minimum length, perform the appropriate action
-						if ( distance >= defaults.threshold ) 
-						{
-							phase = PHASE_END;
-							triggerHandler(event, phase, start, end);
-							touchCancel(event); // reset the variables
-						}
-					}
-				} 
-				else 
-				{
-					phase = PHASE_CANCEL;
-					triggerHandler(event, phase, start, end); 
-					touchCancel(event);
-				}
-			}
-			
-			/**
-			* Event handler for a touch end event. 
-			* Calculate the direction and trigger events
-			*/
-			function touchEnd(event) 
-			{
-				event.preventDefault();
-				
-				distance = caluculateDistance();
-				
-				//changed by codrops
-				//direction = caluculateDirection();
-				
-				if (defaults.triggerOnTouchEnd)
-				{
-					phase = PHASE_END;
-					// check to see if more than one finger was used and that there is an ending coordinate
-					if ( (fingerCount == defaults.fingers  || !hasTouch) && end.x != 0 ) 
-					{
-						// if the user swiped more than the minimum length, perform the appropriate action
-						if ( distance >= defaults.threshold ) 
-						{
-							triggerHandler(event, phase, start, end);
-							touchCancel(event); // reset the variables
-						} 
-						else 
-						{
-							phase = PHASE_CANCEL;
-							triggerHandler(event, phase, start, end); 
-							touchCancel(event);
-						}	
-					} 
-					else 
-					{
-						phase = PHASE_CANCEL;
-						triggerHandler(event, phase, start, end); 
-						touchCancel(event);
-					}
-				}
-				else if (phase == PHASE_MOVE)
-				{
-					phase = PHASE_CANCEL;
-					triggerHandler(event, phase, start, end); 
-					touchCancel(event);
-				}
-				that.removeEventListener(MOVE_EV, touchMove, false);
-				that.removeEventListener(END_EV, touchEnd, false);
-			}
-			
-			/**
-			* Event handler for a touch cancel event. 
-			* Clears current vars
-			*/
-			function touchCancel(event) 
-			{
-				// reset the variables back to default values
-				fingerCount = 0;
-				
-				start.x = 0;
-				start.y = 0;
-				end.x = 0;
-				end.y = 0;
-				delta.x = 0;
-				delta.y = 0;
-			}
-			
-			
-			/**
-			* Trigger the relevant event handler
-			* The handlers are passed the original event, the element that was swiped, and in the case of the catch all handler, the direction that was swiped, "left", "right", "up", or "down"
-			*/
-			// changed by Codrops added start & end
-			function triggerHandler(event, phase, start, end) 
-			{
-				//update status
-				if (defaults.swipeStatus)
-					defaults.swipeStatus.call($this,event, phase, start, end, direction || null, distance || 0);
-				
-				
-				if (phase == PHASE_CANCEL)
-				{
-					if (defaults.click && (fingerCount==1 || !hasTouch) && (isNaN(distance) || distance==0))
-						defaults.click.call($this,event, event.target);
-				}
-				
-				if (phase == PHASE_END)
-				{
-					//trigger catch all event handler
-					if (defaults.swipe)
-				{
-						
-						defaults.swipe.call($this,event, direction, distance);
-						
-				}
-					//trigger direction specific event handlers	
-					switch(direction)
-					{
-						case LEFT :
-							if (defaults.swipeLeft)
-								defaults.swipeLeft.call($this,event, direction, distance);
-							break;
-						
-						case RIGHT :
-							if (defaults.swipeRight)
-								defaults.swipeRight.call($this,event, direction, distance);
-							break;
-
-						case UP :
-							if (defaults.swipeUp)
-								defaults.swipeUp.call($this,event, direction, distance);
-							break;
-						
-						case DOWN :	
-							if (defaults.swipeDown)
-								defaults.swipeDown.call($this,event, direction, distance);
-							break;
-					}
-				}
-			}
-			
-			
-			/**
-			 * Checks direction of the swipe and the value allowPageScroll to see if we should allow or prevent the default behaviour from occurring.
-			 * This will essentially allow page scrolling or not when the user is swiping on a touchSwipe object.
-			 */
-			function validateDefaultEvent(event, direction)
-			{
-				if( defaults.allowPageScroll==NONE )
-				{
-					event.preventDefault();
-				}
-				else 
-				{
-					var auto=defaults.allowPageScroll==AUTO;
-					
-					switch(direction)
-					{
-						case LEFT :
-							if ( (defaults.swipeLeft && auto) || (!auto && defaults.allowPageScroll!=HORIZONTAL))
-								event.preventDefault();
-							break;
-						
-						case RIGHT :
-							if ( (defaults.swipeRight && auto) || (!auto && defaults.allowPageScroll!=HORIZONTAL))
-								event.preventDefault();
-							break;
-
-						case UP :
-							if ( (defaults.swipeUp && auto) || (!auto && defaults.allowPageScroll!=VERTICAL))
-								event.preventDefault();
-							break;
-						
-						case DOWN :	
-							if ( (defaults.swipeDown && auto) || (!auto && defaults.allowPageScroll!=VERTICAL))
-								event.preventDefault();
-							break;
-					}
-				}
-				
-			}
-			
-			
-			
-			/**
-			* Calcualte the length / distance of the swipe
-			*/
-			function caluculateDistance()
-			{
-				//return Math.round(Math.sqrt(Math.pow(end.x - start.x,2) + Math.pow(end.y - start.y,2)));
-				return Math.round(Math.abs(end.x - start.x));
-			}
-			
-			/**
-			* Calcualte the angle of the swipe
-			*/
-			function caluculateAngle() 
-			{
-				var X = start.x-end.x;
-				var Y = end.y-start.y;
-				var r = Math.atan2(Y,X); //radians
-				var angle = Math.round(r*180/Math.PI); //degrees
-				
-				//ensure value is positive
-				if (angle < 0) 
-					angle = 360 - Math.abs(angle);
-					
-				return angle;
-			}
-			
-			/**
-			* Calcualte the direction of the swipe
-			* This will also call caluculateAngle to get the latest angle of swipe
-			*/
-			function caluculateDirection() 
-			{
-				var angle = caluculateAngle();
-				
-				if ( (angle <= 45) && (angle >= 0) ) 
-					return LEFT;
-				
-				else if ( (angle <= 360) && (angle >= 315) )
-					return LEFT;
-				
-				else if ( (angle >= 135) && (angle <= 225) )
-					return RIGHT;
-				
-				else if ( (angle > 45) && (angle < 135) )
-					return DOWN;
-				
-				else
-					return UP;
-			}
-			
-			// added by codrops
-			function calculateDirection() 
-			{
-				var dir;
-				if( end.x < lastPositionX ) {
-					dir = LEFT
-				}
-				else if( end.x > lastPositionX ) {
-					dir = RIGHT;
-				}
-				else {
-					dir = UP
-				}
-				return dir;
-			}
-
-			// Add gestures to all swipable areas if supported
-			try
-			{
-
-				this.addEventListener(START_EV, touchStart, false);
-				this.addEventListener(CANCEL_EV, touchCancel);
-			}
-			catch(e)
-			{
-				//touch not supported
-			}
-				
-		});
-	};
-	
-	
-	
-	
-})(jQuery);
-
-/**
- * jquery.flips.js
- * 
- * Copyright 2011, Pedro Botelho / Codrops
- * Free to use under the MIT license.
- *
- * Date: Fri May 4 2012
- */
- 
-/**
- * Note: This is highly experimental and just a proof-of-concept! 
- * There are some few "hacks", probably some bugs, and some functionality 
- * is incomplete... definitely not ready for a production environment.
- *
- *
- * Tested and working on:
- * - Google Chrome 18.0.1025.168
- * - Apple Safari 5.1.5
- * - Apple Safari 5.1 Mobile
- * 
- */
-
-(function( window, undefined ) {
-	
-	$.Flips 			= function( options, element ) {
-	
-		this.$el	= $( element );
-		this._init( options );
-		
-	};
-	
-	$.Flips.defaults 	= {
-		flipspeed			: 900,
-		fliptimingfunction	: 'linear',
-		current				: 0
-	};
-	
-	$.Flips.prototype 	= {
-		_init 				: function( options ) {
-			
-			this.options 		= $.extend( true, {}, $.Flips.defaults, options );
-			this.$pages			= this.$el.children( 'div.f-page' );
-			this.pagesCount		= this.$pages.length;
-			//this.History		= window.History;
-			this.currentPage	= this.options.current;
-			this._validateOpts();
-			this._getWinSize();
-			this._getState();
-			this._layout();
-			this._initTouchSwipe();
-			this._loadEvents();
-			this._goto();
-			
-		},
-		_validateOpts		: function() {
-			
-			if( this.currentPage < 0 || this.currentPage > this.pagesCount ) {
-			
-				this.currentPage = 0;
-			
-			}
-		
-		},
-		_getWinSize			: function() {
-			
-			var $win = $( window );
-			
-			this.windowProp = {
-				width	: $win.width(),
-				height	: $win.height()
-			};
-		
-		},
-		_goto				: function() {
-			
-			var page = ( this.state === undefined ) ? this.currentPage : this.state;
-			
-			if( !this._isNumber( page ) || page < 0 || page > this.flipPagesCount ) {
-			
-				page = 0;
-			
-			}
-			
-			this.currentPage = page;
-			
-		},
-		_getState			: function() {
-			//this.state = this.History.getState().url.queryStringToJSON().page;
-		    this.state = 0;
-			
-		},
-		_isNumber			: function( n ) {
-		
-			return parseFloat( n ) == parseInt( n ) && !isNaN( n ) && isFinite( n );
-		
-		},
-		_adjustLayout		: function( page ) {
-		
-			var _self = this;
-			
-			this.$flipPages.each( function( i ) {
-				
-				var $page	= $(this);
-				
-				if( i === page - 1 ) {
-				
-					$page.css({
-						'-webkit-transform'	: 'rotateY( -180deg )',
-						'-moz-transform'	: 'rotateY( -180deg )',
-						'z-index'			: _self.flipPagesCount - 1 + i
-					});
-				
-				}
-				else if( i < page ) {
-				
-					$page.css({
-						'-webkit-transform'	: 'rotateY( -181deg )', // todo: fix this (should be -180deg)
-						'-moz-transform'	: 'rotateY( -181deg )', // todo: fix this (should be -180deg)
-						'z-index'			: _self.flipPagesCount - 1 + i
-					});
-				
-				}
-				else {
-				
-					$page.css({
-						'-webkit-transform'	: 'rotateY( 0deg )',
-						'-moz-transform'	: 'rotateY( 0deg )',
-						'z-index'			: _self.flipPagesCount - 1 - i
-					});
-				
-				}
-						
-			} );
-		
-		},
-		_saveState			: function() {
-		
-			// adds a new state to the history object and triggers the statechange event on the window
-			//var page = this.currentPage;
-			//if( this.History.getState().url.queryStringToJSON().page !== page ) {
-			//	this.History.pushState( null, null, '?page=' + page );
-			//}
-			
-		},
-		_layout				: function() {
-			
-			this._setLayoutSize();
-			
-			for( var i = 0; i <= this.pagesCount - 2; ++i ) {
-				
-				var	$page 		= this.$pages.eq( i ),
-					pageData	= {
-						theClass				: 'page',
-						theContentFront			: $page.html(),
-						theContentBack			: ( i !== this.pagesCount ) ? this.$pages.eq( i + 1 ).html() : '',
-						theStyle				: 'z-index: ' + ( this.pagesCount - i ) + ';left: ' + ( this.windowProp.width / 2 ) + 'px;',
-						theContentStyleFront	: 'width:' + this.windowProp.width + 'px;',
-						theContentStyleBack		: 'width:' + this.windowProp.width + 'px;'
-					};
-				
-				if( i === 0 ) {
-				
-					pageData.theClass += ' cover';
-				
-				}
-				else {
-					
-					pageData.theContentStyleFront += 'left:-' + ( this.windowProp.width / 2 ) + 'px';
-					
-					if( i === this.pagesCount - 2 ) {
-					
-						pageData.theClass += ' cover-back';
-					
-					}
-				
-				}
-				
-				$( '#pageTmpl' ).tmpl( pageData ).appendTo( this.$el );
-			
-			}
-			
-			this.$pages.remove();
-			this.$flipPages		= this.$el.children( 'div.page' );
-			this.flipPagesCount	= this.$flipPages.length;
-			
-			this._adjustLayout( ( this.state === undefined ) ? this.currentPage : this.state );
-			
-		},
-		_setLayoutSize		: function() {
-		
-			this.$el.css( {
-				width	: this.windowProp.width,
-				height	: this.windowProp.height
-			} );
-		
-		},
-		_initTouchSwipe		: function() {
-			
-			var _self = this;
-			
-			this.$el.swipe( {
-				threshold			: 0,
-				swipeStatus			: function( event, phase, start, end, direction, distance ) {
-					
-					var startX		= start.x,
-						endX		= end.x,
-						sym, angle,
-						oob			= false,
-						noflip		= false;
-					
-					// check the "page direction" to flip:
-					// if the page flips from the right to the left (right side page)
-					// or from the left to the right (left side page).
-					// check only if not animating
-					if( !_self._isAnimating() ) {
-					
-						( startX < _self.windowProp.width / 2 ) ? _self.flipSide = 'l2r' : _self.flipSide = 'r2l';
-					
-					}
-					
-					if( direction === 'up' || direction === 'down' ) {
-						
-						if( _self.angle === undefined || _self.angle === 0 ) {
-						
-							_self._removeOverlays();
-							return false;
-						
-						}
-						else {
-							
-							( _self.angle < 90 ) ? direction = 'right' : direction = 'left';
-							
-						}
-						
-					};
-					
-					_self.flipDirection = direction;
-					
-					// on the first & last page neighbors we don't flip
-					if( _self.currentPage === 0 && _self.flipSide === 'l2r' || _self.currentPage === _self.flipPagesCount && _self.flipSide === 'r2l' ) {
-						
-						return false;
-					
-					}
-					
-					// save ending point (symetric point):
-					// if we touch / start dragging on, say [x=10], then
-					// we need to drag until [window's width - 10] in order to flip the page 100%.
-					// if the symetric point is too close we are giving some margin:
-					// if we would start dragging right next to [window's width / 2] then
-					// the symmetric point would be very close to the starting point. A very short swipe
-					// would be enough to flip the page..
-					sym	= _self.windowProp.width - startX;
-					
-					var symMargin = 0.9 * ( _self.windowProp.width / 2 );
-					if( Math.abs( startX - sym ) < symMargin ) {
-					
-						( _self.flipSide === 'r2l' ) ? sym -= symMargin / 2 : sym += symMargin / 2;
-					
-					}
-					
-					// some special cases:
-					// Page is on the right side, 
-					// and we drag/swipe to the same direction
-					// ending on a point > than the starting point
-					// -----------------------
-					// |          |          |
-					// |          |          |
-					// |   sym    |     s    |
-					// |          |      e   |
-					// |          |          |
-					// -----------------------
-					if( endX > startX && _self.flipSide === 'r2l' ) {
-					
-						angle		= 0;
-						oob 		= true;
-						noflip		= true;
-					
-					}
-					// Page is on the right side, 
-					// and we drag/swipe to the opposite direction
-					// ending on a point < than the symmetric point
-					// -----------------------
-					// |          |          |
-					// |          |          |
-					// |   sym    |     s    |
-					// |  e       |          |
-					// |          |          |
-					// -----------------------
-					else if( endX < sym && _self.flipSide === 'r2l' ) {
-					
-						angle		= 180;
-						oob 		= true;
-					
-					}
-					// Page is on the left side, 
-					// and we drag/swipe to the opposite direction
-					// ending on a point > than the symmetric point
-					// -----------------------
-					// |          |          |
-					// |          |          |
-					// |    s     |   sym    |
-					// |          |      e   |
-					// |          |          |
-					// -----------------------
-					else if( endX > sym && _self.flipSide === 'l2r' ) {
-					
-						angle		= 0;
-						oob 		= true;
-					
-					}
-					// Page is on the left side, 
-					// and we drag/swipe to the same direction
-					// ending on a point < than the starting point
-					// -----------------------
-					// |          |          |
-					// |          |          |
-					// |    s     |   sym    |
-					// |   e      |          |
-					// |          |          |
-					// -----------------------
-					else if( endX < startX && _self.flipSide === 'l2r' ) {
-					
-						angle		= 180;
-						oob 		= true;
-						noflip		= true;
-					
-					}
-					// we drag/swipe to a point between 
-					// the starting point and symetric point
-					// -----------------------
-					// |          |          |
-					// |    s     |   sym    |
-					// |   sym    |    s     |
-					// |         e|          |
-					// |          |          |
-					// -----------------------
-					else {
-						
-						var s, e, val;
-						
-						( _self.flipSide === 'r2l' ) ?
-							( s = startX, e = sym, val = startX - distance ) : 
-							( s = sym, e = startX , val = startX + distance );
-						
-						angle = _self._calcAngle( val, s, e );
-						
-						if( ( direction === 'left' && _self.flipSide === 'l2r' ) || ( direction === 'right' && _self.flipSide === 'r2l' ) ) {
-							
-							noflip	= true;
-						
-						}
-						
-					}
-					
-					switch( phase ) {
-					
-						case 'start' :
-							
-							if( _self._isAnimating() ) {
-								
-								// the user can still grab a page while one is flipping (in this case not being able to move)
-								// and once the page is flipped the move/touchmove events are triggered..
-								_self.start = true;
-								return false;
-							
-							}
-							else {
-								
-								_self.start = false;
-							
-							}
-							
-							// check which page is clicked/touched
-							_self._setFlippingPage();
-							
-							// check which page comes before & after the one we are clicking
-							_self.$beforePage 	= _self.$flippingPage.prev();
-							_self.$afterPage 	= _self.$flippingPage.next();
-							
-							break;
-							
-						case 'move' :
-							
-							if( distance > 0 ) {
-							
-								if( _self._isAnimating() || _self.start ) {
-										
-									return false;
-								
-								}
-								
-								// adds overlays: shows shadows while flipping
-								if( !_self.hasOverlays ) {
-									
-									_self._addOverlays();
-									
-								}
-								
-								// save last angle
-								_self.angle = angle;
-								// we will update the rotation value of the page while we move it
-								_self._turnPage( angle , true );
-							
-							}
-							break;
-							
-						case 'end' :
-							
-							if( distance > 0 ) {
-								
-								if( _self._isAnimating() || _self.start ) return false;
-								
-								_self.isAnimating = true;
-								
-								// keep track if the page was actually flipped or not
-								// the data flip will be used later on the transitionend event
-								( noflip ) ? _self.$flippingPage.data( 'flip', false ) : _self.$flippingPage.data( 'flip', true );
-								
-								// if out of bounds we will "manually" flip the page,
-								// meaning there will be no transition set
-								if( oob ) {
-									
-									if( !noflip ) {
-										
-										// the page gets flipped (user dragged from the starting point until the symmetric point)
-										// update current page
-										_self._updatePage();
-									
-									}
-									
-									_self._onEndFlip( _self.$flippingPage );
-								
-								}
-								else {
-									
-									// save last angle
-									_self.angle = angle;
-									// calculate the speed to flip the page:
-									// the speed will depend on the current angle.
-									_self._calculateSpeed();
-							
-									switch( direction ) {
-										
-										case 'left' :
-											
-											_self._turnPage( 180 );
-											
-											if( _self.flipSide === 'r2l' ) {
-												
-												_self._updatePage();
-											
-											}
-											
-											break;
-										
-										case 'right' :
-											
-											_self._turnPage( 0 );
-											
-											if( _self.flipSide === 'l2r' ) {
-												
-												_self._updatePage();
-											
-											}
-											
-											break;
-										
-									};
-								
-								}
-								
-							}
-							
-							break;
-
-					};
-					
-				}
-				
-			} );
-		
-		},
-		_setFlippingPage	: function() {
-			
-			var _self = this;
-			
-			( this.flipSide === 'l2r' ) ?
-				this.$flippingPage 	= this.$flipPages.eq( this.currentPage - 1 ) :
-				this.$flippingPage	= this.$flipPages.eq( this.currentPage );
-			
-			this.$flippingPage.on( 'webkitTransitionEnd.flips transitionend.flips OTransitionEnd.flips', function( event ) {
-				
-				if( $( event.target ).hasClass( 'page' ) ) {
-				
-					_self._onEndFlip( $(this) );
-				
-				}
-				
-			});
-		
-		},
-		_updatePage			: function() {
-			
-			if( this.flipSide === 'r2l' ) {
-			
-				++this.currentPage;
-				
-			}
-			else if( this.flipSide === 'l2r' ) {
-			
-				--this.currentPage;
-				
-			}
-			
-		},
-		_isAnimating		: function() {
-		
-			if( this.isAnimating ) {
-			
-				return true;
-			
-			}
-			
-			return false;
-		
-		},
-		_loadEvents			: function() {
-			
-			var _self = this;
-			
-			$( window ).on( 'resize.flips', function( event ) {
-			
-				_self._getWinSize();
-				_self._setLayoutSize();
-				
-				var $contentFront	= _self.$flipPages.children( 'div.front' ).find( 'div.content' ),
-					$contentBack	= _self.$flipPages.children( 'div.back' ).find( 'div.content' )
-				
-				_self.$flipPages.css( 'left', _self.windowProp.width / 2 );
-				
-				$contentFront.filter( function( i ) {
-					return i > 0;
-				}).css( {
-					width	: _self.windowProp.width,
-					left	: -_self.windowProp.width / 2
-				} );
-				$contentFront.eq( 0 ).css( 'width', _self.windowProp.width );
-				
-				$contentBack.css( 'width', _self.windowProp.width );
-			
-			} );
-			
-			$( window ).on( 'statechange.flips', function( event ) {
-				
-				_self._getState();
-				_self._goto();
-				if( !_self.isAnimating ) {
-				
-					_self._adjustLayout( _self.currentPage );
-					
-				}
-				
-			} );
-			
-			this.$flipPages.find( '.box' ).on( 'click.flips', function( event ) {
-				
-				var $box 			= $(this),
-					$boxClose		= $( '<span class="box-close">close</span>' ),
-					transitionProp	= {
-						speed			: 450,
-						timingfunction	: 'linear'
-					},
-					$overlay		= $( '<div class="overlay">close</div>' ).css( {
-						'z-index'				: 9998,
-						'-webkit-transition' 	: 'opacity ' + transitionProp.speed + 'ms ' + transitionProp.timingfunction,
-						'-moz-transition' 		: 'opacity ' + transitionProp.speed + 'ms ' + transitionProp.timingfunction
-					} ).prependTo( $( 'body' ) ),
-					prop 			= {
-						width	: $box.outerWidth(true),
-						height	: $box.outerHeight(true),
-						left	: $box.offset().left,
-						top		: $box.offset().top
-					},
-					$placeholder 	= $box.clone().css( {
-						'position' 			: 'absolute',
-						'width'				: prop.width,
-						'height'			: prop.height,
-						'left'				: prop.left,
-						'top'				: prop.top,
-						'zIndex'			: 9999,
-						'overflow-y'		: 'auto',
-						'-webkit-transition': 'all ' + transitionProp.speed + 'ms ' + transitionProp.timingfunction,
-						'-moz-transition': 'all ' + transitionProp.speed + 'ms ' + transitionProp.timingfunction
-					} )
-					.insertAfter( $overlay )
-					.end()
-					.append( $boxClose.on( 'click.flips', function( event ) {
-						
-						$overlay.css( 'opacity', 0 );
-						
-						$placeholder.children().hide().end().removeClass( 'box-expanded' ).css( {
-							width			: _self.windowProp.width,
-							height			: _self.windowProp.height,
-							'overflow-y' 	: 'hidden'
-						} );
-						
-						setTimeout( function() {
-							$placeholder.css( {
-								left    : prop.left,
-								top		: prop.top,
-								width	: prop.width,
-								height	: prop.height,
-								'-webkit-transition' 	: 'all ' + transitionProp.speed + 'ms ' + transitionProp.timingfunction,
-								'-moz-transition' 	: 'all ' + transitionProp.speed + 'ms ' + transitionProp.timingfunction
-							});
-						}, 0 );
-						
-					}) )
-					.children()
-					.hide()
-					.end()
-					.on( 'webkitTransitionEnd.flips transitionend.flips OTransitionEnd.flips', function( event ) {
-						
-						if( $( event.target ).hasClass( 'box-expanded' ) ) { // expanding
-							
-							$(this).css( {
-								width	: '100%',
-								height	: '100%',
-								'-webkit-transition' : 'none',
-								'-moz-transition' : 'none'
-							} ).children().fadeIn();
-						
-						}
-						else { // collapsing
-							
-							$overlay.remove();
-							$(this).remove();
-						
-						}
-
-					});
-				
-				setTimeout( function() {
-					
-					$overlay.css( {
-						opacity	: 1
-					} );
-					
-					$placeholder.addClass( 'box-expanded' ).css( {
-						left    : 0,
-						top		: 0,
-						width	: _self.windowProp.width,
-						height	: _self.windowProp.height
-					});
-					
-				}, 0 );
-				
-			} );
-			
-		},
-		_onEndFlip			: function( $page ) {
-			
-			// if the page flips from left to right we will need to change the z-index of the flipped page
-			if( ( this.flipSide === 'l2r' && $page.data( 'flip' ) ) || 
-				( this.flipSide === 'r2l' && !$page.data( 'flip' ) )  ) {
-
-				$page.css( 'z-index', this.pagesCount - 2 - $page.index() );
-			
-			}
-			
-			this.$flippingPage.css( {
-				'-webkit-transition' 	: 'none',
-				'-moz-transition' 		: 'none'
-			} );
-			
-			// remove overlays
-			this._removeOverlays();
-			this._saveState();
-			this.isAnimating = false;
-			
-			// hack (todo: issues with safari / z-indexes)
-			if( this.flipSide === 'r2l' || ( this.flipSide === 'l2r' && !$page.data( 'flip' ) ) ) {
-			
-				this.$flippingPage.find('.back').css( '-webkit-transform', 'rotateY(-180deg)' );
-			
-			}
-			
-		},
-		// given the touch/drag start point (s), the end point (e) and a value in between (x)
-		// calculate the respective angle ( 0deg - 180deg )
-		_calcAngle			: function( x, s, e ) {
-			
-			return ( -180 / ( s - e ) ) * x + ( ( s * 180 ) / ( s - e ) );
-		
-		},
-		// given the current angle and the default speed, calculate the respective speed to accomplish the flip
-		_calculateSpeed		: function() {
-			
-			( this.flipDirection === 'right' ) ? 
-				this.flipSpeed = ( this.options.flipspeed / 180 ) * this.angle :
-				this.flipSpeed = - ( this.options.flipspeed / 180 ) * this.angle + this.options.flipspeed;
-		
-		},
-		_turnPage			: function( angle, update ) {
-			
-			// hack / todo: before page that was set to -181deg should have -180deg
-			this.$beforePage.css({
-				'-webkit-transform'	: 'rotateY( -180deg )',
-				'-moz-transform'	: 'rotateY( -180deg )'
-			});
-			
-			// if not moving manually set a transition to flip the page
-			if( !update ) {
-				
-				this.$flippingPage.css( {
-					'-webkit-transition' : '-webkit-transform ' + this.flipSpeed + 'ms ' + this.options.fliptimingfunction,
-					'-moz-transition' : '-moz-transform ' + this.flipSpeed + 'ms ' + this.options.fliptimingfunction
-				} );
-				
-			}
-			
-			// if page is a right side page, we need to set its z-index higher as soon the page starts to flip.
-			// this will make the page be on "top" of the left ones.
-			// note: if the flipping page is on the left side then we set the z-index after the flip is over.
-			// this is done on the _onEndFlip function.
-			var idx	= ( this.flipSide === 'r2l' ) ? this.currentPage : this.currentPage - 1;
-			if( this.flipSide === 'r2l' ) {
-				
-				this.$flippingPage.css( 'z-index', this.flipPagesCount - 1 + idx );
-			
-			}
-			
-			// hack (todo: issues with safari / z-indexes)
-			this.$flippingPage.find('.back').css( '-webkit-transform', 'rotateY(180deg)' );
-			
-			// update the angle
-			this.$flippingPage.css( {
-				'-webkit-transform'		: 'rotateY(-' + angle + 'deg)',
-				'-moz-transform'		: 'rotateY(-' + angle + 'deg)'
-			} );
-			
-			// show overlays
-			this._overlay( angle, update );
-			
-		},
-		_addOverlays		: function() {
-			
-			var _self = this;
-			
-			// remove current overlays
-			this._removeOverlays();
-			
-			this.hasOverlays	= true;
-			
-			// overlays for the flipping page. One in the front, one in the back.
-			
-			this.$frontoverlay	= $( '<div class="flipoverlay"></div>' ).appendTo( this.$flippingPage.find( 'div.front > .outer' ) );
-			this.$backoverlay	= $( '<div class="flipoverlay"></div>' ).appendTo( this.$flippingPage.find( 'div.back > .outer' ) )
-			
-			// overlay for the page "under" the flipping page.
-			if( this.$afterPage ) {
-				
-				this.$afterOverlay	= $( '<div class="overlay"></div>' ).appendTo( this.$afterPage.find( 'div.front > .outer' ) );
-			
-			}
-			
-			// overlay for the page "before" the flipping page
-			if( this.$beforePage ) {
-				
-				this.$beforeOverlay	= $( '<div class="overlay"></div>' ).appendTo( this.$beforePage.find( 'div.back > .outer' ) );
-			
-			}
-		
-		},
-		_removeOverlays		: function() {
-			
-			// removes the 4 overlays
-			if( this.$frontoverlay )
-				this.$frontoverlay.remove();
-			if( this.$backoverlay )
-				this.$backoverlay.remove();
-			if( this.$afterOverlay )
-				this.$afterOverlay.remove();
-			if( this.$beforeOverlay )
-				this.$beforeOverlay.remove();
-				
-			this.hasOverlays	= false;
-				
-		},
-		_overlay			: function( angle, update ) {
-			
-			// changes the opacity of each of the overlays.
-			if( update ) {
-				
-				// if update is true, meaning we are manually flipping the page,
-				// we need to calculate the opacity that corresponds to the current angle
-				var afterOverlayOpacity 	= - ( 1 / 90 ) * angle + 1,
-					beforeOverlayOpacity 	= ( 1 / 90 ) * angle - 1;
-				
-				if( this.$afterOverlay ) {
-				
-					this.$afterOverlay.css( 'opacity', afterOverlayOpacity );
-					
-				}
-				if( this.$beforeOverlay ) {
-				
-					this.$beforeOverlay.css( 'opacity', beforeOverlayOpacity );
-					
-				}
-				
-				// the flipping page will have a fixed value.
-				// todo: add a gradient instead.
-				var flipOpacity 	= 0.1;
-				this.$frontoverlay.css( 'opacity', flipOpacity );
-				this.$backoverlay.css( 'opacity', flipOpacity );
-				
-			}
-			else {
-				
-				var _self = this;
-				
-				// if we release the mouse / touchend then we will set a transition for the overlays.
-				// we will need to take in consideration the current angle, the speed (given the angle)
-				// and the delays for each overlay (the opacity of the overlay will only change
-				// when the flipping page is on the same side).
-				var afterspeed	= this.flipSpeed,
-					beforespeed	= this.flipSpeed,
-					margin		= 60; // hack (todo: issues with safari / z-indexes)
-				
-				if( this.$afterOverlay ) {
-				
-					var afterdelay = 0;
-					
-					if( this.flipDirection === 'right' ) {
-						
-						if( this.angle > 90 ) {
-							
-							afterdelay 	= Math.abs( this.flipSpeed - this.options.flipspeed / 2 - margin );
-							afterspeed	= this.options.flipspeed / 2 - margin ;
-						
-						}
-						else {
-							
-							afterspeed -= margin;
-						
-						}
-						
-					}
-					else {
-						
-						afterspeed	= Math.abs( this.flipSpeed - this.options.flipspeed / 2 );
-					
-					}
-					
-					if( afterspeed <= 0 ) afterspeed = 1;
-					
-					this.$afterOverlay.css( {
-						'-webkit-transition' 	: 'opacity ' + afterspeed + 'ms ' + this.options.fliptimingfunction + ' ' + afterdelay + 'ms',
-						'-moz-transition' 		: 'opacity ' + afterspeed + 'ms ' + this.options.fliptimingfunction + ' ' + afterdelay + 'ms',
-						'opacity'				: ( this.flipDirection === 'left' ) ? 0 : 1
-					} ).on( 'webkitTransitionEnd.flips transitionend.flips OTransitionEnd.flips', function( event ) {
-						if( _self.$beforeOverlay ) _self.$beforeOverlay.off( 'webkitTransitionEnd.flips transitionend.flips OTransitionEnd.flips');
-						setTimeout( function() {
-							_self._adjustLayout(_self.currentPage);
-						}, _self.options.flipspeed / 2 - margin );
-					} );
-					
-				}
-				
-				if( this.$beforeOverlay ) {
-				
-					var beforedelay = 0;
-					
-					if( this.flipDirection === 'left' )  {
-						
-						if( this.angle < 90 ) {
-						
-							beforedelay = Math.abs( this.flipSpeed - this.options.flipspeed / 2 - margin ) ;
-							beforespeed = this.options.flipspeed / 2 - margin;
-						
-						}
-						else {
-							
-							beforespeed -= margin;
-						
-						}
-						
-					}
-					else {
-						
-						beforespeed = Math.abs( this.flipSpeed - this.options.flipspeed / 2 );
-						
-					}
-					
-					if( beforespeed <= 0 ) beforespeed = 1;
-					
-					this.$beforeOverlay.css( {
-						'-webkit-transition'	: 'opacity ' + beforespeed + 'ms ' + this.options.fliptimingfunction + ' ' + beforedelay + 'ms',
-						'-moz-transition'		: 'opacity ' + beforespeed + 'ms ' + this.options.fliptimingfunction + ' ' + beforedelay + 'ms',
-						'opacity'				: ( this.flipDirection === 'left' ) ? 1 : 0
-					} ).on( 'webkitTransitionEnd.flips transitionend.flips OTransitionEnd.flips', function( event ) {
-						if( _self.$afterOverlay ) _self.$afterOverlay.off( 'webkitTransitionEnd.flips transitionend.flips OTransitionEnd.flips');
-						_self._adjustLayout(_self.currentPage);
-					} );
-					
-				}
-				
-			}
-				
-		}
-	};
-	
-	var logError 		= function( message ) {
-		if ( this.console ) {
-			console.error( message );
-		}
-	};
-	
-	$.fn.flips			= function( options ) {
-		
-		if ( typeof options === 'string' ) {
-			
-			var args = Array.prototype.slice.call( arguments, 1 );
-			
-			this.each(function() {
-			
-				var instance = $.data( this, 'flips' );
-				
-				if ( !instance ) {
-					logError( "cannot call methods on flips prior to initialization; " +
-					"attempted to call method '" + options + "'" );
-					return;
-				}
-				
-				if ( !$.isFunction( instance[options] ) || options.charAt(0) === "_" ) {
-					logError( "no such method '" + options + "' for flips instance" );
-					return;
-				}
-				
-				instance[ options ].apply( instance, args );
-			
-			});
-		
-		} 
-		else {
-		
-			this.each(function() {
-			
-				var instance = $.data( this, 'flips' );
-				if ( !instance ) {
-					$.data( this, 'flips', new $.Flips( options, this ) );
-				}
-			});
-		
-		}
-		
-		return this;
-		
-	};
-	
-})( window );
-
 // @tag full-page
 // @require C:\dev\mjgApp\js\jquery-1.9.1.js
 // @require C:\dev\mjgApp\js\modernizr.custom.08464.js
-// @require C:\dev\mjgApp\js\jquery.tmpl.min.js
-// @require C:\dev\mjgApp\js\jquery.history.js
-// @require C:\dev\mjgApp\js\core.string.js
-// @require C:\dev\mjgApp\js\jquery.touchSwipe-1.2.5.js
-// @require C:\dev\mjgApp\js\jquery.flips.js
 // @require C:\dev\mjgApp\app.js
 

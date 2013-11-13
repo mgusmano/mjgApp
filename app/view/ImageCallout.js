@@ -1,27 +1,29 @@
 Ext.define('mjgApp.view.ImageCallout', {
     extend: 'Ext.Panel',
     xtype: 'imagecallout',
-    //cls: 'pastwork',
 
     initialize: function () {
-        this.items.items[0].setTitle(this.getTitle() + ' (tap to close)');
+        this.items.items[0].setTitle(this.getTitle());
         var i = this.getSrc();
         var theStart = 'resources/images/';
         var s = i.indexOf(theStart) + theStart.length;
         var e = i.indexOf('.');
         var theImage = i.substring(s, e);
         this.setContentEl(theImage);
-        var me = this;
-        this.mon(this.el, {
-            tap: function (e, t) {
-                me.destroy();
-            }
-        });
+        //var me = this;
+        //this.mon(this.el, {
+        //    tap: function (e, t) {
+        //        me.destroy();
+        //    }
+        //});
         this.callParent(arguments);
     },
 
     config: {
-
+        listeners: {
+            activate: function (newActiveItem, me, oldActiveItem, eOpts) {
+            }
+        },
         title: null,
         html: null,
         src: null,
@@ -54,33 +56,41 @@ Ext.define('mjgApp.view.ImageCallout', {
                 docked: 'top',
                 xtype: 'toolbar',
                 pack: 'center',
-                title: ''
-                //items: [
-                //   { xtype: 'spacer' },
-                //   {
-                //       xtype: 'button',
-                //       width: 32,
-                //       iconCls: "delete",
-                //       ui: "plain",
-                //       style: {
-                //           background: 'transparent',
-                //           color: '#ffffff',
-                //           padding: '0 0 0 0'
-                //       },
-                //       listeners: {
-                //           tap: function () {
-                //               this.up('panel').hide();
-                //           }
-                //       }
-                //   }
-                //]
+                title: '',
+                style: {fontFamily: 'Arial' },
+                items: [
+                   { xtype: 'spacer' },
+                   {
+                       xtype: 'button',
+                       width: 32,
+                       iconCls: "delete",
+                       ui: "plain",
+                       style: {
+                           background: 'transparent',
+                           color: '#ffffff',
+                           padding: '0 0 0 0'
+                       },
+                       listeners: {
+                           tap: function () {
+                               //this.up('panel').hide();
+                               this.up('panel').destroy();
+                           }
+                       }
+                   }
+                ]
             }
         ]
     }
 });
 
 $(function () {
-    $('body').on('click', '.pastwork', function () {
+    $('body').on('click', '.pastworkxx', function () {
         Ext.getCmp('c' + this.id).destroy();
+    });
+});
+
+$(function () {
+    $('body').on('click', '.pastcompany', function () {
+        Ext.getCmp('d' + this.id).destroy();
     });
 });

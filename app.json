@@ -83,7 +83,7 @@
             "update": "delta"
         },
         {
-            "path": "cover.css",
+            "path": "css/cover.css",
             "update": "delta"
         },
         {
@@ -92,10 +92,6 @@
         },
         {
             "path": "css/demo.css",
-            "update": "delta"
-        },
-        {
-            "path": "css/jquery.mobile.flip.css",
             "update": "delta"
         }
     ],
@@ -126,6 +122,7 @@
      * Extra resources to be copied along when build
      */
     "resources": [
+        "rimages",
         "resources/images",
         "resources/icons",
         "resources/startup"

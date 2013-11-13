@@ -2,6 +2,7 @@ Ext.define('mjgApp.view.Main', {
     extend: 'Ext.tab.Panel',
     xtype: 'main',
     requires: [
+        'Ext.data.Store',
         'Ext.TitleBar',
         'Ext.Video'
     ],
@@ -15,38 +16,41 @@ Ext.define('mjgApp.view.Main', {
         var theItems = [];
         var theChild = {};
 
-        if (Ext.os.deviceType === 'Phone') {
-            theChild = {};
-            theChild.xtype = 'currentphone';
-            theChild.title = 'Current Work';
-            theChild.iconCls = 'home';
-            theItems.push(theChild);
-
-            theChild = {};
-            theChild.xtype = 'pastphone';
-            theChild.title = 'Past Work';
-            theChild.iconCls = 'favorites';
-            theItems.push(theChild);
-        }
-        else {
+        if (Ext.os.deviceType != 'Phone') {
             theChild = {};
             theChild.xtype = 'alltablet';
-            theChild.title = 'Work';
+            theChild.title = 'Home';
             theChild.iconCls = 'home';
             theItems.push(theChild);
 
             theChild = {};
             theChild.xtype = 'currenttablet';
-            theChild.title = 'Current Work';
+            theChild.title = 'Current';
             theChild.iconCls = 'favorites';
             theItems.push(theChild);
+        }
+        else {
+            theChild = {};
+            theChild.xtype = 'currentphone';
+            theChild.title = 'Current';
+            theChild.iconCls = 'home';
+            theItems.push(theChild);
+
+            theChild = {};
+            theChild.xtype = 'pastphone';
+            theChild.title = 'Past';
+            theChild.iconCls = 'favorites';
+            theItems.push(theChild);
+
         }
 
         theChild = {};
         theChild.xtype = 'dashboard';
         theChild.title = 'Companies';
         theChild.iconCls = 'info';
-        theItems.push(theChild)
+        theChild.theFont = 'f30';
+
+        theItems.push(theChild);
 
         this.add(theItems);
     },

@@ -9,7 +9,6 @@
 Ext.define('mjgApp.view.Cover', {
     extend: 'Ext.DataView',
     xtype: 'cover',
-
     config:{
        /**
          * @cfg {Number} selectedIndex The idx from the Store that will be active first. Only one item can be active at a
@@ -221,12 +220,19 @@ Ext.define('mjgApp.view.Cover', {
     getBaseItemBox: function(containerBox){
         var cH = containerBox.height,
             cW = containerBox.width,
-            //sizeFactor = (cW > cH) ? 0.68 : 0.52,
-            sizeFactor = (cW > cH) ? 0.75 : 0.65,
+            sizeFactor = (cW > cH) ? 0.50 : 0.50,
             h, w;
 
         var height = (window.innerHeight > 0) ? window.innerHeight : screen.Height;
+        h = w = Math.min(containerBox.width, containerBox.height) * sizeFactor;
+        theTop = (height - h - (h / 2)) /2;
 
+       // console.log('height: ' + height);
+        //console.log('h: ' + h);
+        //console.log('theTop: ' + theTop);
+
+        //640-200 - (200/2) =340 /2 ==top
+        //h = w = 200;
         //var orientation = Ext.Viewport.getOrientation();
         //var theTop = 0;
         //if (orientation === 'portrait') {
@@ -236,16 +242,13 @@ Ext.define('mjgApp.view.Cover', {
         //    theTop = 30;
         //}
 
-        if (height < 350) {
-            theTop = 30;
-        }
-        else {
-            var theTabBar = 100;
-            theTop = (height - theTabBar) / 3;
-        }
-
-        //h = w = Math.min(containerBox.width, containerBox.height) * sizeFactor;
-        h = w = 200;
+        //if (height < 350) {
+        //    theTop = 30;
+        //}
+        //else {
+        //    var theTabBar = 100;
+        //    theTop = (height - theTabBar) / 3;
+        //}
 
         return {
             top: theTop,
@@ -306,7 +309,7 @@ Ext.define('mjgApp.view.Cover', {
             items, idx = 0, l,
             orientation = Ext.Viewport.getOrientation();
 
-        this.setOrientation(orientation);
+        //this.setOrientation(orientation);
 
         this.callParent([me]);
 

@@ -1,8 +1,9 @@
 Ext.define('mjgApp.view.ImagePanel', {
     extend: 'Ext.Container',
     xtype: 'imagepanel',
-    style: { backgroundColor: '#FFFFFF' },
-
+    requires: [
+        'Ext.Img'
+    ],
     initialize: function () {
         this.down('#theHeader').setHtml(this.getHeader());
 
@@ -16,6 +17,7 @@ Ext.define('mjgApp.view.ImagePanel', {
     },
 
     config: {
+        style: { backgroundColor: '#FFFFFF' },
         image: null,
         header: null,
         padding: '0 5 0 5', layout: 'vbox',

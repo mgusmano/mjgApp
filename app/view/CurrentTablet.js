@@ -6,7 +6,9 @@ Ext.define('mjgApp.view.CurrentTablet', {
         direction: 'horizontal',
         items: [
             //{ xtype: 'imagepanel', image: 'SharePointRest.png', header: 'SharePoint REST API Remote List Reader'},
-            { xtype: 'imagepanel', image: 'EMSPEED12.png', header: 'HTML5 Single Page Application', style: { backgroundColor: '#FFFFFF' } },
+            { xtype: 'imagepanel', image: 'mobile.png', header: 'Project Management Mobile Application' },
+            { xtype: 'imagepanel', image: 'me.png', header: 'This application - iPad resume' },
+            { xtype: 'imagepanel', image: 'EMSPEED12a.png', header: 'HTML5 Single Page Application', style: { backgroundColor: '#FFFFFF' } },
             { xtype: 'imagepanel', image: 'EMSPEEDPOC.jpg', header: 'HTML5 Graphical Proof of Concept' },
             { xtype: 'imagepanel', image: 'EMSPEED10.jpg', header: 'HTML5/Silverlight Web Application', style: { backgroundColor: '#FFFFFF' } },
             { xtype: 'imagepanel', image: 'NalcoEquip.jpg', header: 'ASP.NET/Silverlight Web Application' },
