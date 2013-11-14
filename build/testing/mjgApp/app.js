@@ -67331,30 +67331,31 @@ Ext.define('mjgApp.view.Main', {
         var theItems = [];
         var theChild = {};
 
-//        alert(Ext.os.deviceType);
         if (Ext.os.deviceType != 'Phone') {
+
             theChild = {};
             theChild.xtype = 'alltablet';
-            theChild.title = 'Work';
+            theChild.title = 'Home';
             theChild.iconCls = 'home';
             theItems.push(theChild);
 
             theChild = {};
             theChild.xtype = 'currenttablet';
-            theChild.title = 'Current Work';
+            theChild.title = 'Current';
             theChild.iconCls = 'favorites';
             theItems.push(theChild);
         }
         else {
+
             theChild = {};
             theChild.xtype = 'currentphone';
-            theChild.title = 'Current Work';
+            theChild.title = 'Current';
             theChild.iconCls = 'home';
             theItems.push(theChild);
 
             theChild = {};
             theChild.xtype = 'pastphone';
-            theChild.title = 'Past Work';
+            theChild.title = 'Past';
             theChild.iconCls = 'favorites';
             theItems.push(theChild);
 
@@ -67364,29 +67365,15 @@ Ext.define('mjgApp.view.Main', {
         theChild.xtype = 'dashboard';
         theChild.title = 'Companies';
         theChild.iconCls = 'info';
+        theChild.theFont = 'f30';
+
         theItems.push(theChild);
 
         this.add(theItems);
     },
 
-
     config: {
-        tabBarPosition: 'bottom',
-        xitems: [
- 
-            //{
-            //    xtype: 'container',
-            //    title: 'Companies',
-            //    iconCls: 'info',
-            //    contentEl: 'qrcode',
-            //    listeners: {
-            //        painted: function (element, eOpts) {
-            //            $('#qrcode').qrcode({ width: 264, height: 264, text: "{projectId:97266}" });
-            //        }
-            //    }
-            //},
-
-        ]
+        tabBarPosition: 'bottom'
     }
 });
 
@@ -67617,12 +67604,11 @@ Ext.define('mjgApp.view.Cover', {
 
         var height = (window.innerHeight > 0) ? window.innerHeight : screen.Height;
         h = w = Math.min(containerBox.width, containerBox.height) * sizeFactor;
-
         theTop = (height - h - (h / 2)) /2;
 
-        console.log('height: ' + height);
-        console.log('h: ' + h);
-        console.log('theTop: ' + theTop);
+       // console.log('height: ' + height);
+        //console.log('h: ' + h);
+        //console.log('theTop: ' + theTop);
 
         //640-200 - (200/2) =340 /2 ==top
         //h = w = 200;
@@ -67760,78 +67746,98 @@ Ext.define('mjgApp.view.Dashboard', {
                
                         
       
+
+    initialize: function () {
+        var theItems = [];
+        var theChild = {};
+
+        var orientation = Ext.Viewport.getOrientation();
+        var theMax = 0;
+        if (orientation === 'portrait') {
+            theMax = window.innerHeight;
+        }
+        else {
+            theMax = window.innerWidth;
+        }
+        var theFont;
+        var theFontBody;
+        switch (true) {
+            case (theMax < 600):
+                theFont = 'f10';
+                theFontBody = 'f8';
+                break;
+            case ((theMax >= 601) && (theMax <= 1200)):
+                theFont = 'f14';
+                theFontBody = 'f12';
+                break;
+            case ((theMax >= 1201)):
+                theFont = 'f20';
+                theFontBody = 'f88';
+                break;
+            default:
+                theFont = 'f12';
+                theFontBody = 'f10';
+                break;
+        }
+
+        theChild = {};
+        theChild.xtype = 'cover';
+        theChild.flex = 1;
+        theChild.itemCls = 'my-cover-item';
+        theChild.id = 'coverHistory';
+        theChild.selectedIndex = 2;
+        theChild.itemTpl = [
+            '<div style="width:100%px;height:100%;border-style:solid;border-width:1px;background-color:white;padding:3px 3px 3px 3px;">',
+                '<div class="' + theFont + ' myName" xstyle="font-size:14px;font-weight:bold;color:#146BA8;font-style:italic;">{company}</div>',
+                '<div class="' + theFont + ' "  xstyle="font-size:10px;font-weight:bold;color:#146BA8;">{title}</div>',
+                '<div class="' + theFont + ' " xstyle="font-size:10px;font-weight:bold;color:#000000;">{tenure}</div>',
+                '<div class="' + theFont + ' " style="margin:5px 0px 0px 0px;">{summary} </div>',
+                //'<button co="{co}" name="{company}" class="more" style="font-size:10px;margin:5px 0px 0px 140px;">more</button>',
+            '</div>'
+        ];
+        theChild.store = Ext.create("Ext.data.Store", { 
+            fields: ['co', 'company', 'title', 'tenure', 'summary'],
+            data: [
+                { co: 'hitachi', company: 'Hitachi Consulting', title: 'Senior Manager/Architect', tenure: 'Oct 2009 - Present', summary: 'Senior Manager with Hitachi Consulting based in the Houston office. Involved in assisting and mentoring clients in the development and implementation of solutions that utilize Microsoft SharePoint related technologies including ASP.NET and HTML5.' },
+                { co: 'img', company: 'The Information Management Group', title: 'Partner', tenure: 'Sept 1997- Oct 2009', summary: 'Director of Emerging Technologies, responsible for fostering an understanding of how new and emerging technologies could be utilized for IMG and its clients.  Lead Technical Trainer focusing on Microsoft Development technologies.' },
+                { co: 'bismarck', company: 'The Bismarck Group', title: 'Founder', tenure: 'Mar 1995 - Sept 1997', summary: 'Chief Technology Officer, responsible for providing Client Server software integration services to high growth, information-centric organizations and for building solutions that could be sold as \'Customizable Software Products\'.' },
+                { co: 'lante', company: 'Lante Corporation', title: 'Director of Consulting', tenure: 'Nov 1992 - Mar 1995', summary: 'Director of Consulting, responsible for the entire consulting organization, including all aspects of project execution, profit and loss (utilization) responsibility,  performance reviews,  recruiting,  and staffing.' },
+                { co: 'andersen', company: 'Andersen Consulting', title: 'Manager', tenure: 'May 1984 - Nov 1992', summary: 'Staff Consultant and Manager in the Chicago office, spending first 4 years on a variety of medium and large systems development projects. Promoted to a Project Manager after four years and moved to role with Emerging Technologies Group.' }
+            ]
+        });
+        theItems.push(theChild);
+        this.add(theItems);
+        this.callParent(arguments);
+    },
+
     config: {
         title: null,
-        layout: 'vbox',
-        items: [
-		{
-		    xtype: 'cover',
-		    flex: 1,
-		    itemCls: 'my-cover-item',
-		    //These are just for demo purposes.
-		    id: 'coverHistory',
-		    //height:  300 ,
-		   // width: '100%',
-		    //height: (Ext.os.deviceType !== 'Phone')? 300: undefined,
-		    //width: (Ext.os.deviceType !== 'Phone')? 800: undefined,
-		    //end-demo
-		    itemTpl : [
-				'<div style="width:100%px;height:100%;border-style:solid;border-width:1px;background-color:white;padding:5px 5px 5px 5px;">',
-                    '<div style="font-size:14px;font-weight:bold;color:#146BA8;font-style:italic;">{company}</div>',
-                    '<div style="font-size:10px;font-weight:bold;color:#146BA8;">{title}</div>',
-                    '<div style="font-size:10px;font-weight:bold;color:#000000;">{tenure}</div>',
-                    '<div style="font-size:10px;margin:5px 0px 0px 0px;">{summary} </div>',
-                    //'<button co="{co}" name="{company}" class="more" style="font-size:10px;margin:5px 0px 0px 140px;">more</button>',
-				'</div>'
-		    ],
-		    store: Ext.create("Ext.data.Store", { 
-		        fields: ['co', 'company', 'title', 'tenure', 'summary'],
-		        data: [
-                    { co: 'hitachi', company: 'Hitachi Consulting', title: 'Senior Manager/Architect', tenure: 'Oct 2009 - Present', summary: 'Senior Manager with Hitachi Consulting based in the Houston office. Involved in assisting and mentoring clients in the development and implementation of solutions that utilize Microsoft SharePoint related technologies including ASP.NET and HTML5.' },
-                    { co: 'img', company: 'The Information Management Group', title: 'Partner', tenure: 'Sept 1997- Oct 2009', summary: 'Director of Emerging Technologies, responsible for fostering an understanding of how new and emerging technologies could be utilized for IMG and its clients.  Lead Technical Trainer focusing on Microsoft Development technologies.' },
-                    { co: 'bismarck', company: 'The Bismarck Group', title: 'Founder', tenure: 'Mar 1995 - Sept 1997', summary: 'Chief Technology Officer, responsible for providing Client Server software integration services to high growth, information-centric organizations and for building solutions that could be sold as \'Customizable Software Products\'.' },
-                    { co: 'lante', company: 'Lante Corporation', title: 'Director of Consulting', tenure: 'Nov 1992 - Mar 1995', summary: 'Director of Consulting, responsible for the entire consulting organization, including all aspects of project execution, profit and loss (utilization) responsibility,  performance reviews,  recruiting,  and staffing.' },
-                    { co: 'andersen', company: 'Andersen Consulting', title: 'Manager', tenure: 'May 1984 - Nov 1992', summary: 'Staff Consultant and Manager in the Chicago office, spending first 4 years on a variety of medium and large systems development projects. Promoted to a Project Manager after four years and moved to role with Emerging Technologies Group.' }
-		        ]
-		    }),
-
-		    selectedIndex: 2
-		    //listeners:{
-		    //    itemdoubletap: function(){
-		    //        console.log('itemdbltap', arguments);
-		    //    },
-		    //    itemtap: function(cover, idx){
-		    //        console.log('itemtap', arguments);
-		    //    },
-		    //    scope: this
-		    //}
-		}
- 
-        ],
-        listeners: {
-            activate: function (newActiveItem, me, oldActiveItem, eOpts) {
-                var me = newActiveItem;
-                //com.setTitle(me, 'Welcome Marc');
-                try {
-                }
-                catch (exception) {
-                }
-            }
-        }
+        layout: 'vbox'
+        //theFont: null,
+        //listeners: {
+        //    activate: function (newActiveItem, me, oldActiveItem, eOpts) {
+        //        var me = newActiveItem;
+        //        //com.setTitle(me, 'Welcome Marc');
+        //        try {
+        //        }
+        //        catch (exception) {
+        //        }
+        //    }
+        //}
     }
 
 });
 
-$(function () {
-    $('body').on('click', '.more', function () {
+//$(function () {
+//    $('body').on('click', '.more', function () {
 
-        var co = $(this).attr('co');
-        //var name = $(this).attr('name');
-        var overlay = Ext.Viewport.add({ xtype: 'imagecallout', title: 'Details', src: 'resources/images/' + co + '.jpg', id: 'd'+co });
-        overlay.show();
-        overlay.remove();
-    });
-});
+//        var co = $(this).attr('co');
+//        //var name = $(this).attr('name');
+//        var overlay = Ext.Viewport.add({ xtype: 'imagecallout', title: 'Details', src: 'resources/images/' + co + '.jpg', id: 'd'+co });
+//        overlay.show();
+//        overlay.remove();
+//    });
+//});
 
 Ext.define('mjgApp.view.AllTablet', {
     extend:  Ext.Container ,
@@ -67866,38 +67872,55 @@ Ext.define('mjgApp.view.AllTablet', {
         bodyStyle: { backgroundColor: '#FFFFFF' },
         //contentEl: 'fliparea',
         isLoaded: false,
+        isPainted: false,
+
         listeners: {
 
-            activate2: function (newActiveItem, me, oldActiveItem, eOpts) {
-                if (this.getIsLoaded() === false) {
-                    this.setIsLoaded(true);
-                    var $container = $('#flip'),
-                        $pages = $container.children().hide();
-                    Modernizr.load({
-                        test: Modernizr.csstransforms3d && Modernizr.csstransitions,
-                        yep: ['js/jquery.tmpl.min.js', 'js/jquery.history.js', 'js/core.string.js', 'js/jquery.touchSwipe-1.2.5.js', 'js/jquery.flips.js'],
-                        nope: 'css/fallback.css',
-                        callback: function (url, result, key) {
-                            if (url === 'css/fallback.css') {
-                                $pages.show();
+            painted: function (me, eOpts) {
+                if (this.getIsPainted() === false) {
+                    this.setIsPainted(true);
+                    if (Ext.browser.is.IE) {
+                        $('#theBrowser').html('this page does not work in Internet Explorer</br>use a WebKit browser (Chrome, FireFox or Safari)');
+                    }
+                    if (Ext.browser.is.WebKit) {
+                        if (Ext.os.deviceType != 'Phone') {
+                            if (Ext.os.deviceType != 'Tablet') {
+                                $('#theBrowser').html('best viewed on iPad (but works great here too!)');
+                                $("#buttonMobile").append('<button class="launch f16" onclick="v2pocbuild()">See live demo</button>')
+                                $("#buttonEMSPEED12").append('<button class="launch f16" onclick="mjguitester()">See live demo</button>')
                             }
-                            else if (url === 'js/jquery.flips.js') {
-                                $('#flip').flips();
+                            else {
+                                $("#buttonMobile").append('<span style="color:red;" class="f16" >Live demo at http://v2pocbuild.azurewebsites.net </span>')
+                                $("#buttonEMSPEED12").append('<span style="color:red;" class="f16" >Live demo at http://mjguitester.azurewebsites.net/sites/97370/Portal.aspx </span>')
                             }
-
                         }
-                    });
+                    }
                 }
             }
         }
     }
 });
 
-$(function () {
-    $('body').on('click', '.img-cont', function () {
-        alert('img-cont');
-    });
-});
+//$(function () {
+//    $('body').on('click', '.img-cont', function () {
+//        var theBack = $(this).attr('back');
+//        if (theBack != undefined) {
+//            var overlay = Ext.Viewport.add({ xtype: 'details', title: 'Project Details', src: 'resources/images/' + 'f' + theBack + '.png', id: 'gmobile' });
+//            overlay.show();
+//            overlay.remove();
+//        }
+//    });
+//});
+
+function v2pocbuild() {
+    window.open('http://v2pocbuild.azurewebsites.net/', 'demo', 'height=568,width=320,left=50,top=50,titlebar=no,toolbar=no,menubar=no,location=no,directories=no,status=no')
+}
+
+function mjguitester() {
+    var h = screen.height - 200;
+    var w = screen.width - 100;
+    window.open('http://mjguitester.azurewebsites.net/sites/97370/Portal.aspx', 'demo', 'height=' + h  + ',width=' + w + ',left=50,top=50,titlebar=no,toolbar=no,menubar=no,location=no,directories=no,status=no')
+}
 
 Ext.define('mjgApp.view.ImagePanel', {
     extend:  Ext.Container ,
@@ -67948,7 +67971,9 @@ Ext.define('mjgApp.view.CurrentTablet', {
         direction: 'horizontal',
         items: [
             //{ xtype: 'imagepanel', image: 'SharePointRest.png', header: 'SharePoint REST API Remote List Reader'},
-            { xtype: 'imagepanel', image: 'EMSPEED12.png', header: 'HTML5 Single Page Application', style: { backgroundColor: '#FFFFFF' } },
+            { xtype: 'imagepanel', image: 'mobile.png', header: 'Project Management Mobile Application' },
+            { xtype: 'imagepanel', image: 'me.png', header: 'This application - iPad resume' },
+            { xtype: 'imagepanel', image: 'EMSPEED12a.png', header: 'HTML5 Single Page Application', style: { backgroundColor: '#FFFFFF' } },
             { xtype: 'imagepanel', image: 'EMSPEEDPOC.jpg', header: 'HTML5 Graphical Proof of Concept' },
             { xtype: 'imagepanel', image: 'EMSPEED10.jpg', header: 'HTML5/Silverlight Web Application', style: { backgroundColor: '#FFFFFF' } },
             { xtype: 'imagepanel', image: 'NalcoEquip.jpg', header: 'ASP.NET/Silverlight Web Application' },
@@ -67970,6 +67995,8 @@ Ext.define('mjgApp.view.CurrentPhone', {
             { xtype: 'container', padding: '5 5 5 5', contentEl: 'summary', style: {backgroundColor: '#FFFFFF'} },
             //{ xtype: 'basepage', image: 'SharePointRest.png', header: 'SharePoint REST API Remote List Reader' },
             { xtype: 'imagepanel', image: 'EMSPEED12.png', header: 'HTML5 Single Page Application' },
+            { xtype: 'imagepanel', image: 'mobile.png', header: 'Project Management Mobile Application' },
+            { xtype: 'imagepanel', image: 'me.png', header: 'This application - iPad resume' },
             { xtype: 'imagepanel', image: 'EMSPEEDPOC.jpg', header: 'HTML5 Graphical Proof of Concept', style: { backgroundColor: '#FFFFFF' } },
             { xtype: 'imagepanel', image: 'EMSPEED10.jpg', header: 'HTML5/Silverlight Web Application' },
             { xtype: 'imagepanel', image: 'NalcoEquip.jpg', header: 'ASP.NET/Silverlight Web Application', style: { backgroundColor: '#FFFFFF' } },
@@ -68095,6 +68122,104 @@ $(function () {
     });
 });
 
+Ext.define('mjgApp.view.Details', {
+    extend:  Ext.Panel ,
+    xtype: 'details',
+
+    initialize: function () {
+        this.items.items[0].setTitle(this.getTitle());
+        var i = this.getSrc();
+        var theStart = 'resources/images/';
+        var s = i.indexOf(theStart) + theStart.length;
+        var e = i.indexOf('.');
+        var theImage = i.substring(s, e);
+        this.setContentEl(theImage);
+        //var me = this;
+        //this.mon(this.el, {
+        //    tap: function (e, t) {
+        //        me.destroy();
+        //    }
+        //});
+        this.callParent(arguments);
+    },
+
+    config: {
+        back: null,
+        listeners: {
+            activate: function (newActiveItem, me, oldActiveItem, eOpts) {
+            }
+        },
+        title: null,
+        html: null,
+        src: null,
+        modal: true,
+        centered: true,
+        hideOnMaskTap: true,
+        showAnimation: {
+            type: 'popIn',
+            duration: 250,
+            easing: 'ease-out'
+        },
+        hideAnimation: {
+            type: 'popOut',
+            duration: 250,
+            easing: 'ease-out'
+        },
+
+
+
+        width: (Ext.os.deviceType == 'Phone') ? '95%' : '100%',
+        height: Ext.os.deviceType == 'Phone' ? '95%' : '100%',
+        //width: '60%',
+        //height: '50%',
+        //width: Ext.filterPlatform('ie10') ? '100%' : (Ext.os.deviceType == 'Phone') ? 290 : 800,
+        //height: Ext.filterPlatform('ie10') ? '30%' : Ext.os.deviceType == 'Phone' ? 490 : 400,
+        styleHtmlContent: true,
+        scrollable: true,
+        items: [
+            {
+                docked: 'top',
+                xtype: 'toolbar',
+                pack: 'center',
+                title: '',
+                style: {fontFamily: 'Arial' },
+                items: [
+                   { xtype: 'spacer' },
+                   {
+                       xtype: 'button',
+                       width: 32,
+                       iconCls: "delete",
+                       ui: "plain",
+                       style: {
+                           background: 'transparent',
+                           color: '#ffffff',
+                           padding: '0 0 0 0'
+                       },
+                       listeners: {
+                           tap: function () {
+                               //this.up('panel').hide();
+                               this.up('panel').destroy();
+                           }
+                       }
+                   }
+                ]
+            }
+        ]
+    }
+});
+
+$(function () {
+    $('body').on('click', '.pastworkxx', function () {
+        Ext.getCmp('c' + this.id).destroy();
+    });
+});
+
+$(function () {
+    $('body').on('click', '.pastcompany', function () {
+        Ext.getCmp('d' + this.id).destroy();
+    });
+});
+
 /*
     This file is generated and updated by Sencha Cmd. You can edit this file as
     needed for your application, but these edits will have to be merged by
@@ -68123,8 +68248,9 @@ Ext.application({
         'CurrentPhone',
         'PastPhone',
         'ImagePanel',
-        'ImageCallout'
-    ],
+        'ImageCallout',
+        'Details'
+],
 
     icon: {
         '57': 'resources/icons/Icon.png',

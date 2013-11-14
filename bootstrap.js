@@ -747,6 +747,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "mjgApp.view.CurrentPhone": [],
   "mjgApp.view.CurrentTablet": [],
   "mjgApp.view.Dashboard": [],
+  "mjgApp.view.Details": [],
   "mjgApp.view.ImageCallout": [],
   "mjgApp.view.ImagePanel": [],
   "mjgApp.view.Main": [],
@@ -1701,6 +1702,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "mjgApp.view.Dashboard": [
     "widget.dashboard"
+  ],
+  "mjgApp.view.Details": [
+    "widget.details"
   ],
   "mjgApp.view.ImageCallout": [
     "widget.imagecallout"

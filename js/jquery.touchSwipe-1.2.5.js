@@ -119,8 +119,9 @@
 		 */
 		return this.each(function() 
 		{
+
             var that = this;
-			var $this = $(this);
+            var $this = $(this);
 			
 			var triggerElementID = null; 	// this variable is used to identity the triggering element
 			var fingerCount = 0;			// the current number of fingers being used.	

@@ -26,8 +26,9 @@ Ext.application({
         'CurrentPhone',
         'PastPhone',
         'ImagePanel',
-        'ImageCallout'
-    ],
+        'ImageCallout',
+        'Details'
+],
 
     icon: {
         '57': 'resources/icons/Icon.png',

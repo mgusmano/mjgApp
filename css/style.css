@@ -236,7 +236,7 @@ a.f-ref{
 	overflow: hidden;
 	position: relative;
 	background: #fff;
-	cursor: pointer;
+	cursor: default ;
 }
 .img-cont{
 	height: 40%;
@@ -244,6 +244,7 @@ a.f-ref{
 	background-repeat: no-repeat;
 	background-position: top center;
 	background-size: cover;
+    cursor:default;
 }
 
 .box h3{

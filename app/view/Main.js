@@ -17,6 +17,7 @@ Ext.define('mjgApp.view.Main', {
         var theChild = {};
 
         if (Ext.os.deviceType != 'Phone') {
+
             theChild = {};
             theChild.xtype = 'alltablet';
             theChild.title = 'Home';
@@ -30,6 +31,7 @@ Ext.define('mjgApp.view.Main', {
             theItems.push(theChild);
         }
         else {
+
             theChild = {};
             theChild.xtype = 'currentphone';
             theChild.title = 'Current';
@@ -55,23 +57,7 @@ Ext.define('mjgApp.view.Main', {
         this.add(theItems);
     },
 
-
     config: {
-        tabBarPosition: 'bottom',
-        xitems: [
- 
-            //{
-            //    xtype: 'container',
-            //    title: 'Companies',
-            //    iconCls: 'info',
-            //    contentEl: 'qrcode',
-            //    listeners: {
-            //        painted: function (element, eOpts) {
-            //            $('#qrcode').qrcode({ width: 264, height: 264, text: "{projectId:97266}" });
-            //        }
-            //    }
-            //},
-
-        ]
+        tabBarPosition: 'bottom'
     }
 });

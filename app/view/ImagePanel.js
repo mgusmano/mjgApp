@@ -5,7 +5,7 @@ Ext.define('mjgApp.view.ImagePanel', {
         'Ext.Img'
     ],
     initialize: function () {
-        this.down('#theHeader').setHtml(this.getHeader());
+        this.down('#theHeader').setHtml('<div class="f24">' + this.getHeader() + '</div>');
 
         var theImage = this.getImage();
         this.down('image').setSrc('resources/images/' + theImage);
@@ -22,7 +22,7 @@ Ext.define('mjgApp.view.ImagePanel', {
         header: null,
         padding: '0 5 0 5', layout: 'vbox',
         items: [
-            { xtype: 'container', itemId: 'theHeader', margin: '5 5 5 5', style: { textAlign: 'center', fontSize: '10px' } },
+            { xtype: 'container', itemId: 'theHeader', margin: '5 5 5 5', style: { textAlign: 'center' } },
             {
                 xtype: 'image', flex: 1, cls: 'my-carousel-item-img', theId: null,
                 listeners: {
@@ -33,7 +33,7 @@ Ext.define('mjgApp.view.ImagePanel', {
                     }
                 }
             },
-           { xtype: 'container', margin: '5 5 5 5', style: { textAlign: 'center', fontSize: '10px' }, html: "Tap on the image to see details on this project." },
+           { xtype: 'container', margin: '5 5 5 5', style: { textAlign: 'center' }, html: '<div class="f24">Tap/click on the image to see details on this project</div>' },
            { xtype: 'container', height: 20 }
         ]
     }

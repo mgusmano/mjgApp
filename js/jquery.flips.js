@@ -100,13 +100,13 @@
 			
 			this.$flipPages.each( function( i ) {
 				
-				var $page	= $(this);
-				
+			    var $page = $(this);
+			
 				if( i === page - 1 ) {
-				
 					$page.css({
 						'-webkit-transform'	: 'rotateY( -180deg )',
-						'-moz-transform'	: 'rotateY( -180deg )',
+						'-moz-transform': 'rotateY( -180deg )',
+						'-transform': 'rotateY( -180deg )',
 						'z-index'			: _self.flipPagesCount - 1 + i
 					});
 				
@@ -116,7 +116,8 @@
 					$page.css({
 						'-webkit-transform'	: 'rotateY( -181deg )', // todo: fix this (should be -180deg)
 						'-moz-transform'	: 'rotateY( -181deg )', // todo: fix this (should be -180deg)
-						'z-index'			: _self.flipPagesCount - 1 + i
+						'-transform': 'rotateY( -181deg )', // todo: fix this (should be -180deg)
+						'z-index': _self.flipPagesCount - 1 + i
 					});
 				
 				}
@@ -125,7 +126,8 @@
 					$page.css({
 						'-webkit-transform'	: 'rotateY( 0deg )',
 						'-moz-transform'	: 'rotateY( 0deg )',
-						'z-index'			: _self.flipPagesCount - 1 - i
+						'-transform': 'rotateY( 0deg )',
+						'z-index': _self.flipPagesCount - 1 - i
 					});
 				
 				}
@@ -563,15 +565,15 @@
 				
 			} );
 			
-			this.$flipPages.find( '.box' ).on( 'click.flips', function( event ) {
+			this.$flipPages.find( '.boxv' ).on( 'xclick.flipsx', function( event ) {
 				
 				var $box 			= $(this),
-					$boxClose		= $( '<span class="box-close">close</span>' ),
+					$boxClose		= $( '<span class="box-close">xclose</span>' ),
 					transitionProp	= {
 						speed			: 450,
 						timingfunction	: 'linear'
 					},
-					$overlay		= $( '<div class="overlay">close</div>' ).css( {
+					$overlay		= $( '<div class="overlay">eclose</div>' ).css( {
 						'z-index'				: 9998,
 						'-webkit-transition' 	: 'opacity ' + transitionProp.speed + 'ms ' + transitionProp.timingfunction,
 						'-moz-transition' 		: 'opacity ' + transitionProp.speed + 'ms ' + transitionProp.timingfunction
@@ -595,7 +597,7 @@
 					} )
 					.insertAfter( $overlay )
 					.end()
-					.append( $boxClose.on( 'click.flips', function( event ) {
+					.append( $boxClose.on( 'xclick.flipsx', function( event ) {
 						
 						$overlay.css( 'opacity', 0 );
 						
