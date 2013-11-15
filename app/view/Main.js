@@ -51,7 +51,6 @@ Ext.define('mjgApp.view.Main', {
         theChild.title = 'Companies';
         theChild.iconCls = 'info';
         theChild.theFont = 'f30';
-
         theItems.push(theChild);
 
         this.add(theItems);

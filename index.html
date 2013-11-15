@@ -1,9 +1,24 @@
 ﻿<!DOCTYPE HTML>
-<html manifest="" lang="en-US">
+<html manifest="" lang="en-US" ng-app>
 <head>
     <meta charset="UTF-8">
     <title>mjgApp</title>
     <script src="js/jquery-1.9.1.js"></script>
+    <script src="http://code.angularjs.org/1.2.0/angular.min.js"></script>
+
+<script>
+    function AccomplishCtrl($scope) {
+        $scope.accomplishments = [
+            { text: '- BS Business Administration, University Of Illinois, May 1984' },
+            { text: '- Microsoft Regional Director in the US Midwest District for 3 years' },
+            { text: '- Developing brower-based web applications for the past 10 years' },
+            { text: '- Speaker at numerous conferences, including Microsoft TechEd' },
+            { text: '- Founder/Partner, The Bismarck Group, Chicago, IL' },
+            { text: '- Partner, The Information Management Group, Chicago, IL' }
+        ];
+    }
+</script>
+
     <style type="text/css">
          /**
          * Example of an initial loading indicator.
@@ -234,13 +249,12 @@
                 Microsoft SharePoint architecture with experience building HTML5 Single Page Applications; working on the requirements,
                 design and development and implementation of custom solutions.
             </div>
-            <div class="f14 myBody" style="margin: 20px 0px 0px 0px;">
-                - BS Business Administration, University Of Illinois, May 1984<br />
-                - Microsoft Regional Director in the US Midwest District for 3 years<br />
-                - Developing brower-based web applications for the past 10 years<br />
-                - Speaker at numerous conferences, including Microsoft TechEd<br />
-                - Founder/Partner, The Bismarck Group, Chicago, IL<br />
-                - Partner, The Information Management Group, Chicago, IL
+            <div ng-controller="AccomplishCtrl" class="f14 myBody" style="margin: 20px 0px 0px 0px;">
+                <ul>
+                    <li ng-repeat="accomplishment in accomplishments">
+                        {{accomplishment.text}}
+                    </li>
+                </ul>
             </div>
             <div class="f14 myBody" style="font-style: italic; color: #146BA8; margin: 20px 0px 0px 0px;">
                 "I have a passion for building outstanding software, especially leading edge, user-centric applications.
