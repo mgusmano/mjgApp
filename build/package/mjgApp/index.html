@@ -1,9 +1,25 @@
 <!DOCTYPE HTML>
-<html manifest="" lang="en-US">
+<html manifest="" lang="en-US" ng-app>
 <head>
     <meta charset="UTF-8">
     <title>mjgApp</title>
-    <script src="js/jquery-1.9.1.js"></script>
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/jquery.qrcode-0.7.0.js"></script>
+    <script src="http://code.angularjs.org/1.2.0/angular.min.js"></script>
+
+<script>
+    function AccomplishCtrl($scope) {
+        $scope.accomplishments = [
+            { text: '- BS Business Administration, University Of Illinois, May 1984' },
+            { text: '- Microsoft Regional Director in the US Midwest District for 3 years' },
+            { text: '- Developing brower-based web applications for the past 10 years' },
+            { text: '- Speaker at numerous conferences, including Microsoft TechEd' },
+            { text: '- Founder/Partner, The Bismarck Group, Chicago, IL' },
+            { text: '- Partner, The Information Management Group, Chicago, IL' }
+        ];
+    }
+</script>
+
     <style type="text/css">
          /**
          * Example of an initial loading indicator.
@@ -228,7 +244,7 @@
         }
     }
 
-})(this);Ext.blink({"id":"43c07621-ff6e-4ac5-8bd9-7dd45720baa5","js":[{"path":"app.js"},{"path":"js/modernizr.custom.08464.js"},{"path":"app.js"}],"css":[{"path":"resources/css/app.css","update":"delta"},{"path":"css/cover.css","update":"delta"},{"path":"css/style.css","update":"delta"},{"path":"css/demo.css","update":"delta"}]});</script>
+})(this);Ext.blink({"id":"43c07621-ff6e-4ac5-8bd9-7dd45720baa5","js":[{"path":"app.js"},{"path":"js/modernizr.custom.08464.js"},{"path":"js/jquery.qrcode-0.7.0.js"},{"path":"app.js"}],"css":[{"path":"resources/css/app.css","update":"delta"},{"path":"css/cover.css","update":"delta"},{"path":"css/style.css","update":"delta"},{"path":"css/demo.css","update":"delta"}]});</script>
 
 </head>
 <body>
@@ -410,22 +426,22 @@
                 Microsoft SharePoint architecture with experience building HTML5 Single Page Applications; working on the requirements,
                 design and development and implementation of custom solutions.
             </div>
-            <div class="f14 myBody" style="margin: 20px 0px 0px 0px;">
-                - BS Business Administration, University Of Illinois, May 1984<br />
-                - Microsoft Regional Director in the US Midwest District for 3 years<br />
-                - Developing brower-based web applications for the past 10 years<br />
-                - Speaker at numerous conferences, including Microsoft TechEd<br />
-                - Founder/Partner, The Bismarck Group, Chicago, IL<br />
-                - Partner, The Information Management Group, Chicago, IL
+            <div ng-controller="AccomplishCtrl" class="f14 myBody" style="margin: 20px 0px 0px 0px;">
+                <ul>
+                    <li ng-repeat="accomplishment in accomplishments">
+                        {{accomplishment.text}}
+                    </li>
+                </ul>
             </div>
             <div class="f14 myBody" style="font-style: italic; color: #146BA8; margin: 20px 0px 0px 0px;">
                 "I have a passion for building outstanding software, especially leading edge, user-centric applications.
                 I love to delight my clients, and have a track record of doing exactly that.
-                I enjoy working for an innovative, driven company who understands the balance of working hard and enjoying life..."
+                I enjoy working for an Hitachi, it is an innovative, driven company who understands the balance of working hard and enjoying life..."
             </div>
+
             <div class="f12 myBody" style="margin: 20px 0px 0px 0px;">
                 847-331-2020<br />
-                mgusmano@yahoo.com
+                mgusmano@hitachiconsulting.com
             </div>
             <div class="f24 myBody" style="color:red;margin:20px 0px 0px 0px;" id="theBrowser"></div>
         </header>
@@ -436,6 +452,11 @@
                 <div class="cover-elements">
                     <h1 class="f18">Swipe or drag</h1>
                     <h1 class="f18">to flip pages</h1>
+                    <div>
+                        <div id="qrcode"></div>
+                        <div class="f12" style="width:200px;color: white;text-align:center;">use QR code to scan</div>
+                        <div class="f12" style="width: 200px; color: white; text-align: center;">to phone or iPad</div>
+                    </div>
                     <div class="f-cover-story f16"><span>Projects Summary</span>Marc Gusmano<div>&nbsp</div></div>
                 </div>
                 <div class="f-cover-flip f24">&lt; Flip The Page</div>
@@ -448,31 +469,48 @@
                     <h2>Projects at Hitachi Consulting</h2>
                     <a>Previous Projects</a>
                 </div>
-                <div class="box w-100 h-50 box-b-l box-b-r box-img-left" id="buttonMobile">
+                <div class="box w-100 h-100 box-b-l box-b-r box-img-left" id="buttonMobile">
                     <div class="img-cont" back="mobile" style="cursor:default;background-image: url(resources/images/mobile.png); "></div>
-                    <div class="f18">Large Oil and Gas Provider - Houston, TX</div>
-                    <div class="f16">Senior HTML5/Mobile Architect - April 2013 to present</div>
-                    <div class="f16 myBody">
-                        Architected and implemented a project management mobile web application.
+                    <div class="f22">Large Oil and Gas Provider - Houston, TX</div>
+                    <div class="f20">Senior HTML5/Mobile Architect - April 2013 to present</div>
+                    <div class="f20 myBody">
+                        Architected and implemented a project management mobile web application. Included initial effort to implement for responsive design (from mobile to desktop).
                     </div>
-                    <div class="f16 myBody">
+                    <div class="f18 myBody">
                         Tools: <a target="_blank" class="lnk" href="https://www.atlassian.com/software/jira">Jira (requirements, tasks, ticketing)</a>, <a target="_blank" class="lnk" href="http://git-scm.com/">Git (version control</a>), Continuous Integration (internal tool)
                         <br />Browser: <a target="_blank" class="lnk" href="http://www.sencha.com/products/touch/">Sencha Touch 2.3</a>, <a target="_blank" class="lnk" href="http://jquery.com/">JQuery 1.9.1</a>, <a target="_blank" class="lnk" href="http://www.bryntum.com/products/siesta/">Siesta (testing)</a>, <a target="_blank" class="lnk" href="http://phonegap.com/">PhoneGap</a>
-                        <br />Server: <a target="_blank" class="lnk" href="http://msdn.microsoft.com/en-us/library/ms171868(v=vs.110).aspx">Microsoft .NET Framework 4.5 in C#</a>, <a target="_blank" class="lnk" href="http://msdn.microsoft.com/en-us/library/ms731082(v=vs.110).aspx">Microsoft Windows Communication Foundation (WCF)</a>, <a target="_blank" class="lnk" href="https://www.microsoft.com/en-us/sqlserver/default.aspx">SQL Server 2010</a>
+                        <br />Server: <a target="_blank" class="lnk" href="http://msdn.microsoft.com/en-us/library/ms171868(v=vs.110).aspx">Microsoft .NET Framework 4.5 in C#</a>, <a target="_blank" class="lnk" href="http://msdn.microsoft.com/en-us/library/ms731082(v=vs.110).aspx">Microsoft Windows Communication Foundation (WCF)</a>, <a target="_blank" class="lnk" href="https://www.microsoft.com/en-us/sqlserver/default.aspx">SQL Server</a>
+                    </div>
+                    <div class="f20 myBody">
+                        <div style="margin:20px 0px 20px 0px;" id="qrcodeMobile"></div>
+                        <div class="f12">use QR code to scan to phone or iPad</div>
                     </div>
                 </div>
+            </div>
 
-                <div class="box w-100 h-50 box-b-l box-b-r box-img-right" id="buttonEMSPEED12">
+
+            <!--p1-->
+            <div class="f-page">
+                <div class="f-title">
+                    <a>Marc Gusmano</a>
+                    <h2>Projects at Hitachi Consulting</h2>
+                    <a>Previous Projects</a>
+                </div>
+                <div class="box w-100 h-100 box-b-l box-b-r box-img-right" id="buttonEMSPEED12">
                     <div class="img-cont" back="EMSPEED12" style="cursor: default; background-image: url(resources/images/EMSPEED12.png); "></div>
-                    <div class="f18">Large Oil and Gas Provider - Houston, TX</div>
-                    <div class="f16">Senior HTML5 Architect - June 2012 to present</div>
-                    <div class="f16 myBody">
+                    <div class="f22">Large Oil and Gas Provider - Houston, TX</div>
+                    <div class="f20">Senior HTML5 Architect - June 2012 to present</div>
+                    <div class="f20 myBody">
                         Architected and implemented a Web-based project management.  Built as a 100% browser-based 'Single Page Application' with HTML5, JavaScript, AJAX and CSS3.
                     </div>
-                    <div class="f16 myBody">
+                    <div class="f18 myBody">
                         Tools: <a target="_blank" class="lnk" href="https://www.atlassian.com/software/jira">Jira (requirements, task management, ticketing)</a>, <a target="_blank" class="lnk" href="http://git-scm.com/">Git (version control</a>)
                         <br />Browser: <a target="_blank" class="lnk" href="http://www.sencha.com/products/extjs/">Sencha ExtJS 4.2</a>, <a target="_blank" class="lnk" href="http://jquery.com/">JQuery 1.9.1</a>, <a target="_blank" class="lnk" href="http://www.bryntum.com/products/siesta/">Siesta (testing)</a> ,
                         <br />Server: <a target="_blank" class="lnk" href="http://msdn.microsoft.com/en-us/library/ms171868(v=vs.110).aspx">Microsoft .NET Framework 4.5 in C#</a>, <a target="_blank" class="lnk" href="http://msdn.microsoft.com/en-us/library/ms731082(v=vs.110).aspx">Microsoft WCF</a>, <a target="_blank" class="lnk" href="https://www.microsoft.com/en-us/sqlserver/default.aspx">SQL Server</a>
+                    </div>
+                    <div class="f20 myBody">
+                        <div style="margin:20px 0px 20px 0px;" id="qrcodeEMSPEED12"></div>
+                        <div class="f12">use QR code to scan to phone or iPad</div>
                     </div>
                 </div>
             </div>
@@ -493,9 +531,14 @@
                     <div class="f14">November 2013</div>
                     <div class="f16 myBody">
                         Resume implemented as a mobile web application.  Includes several innovative ways to page through data.
+                        Showcases many different developer frameworks and libraries.
+
                     </div>
                     <div class="f16 myBody">
-                        HTML5, Sencha Touch 2.3, JQuery 1.9.1, JavaScript, CSS/SASS, Windows Azure Hosting
+                        HTML5, Sencha Touch 2.3, JQuery 1.10.2, AngularJS 1.2.1 (Data Binding, Controller), Modernizr (CSS 3D Transforms and Transitions), JavaScript, CSS/SASS, Windows Azure Hosting
+                    </div>
+                    <div class="f16 myBody">
+                        JQuery plugins: MockJax (AJAX Mocking), jquery.flips, TouchSwipe, jQuery.qrcode
                     </div>
                 </div>
                 <div class="box w-90 h-50 box-b-l box-b-r box-img-left">
@@ -1028,7 +1071,6 @@
         </div>
     </script>
 
-    <div id="qrcode" style="display: none;"></div>
 
 
 

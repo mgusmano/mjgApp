@@ -38,6 +38,35 @@ Ext.define('mjgApp.view.AllTablet', {
             painted: function (me, eOpts) {
                 if (this.getIsPainted() === false) {
                     this.setIsPainted(true);
+
+                    var options = {
+                        render: 'div',
+                        fill: '#333333',
+                        background: '#ffffff',
+                        text: 'http://mjgappbuild.azurewebsites.net',
+                        size: 200
+                    }
+                    $("#qrcode").empty().qrcode(options);
+
+                    var options = {
+                        render: 'image',
+                        fill: '#333333',
+                        background: '#ffffff',
+                        text: 'http://v2pocbuild.azurewebsites.net',
+                        size: 150
+                    }
+                    $("#qrcodeMobile").empty().qrcode(options);
+
+                    var options = {
+                        render: 'image',
+                        fill: '#333333',
+                        background: '#ffffff',
+                        text: 'http://mjguitester.azurewebsites.net/sites/97370/Portal.aspx',
+                        size: 150
+                    }
+                    $("#qrcodeEMSPEED12").empty().qrcode(options);
+
+
                     if (Ext.browser.is.IE) {
                         $('#theBrowser').html('this page does not work in Internet Explorer</br>use a WebKit browser (Chrome, FireFox or Safari)');
                     }
@@ -77,7 +106,7 @@ Ext.define('mjgApp.view.AllTablet', {
 //});
 
 function v2pocbuild() {
-    window.open('http://v2pocbuild.azurewebsites.net/', 'demo', 'height=568,width=320,left=50,top=50,titlebar=no,toolbar=no,menubar=no,location=no,directories=no,status=no')
+    window.open('http://v2pocbuild.azurewebsites.net', 'demo', 'height=568,width=320,left=50,top=50,titlebar=no,toolbar=no,menubar=no,location=no,directories=no,status=no')
 }
 
 function mjguitester() {

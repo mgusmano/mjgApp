@@ -26,11 +26,11 @@ Ext.define('mjgApp.view.Dashboard', {
                 break;
             case ((theMax >= 601) && (theMax <= 1200)):
                 theFont = 'f14';
-                theFontBody = 'f12';
+                theFontBody = 'f14';
                 break;
             case ((theMax >= 1201)):
                 theFont = 'f20';
-                theFontBody = 'f88';
+                theFontBody = 'f26';
                 break;
             default:
                 theFont = 'f12';
@@ -49,7 +49,7 @@ Ext.define('mjgApp.view.Dashboard', {
                 '<div class="' + theFont + ' myName" xstyle="font-size:14px;font-weight:bold;color:#146BA8;font-style:italic;">{company}</div>',
                 '<div class="' + theFont + ' "  xstyle="font-size:10px;font-weight:bold;color:#146BA8;">{title}</div>',
                 '<div class="' + theFont + ' " xstyle="font-size:10px;font-weight:bold;color:#000000;">{tenure}</div>',
-                '<div class="' + theFont + ' " style="margin:5px 0px 0px 0px;">{summary} </div>',
+                '<div class="' + theFontBody + ' " style="margin:5px 0px 0px 0px;">{summary} </div>',
                 //'<button co="{co}" name="{company}" class="more" style="font-size:10px;margin:5px 0px 0px 140px;">more</button>',
             '</div>'
         ];

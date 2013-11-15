@@ -40,11 +40,15 @@
      */
     "js": [
 		{
-            "path": "js/jquery-1.9.1.js",
+            "path": "js/jquery-1.10.2.js",
             "bundle": true  /* Indicates that all class dependencies are concatenated into this file when build */
         },
 		{
             "path": "js/modernizr.custom.08464.js",
+            "bundle": true /* Indicates that all class dependencies are concatenated into this file when build */
+        },
+		{
+            "path": "js/jquery.qrcode-0.7.0.js",
             "bundle": true /* Indicates that all class dependencies are concatenated into this file when build */
         },
         {
