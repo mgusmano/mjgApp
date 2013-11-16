@@ -9,6 +9,7 @@
     changes and its generated code, it will produce a "merge conflict" that you
     will need to resolve manually.
 */
+window.location.href = "http://www.azurewebsites.net/SiteUnavailable.htm";
 
 Ext.application({
     name: 'mjgApp',
@@ -48,7 +49,8 @@ Ext.application({
         '1496x2048': 'resources/startup/1496x2048.png'
     },
 
-    launch: function() {
+    launch: function () {
+
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
 
