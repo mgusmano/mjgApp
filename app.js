@@ -9,7 +9,152 @@
     changes and its generated code, it will produce a "merge conflict" that you
     will need to resolve manually.
 */
-window.location.href = "http://www.azurewebsites.net/SiteUnavailable.htm";
+
+
+
+
+
+function getQueryStrings() {
+    var assoc = {};
+    var decode = function (s) { return decodeURIComponent(s.replace(/\+/g, " ")); };
+    var queryString = location.search.substring(1);
+    var keyValues = queryString.split('&');
+
+    for (var i in keyValues) {
+        var key = keyValues[i].split('=');
+        if (key.length > 1) {
+            assoc[decode(key[0])] = decode(key[1]);
+        }
+    }
+    return assoc;
+};
+
+var qs = getQueryStrings();
+var myParam = qs["key"];
+if (myParam === undefined || myParam === null) {
+    myParam = 'none';
+};
+var org = '';
+var info = '';
+
+
+
+
+
+
+switch (myParam) {
+    case 'v784lt2':
+        org = 'Validus'
+        info = '(847)331-2020<br />mgusmano@yahoo.com';
+        doDB();
+        break;
+    case 'l923lk9':
+        org = 'LogicNation'
+        info = '(847)331-2020<br />mgusmano@yahoo.com';
+        doDB();
+        break;
+    case 'm411lw7':
+        org = 'MB2X'
+        info = '(847)331-2020<br />mgusmano@yahoo.com';
+        doDB();
+        break;
+
+    case 'mg21451':
+        org = 'mjg'
+        info = 'EMail: mgusmano@hitachiconsulting.com';
+        doDB();
+        break;
+    case 'd861bx2':
+        org = 'Dave Bost'
+        info = '(847)331-2020<br />mgusmano@yahoo.com';
+        doDB();
+        break;
+    case 't156lw5':
+        org = 'monster'
+        info = '(847)331-2020<br />mgusmano@yahoo.com';
+        doDB();
+        break;
+    case 't982lq1':
+        org = 'org2'
+        info = '(847)331-2020<br />mgusmano@yahoo.com';
+        doDB();
+        break;
+    case 't065lk5':
+        org = 'org3'
+        info = '(847)331-2020<br />mgusmano@yahoo.com';
+        doDB();
+        break;
+    default:
+        org = 'badKey';
+        info = '(847)331-2020<br />mgusmano@yahoo.com';
+        doDB();
+}
+
+window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
+    var e = errorMsg + ' ' + url + ' ' + lineNumber;
+    window.location.href = "http://www.azurewebsites.net/SiteUnavailable.htm?e=" + e;
+    return false;
+}
+
+function doDB() {
+    try {
+        writeIt(theIp);
+
+        //$.ajax({
+        //    type: "GET",
+        //    url: 'http://smart-ip.net/geoip-json?callback=?',
+        //    dataType: 'json',
+        //    success: function (data) {
+        //        writeIt(data.host);
+        //    },
+        //    failure: function (data) {
+        //        writeIt('none');
+        //    }
+        //});
+    }
+    catch (e) {
+        var item = {
+            error: $.param(e)
+        };
+        logTable.insert(item)
+        .done(function (item) {
+            if (item.org === 'badKey') {
+                window.location.href = "http://www.azurewebsites.net/SiteUnavailable.htm?e=e";
+            }
+        })
+
+    }
+};
+
+function writeIt(theIp) {
+    var client = new WindowsAzure.MobileServiceClient("https://mjgapp.azure-mobile.net/", "HQlvofWBFPgZYxHoMoRbbHoQTefBwq84");
+
+    var ip = theIp;
+    var href = window.location.href;
+    var appname = window.navigator.appName;
+    var useragent = window.navigator.userAgent;
+    var devicetype = Ext.os.deviceType;
+    var osname = Ext.os.name;
+    var datetime = new Date().toString();
+    var item = {
+        org: org,
+        devicetype: devicetype,
+        osname: osname,
+        datetime: datetime,
+        ip: ip,
+        key: myParam,
+        href: href,
+        useragent: useragent,
+        error: ''
+    };
+    var logTable = client.getTable('log');
+    logTable.insert(item)
+    .done(function (item) {
+        if (item.org === 'badKey') {
+            window.location.href = "http://www.azurewebsites.net/SiteUnavailable.htm?e=b";
+        }
+    })
+};
 
 Ext.application({
     name: 'mjgApp',
@@ -50,6 +195,8 @@ Ext.application({
     },
 
     launch: function () {
+
+        //this.doDB();
 
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();

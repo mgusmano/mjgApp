@@ -22,11 +22,11 @@ Ext.define('mjgApp.view.Dashboard', {
         switch (true) {
             case (theMax < 600):
                 theFont = 'f10';
-                theFontBody = 'f8';
+                theFontBody = 'f12';
                 break;
             case ((theMax >= 601) && (theMax <= 1200)):
                 theFont = 'f14';
-                theFontBody = 'f14';
+                theFontBody = 'f16';
                 break;
             case ((theMax >= 1201)):
                 theFont = 'f20';

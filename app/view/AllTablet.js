@@ -43,8 +43,8 @@ Ext.define('mjgApp.view.AllTablet', {
                         render: 'div',
                         fill: '#333333',
                         background: '#ffffff',
-                        text: 'http://mjgappbuild.azurewebsites.net',
-                        size: 200
+                        text: location.href,
+                        size: 125
                     }
                     $("#qrcode").empty().qrcode(options);
 
@@ -66,6 +66,7 @@ Ext.define('mjgApp.view.AllTablet', {
                     }
                     $("#qrcodeEMSPEED12").empty().qrcode(options);
 
+                    $('#info').html(info);
 
                     if (Ext.browser.is.IE) {
                         $('#theBrowser').html('this page does not work in Internet Explorer</br>use a WebKit browser (Chrome, FireFox or Safari)');

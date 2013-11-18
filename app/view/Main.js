@@ -16,44 +16,46 @@ Ext.define('mjgApp.view.Main', {
         var theItems = [];
         var theChild = {};
 
-        if (Ext.os.deviceType != 'Phone') {
+        if (org != 'badKey') {
+            if (Ext.os.deviceType != 'Phone') {
+
+                theChild = {};
+                theChild.xtype = 'alltablet';
+                theChild.title = 'Home';
+                theChild.iconCls = 'home';
+                theItems.push(theChild);
+
+                theChild = {};
+                theChild.xtype = 'currenttablet';
+                theChild.title = 'Current';
+                theChild.iconCls = 'favorites';
+                theItems.push(theChild);
+            }
+            else {
+
+                theChild = {};
+                theChild.xtype = 'currentphone';
+                theChild.title = 'Current';
+                theChild.iconCls = 'home';
+                theItems.push(theChild);
+
+                theChild = {};
+                theChild.xtype = 'pastphone';
+                theChild.title = 'Past';
+                theChild.iconCls = 'favorites';
+                theItems.push(theChild);
+
+            }
 
             theChild = {};
-            theChild.xtype = 'alltablet';
-            theChild.title = 'Home';
-            theChild.iconCls = 'home';
+            theChild.xtype = 'dashboard';
+            theChild.title = 'Companies';
+            theChild.iconCls = 'info';
+            theChild.theFont = 'f30';
             theItems.push(theChild);
 
-            theChild = {};
-            theChild.xtype = 'currenttablet';
-            theChild.title = 'Current';
-            theChild.iconCls = 'favorites';
-            theItems.push(theChild);
+            this.add(theItems);
         }
-        else {
-
-            theChild = {};
-            theChild.xtype = 'currentphone';
-            theChild.title = 'Current';
-            theChild.iconCls = 'home';
-            theItems.push(theChild);
-
-            theChild = {};
-            theChild.xtype = 'pastphone';
-            theChild.title = 'Past';
-            theChild.iconCls = 'favorites';
-            theItems.push(theChild);
-
-        }
-
-        theChild = {};
-        theChild.xtype = 'dashboard';
-        theChild.title = 'Companies';
-        theChild.iconCls = 'info';
-        theChild.theFont = 'f30';
-        theItems.push(theChild);
-
-        this.add(theItems);
     },
 
     config: {

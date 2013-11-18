@@ -93,8 +93,8 @@
 	padding-top: 20px;
 }
 .page.cover .front .content{
-	xbackground: #ddd url(../images/cover.jpg) no-repeat center center;
-	background: #333333;
+	background: #ddd url(../images/cover.jpg) no-repeat center center;
+	xbackground: #333333;
 	background-size: cover;
 }
 .page.cover-back .back .content{
@@ -143,13 +143,14 @@ a.f-ref{
 }
 .page a, 
 .page.cover .f-cover-story span{
-	color: #F86738;
+	color: #DA291C;
+	xcolor: #F86738;
 }
 .page a:hover{
 	color: #000;
 }
 .f-cover-flip{
-	background: #F86738;
+	background: #DA291C;
 	color: #FFFFFF;
 	position: absolute;
 	right: 0px;
